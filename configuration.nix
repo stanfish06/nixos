@@ -42,8 +42,8 @@
     automake
     libtool
     # others that can be as new as possible
-    unstable.tmux
-    unstable.neovim
+    tmux
+    neovim
   ];
   environment.variables.EDITOR = "vim";
 
