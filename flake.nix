@@ -19,16 +19,16 @@
       # configuration.nix is just a lambda, and you can embed it here directly
       modules = [
         nixos-wsl.nixosModules.wsl
-        {
-          # overlays are functions, final extends prev, and you can do some changes
-          # for instance, unstable = nixpkgs-unstable.legacyPackages.${prev.system}; is a nixpkgs-unstable that uses same system as parent overlay.  
-          # You may refer to this module using final.unstable within that function (e.g. unstable-2 = final.unstable, which is trivial though)
-          nixpkgs.overlays = [
-            (final: prev: {
-               unstable = nixpkgs-unstable.legacyPackages.${prev.system};           
-            })
-          ];
-        }
+        # {
+        #   # overlays are functions, final extends prev, and you can do some changes
+        #   # for instance, unstable = nixpkgs-unstable.legacyPackages.${prev.system}; is a nixpkgs-unstable that uses same system as parent overlay.  
+        #   # You may refer to this module using final.unstable within that function (e.g. unstable-2 = final.unstable, which is trivial though)
+        #   nixpkgs.overlays = [
+        #     (final: prev: {
+        #        unstable = nixpkgs-unstable.legacyPackages.${prev.system};           
+        #     })
+        #   ];
+        # }
         ./configuration.nix
       ];
     };
