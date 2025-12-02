@@ -26,7 +26,7 @@
   users.users.root = {
     initialPassword = "123456";
   };
-
+  # (do not massively use 25.11/unstable on wsl - 12/11/2025)
   environment.systemPackages = with pkgs; [
     # basic tools
     git
@@ -41,9 +41,10 @@
     autoconf
     automake
     libtool
-    # others that can be as new as possible
-    tmux
+    # others
+    unstable.tmux
     neovim
+    zsh
   ];
   environment.variables.EDITOR = "vim";
 
