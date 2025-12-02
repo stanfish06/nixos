@@ -41,8 +41,6 @@
     autoconf
     automake
     libtool
-	# shell
-    zsh
     # others that can be as new as possible
     unstable.tmux
     unstable.neovim
