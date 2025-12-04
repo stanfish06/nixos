@@ -13,7 +13,7 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-wsl }@inputs: {
     # nixos is the hostname (e.g. you can have config for laptop1, desktop1, server1,...)
     # you can select specific config to rebuild with nixos-rebuild swtich --flake /etc/nixos#hostname
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixos_wsl = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       # modules can import configs, install packages, enable services, etc
       # configuration.nix is just a lambda, and you can embed it here directly
@@ -29,7 +29,20 @@
             })
           ];
         }
-        ./configuration.nix
+        ./configuration-wsl.nix
+      ];
+    };
+    nixosConfigurations.nixos_linux = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        {
+          nixpkgs.overlays = [
+            (final: prev: {
+               unstable = nixpkgs-unstable.legacyPackages.${prev.system};           
+            })
+          ];
+        }
+        ./configuration-linux.nix
       ];
     };
   };
