@@ -43,6 +43,7 @@
           ];
         }
         ./configuration-linux.nix
+        /etc/nixos/hardware-configuration.nix
       ];
     };
   };
