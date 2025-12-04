@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-new.url = "github:NixOS/nixpkgs/nixos-25.11";
+    home-manager = {	
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
   };
@@ -43,6 +47,12 @@
                new = inputs.nixpkgs-new.legacyPackages.${prev.system};           
             })
           ];
+        }
+        inputs.home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.stan = ./home.nix;
         }
         ./configuration-linux.nix
         ./hardware-configuration.nix
