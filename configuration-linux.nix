@@ -84,6 +84,7 @@
     new.tmux
     unstable.neovim
     new.zsh
+    new.alacritty
   ];
   environment.variables.EDITOR = "nvim";
 
