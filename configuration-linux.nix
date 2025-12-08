@@ -2,10 +2,18 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
   ];
@@ -53,6 +61,7 @@
   };
 
   programs.zsh.enable = true;
+
   programs.firefox.enable = true;
 
   users.users.stan = {
@@ -60,7 +69,11 @@
     description = "stan";
     shell = pkgs.zsh;
     initialPassword = "123456";
-    extraGroups = [ "sudo" "networkmanager" "wheel" ];
+    extraGroups = [
+      "sudo"
+      "networkmanager"
+      "wheel"
+    ];
   };
   users.users.root = {
     initialPassword = "123456";
@@ -84,6 +97,8 @@
     unstable.neovim
     new.zsh
     new.alacritty
+    new.nixfmt-rfc-style
+    new.nixfmt-tree
   ];
   environment.variables.EDITOR = "nvim";
 

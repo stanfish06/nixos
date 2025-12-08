@@ -1,4 +1,9 @@
-{ config, pkgs, ... }: 
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   home.stateVersion = "24.05";
@@ -12,6 +17,24 @@
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
       recursive = true;
     };
+  };
+  programs.zsh = {
+    enable = true;
+    oh-my-zsh = {
+      enable = true;
+      plugins = [
+        "git"
+        "fzf"
+      ];
+      theme = "robbyrussell";
+    };
+    plugins = [
+      {
+        name = "vi-mode";
+        src = pkgs.zsh-vi-mode;
+        file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+      }
+    ];
   };
   home.packages = with pkgs; [
     fzf
