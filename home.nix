@@ -36,12 +36,17 @@
       }
     ];
   };
+  home.sessionVariables = {
+    PATH = "$HOME/.local/bin:$PATH";
+  };
   home.packages = with pkgs; [
     fzf
     ripgrep
-    rofi
-    dwl
-    wmenu
+    rofi-wayland
     gh
+    i3status
+    lazygit
+    new.quickshell
   ];
+  # TODO: autostart quickshell with dwl
 }
