@@ -16,6 +16,9 @@
   ];
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
+    nerd-fonts.victor-mono
+    maple-mono.NF
+    iosevka
   ];
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

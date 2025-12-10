@@ -12,6 +12,9 @@
     ".tmux.conf" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/tmux/linux/.tmux.conf";
     };
+    ".wezterm.lua" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/wezterm/linux/.wezterm.lua";
+    };
     ".local/bin/start-dwl" = {
       text = ''
         #!/usr/bin/env bash
@@ -97,5 +100,6 @@
     i3status
     lazygit
     new.quickshell
+    new.wezterm
   ];
 }
