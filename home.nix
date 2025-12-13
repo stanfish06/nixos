@@ -17,24 +17,31 @@
     };
     ".local/bin/start-dwl" = {
       text = ''
-        #!/usr/bin/env bash
+                #!/usr/bin/env bash
 
-        dwl &
-        # wait until socket is ready, then start services
-        unset WAYLAND_DISPLAY
-        while [ -z "$WAYLAND_DISPLAY" ]; do 
-            sleep 0.1
-            export WAYLAND_DISPLAY=wayland-0
-            if [ -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]; then
-                echo "socket found"
-                break
-            fi
-            unset WAYLAND_DISPLAY
-        done
+                systemd-run --user --scope --unit=dwl-session --collect dwl &
 
-        systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-        systemctl --user start wayland-session.target
+                # wait until socket is ready, then start services
+                unset WAYLAND_DISPLAY
+                while [ -z "$WAYLAND_DISPLAY" ]; do 
+                    sleep 0.1
+                    export WAYLAND_DISPLAY=wayland-0
+                    if [ -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]; then
+                        echo "socket found"
+                        break
+                    fi
+                    unset WAYLAND_DISPLAY
+                done
+
+                systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+                dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+                systemctl --user start wayland-session.target
+
+                while systemctl --user is-active -q dwl-session.scope; do
+                    sleep 1
+                done
+        	# reset wayland-session so other services will work upon rerun
+                systemctl --user stop wayland-session.target || true
       '';
       executable = true;
     };
@@ -101,5 +108,6 @@
     lazygit
     new.quickshell
     new.wezterm
+    new.wlroots_0_19
   ];
 }
