@@ -15,6 +15,12 @@
     ".wezterm.lua" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/wezterm/linux/.wezterm.lua";
     };
+    ".emacs" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/emacs/.emacs";
+    };
+    ".emacs.d/myDarkTheme-theme.el" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/emacs/myDarkTheme-theme.el";
+    };
     ".local/bin/start-dwl" = {
       text = ''
                 #!/usr/bin/env bash
@@ -96,6 +102,49 @@
       }
     ];
   };
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+      palette = "catppuccin_macchiato";
+      palettes = {
+        catppuccin_macchiato = {
+          rosewater = "#f4dbd6";
+          flamingo = "#f0c6c6";
+          pink = "#f5bde6";
+          mauve = "#c6a0f6";
+          red = "#ed8796";
+          maroon = "#ee99a0";
+          peach = "#f5a97f";
+          yellow = "#eed49f";
+          green = "#a6da95";
+          teal = "#8bd5ca";
+          sky = "#91d7e3";
+          sapphire = "#7dc4e4";
+          blue = "#8aadf4";
+          lavender = "#b7bdf8";
+          text = "#cad3f5";
+          subtext1 = "#b8c0e0";
+          subtext0 = "#a5adcb";
+          overlay2 = "#939ab7";
+          overlay1 = "#8087a2";
+          overlay0 = "#6e738d";
+          surface2 = "#5b6078";
+          surface1 = "#494d64";
+          surface0 = "#363a4f";
+          base = "#24273a";
+          mantle = "#1e2030";
+          crust = "#181926";
+          darkred = "#B22222";
+          debianred = "#D70A53";
+        };
+      };
+      character = {
+        success_symbol = "[⟫](bold teal)";
+        error_symbol = "[✕](bold red)";
+      };
+    };
+  };
   home.sessionVariables = {
     PATH = "$HOME/.local/bin:$PATH";
   };
@@ -109,5 +158,6 @@
     new.quickshell
     new.wezterm
     new.wlroots_0_19
+    new.emacs
   ];
 }
