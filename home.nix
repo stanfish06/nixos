@@ -102,6 +102,10 @@
       }
     ];
   };
+  programs.emacs = {
+    enable = true;
+    package = pkgs.emacs;
+  };
   programs.starship = {
     enable = true;
     settings = {
@@ -158,6 +162,5 @@
     new.quickshell
     new.wezterm
     new.wlroots_0_19
-    new.emacs
   ];
 }
