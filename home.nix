@@ -12,6 +12,9 @@
     ".tmux.conf" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/tmux/linux/.tmux.conf";
     };
+    ".vimrc" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/vim/.vimrc";
+    };
     ".wezterm.lua" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/wezterm/linux/.wezterm.lua";
     };
@@ -98,6 +101,7 @@
       plugins = [
         "git"
         "fzf"
+	"mise"
       ];
       theme = "robbyrussell";
     };
@@ -168,10 +172,33 @@
     i3status
     lazygit
     vscode
+    rstudio
     new.quickshell
     new.wezterm
     new.wlroots_0_19
     new.brave
-    new.rstudio
+    new.mise
+    # c/c++
+    gcc
+    cmake
+    gnumake
+    gdb
+    lldb
+    ccache
+    # rust
+    cargo
+    rustc
+    rust-analyzer
+    # python
+    python3
+    python3Packages.pip
+    python3Packages.virtualenv
+    # js
+    nodejs
+    # bulid tools
+    pkg-config
+    autoconf
+    automake
+    libtool
   ];
 }
