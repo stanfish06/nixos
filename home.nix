@@ -159,6 +159,7 @@
   home.sessionVariables = {
     PATH = "$HOME/.local/bin:$PATH";
   };
+  nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     fzf
     ripgrep
@@ -166,8 +167,11 @@
     gh
     i3status
     lazygit
+    vscode
     new.quickshell
     new.wezterm
     new.wlroots_0_19
+    new.brave
+    new.rstudio
   ];
 }
