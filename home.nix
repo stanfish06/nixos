@@ -7,8 +7,13 @@
 
 {
   home.stateVersion = "24.05";
-
+  home.sessionPath = [ "$HOME/.npm-global/bin" ];
   home.file = {
+    ".npmrc" = {
+      text = ''
+        prefex=~/.npm-global
+      '';
+    };
     ".tmux.conf" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/tmux/linux/.tmux.conf";
     };
@@ -101,7 +106,7 @@
       plugins = [
         "git"
         "fzf"
-	"mise"
+        "mise"
       ];
       theme = "robbyrussell";
     };
@@ -173,12 +178,15 @@
     lazygit
     vscode
     rstudio
+    jq
+    new.atuin
     new.quickshell
     new.wezterm
     new.wlroots_0_19
     new.brave
     new.mise
     # c/c++
+    clang-tools
     gcc
     cmake
     gnumake
@@ -190,11 +198,13 @@
     rustc
     rust-analyzer
     # python
-    python3
-    python3Packages.pip
-    python3Packages.virtualenv
+    unstable.python3
+    unstable.pyright
+    unstable.python3Packages.pip
+    unstable.python3Packages.virtualenv
     # js
-    nodejs
+    unstable.nodejs
+    unstable.nodePackages.bash-language-server
     # bulid tools
     pkg-config
     autoconf
