@@ -201,11 +201,11 @@
         format = "\\[[$symbol$branch]($style)\\]";
       };
       git_branch = {
-        symbol = " ";
+        symbol = "";
         format = "\\[[$symbol$branch]($style)\\]";
       };
       git_commit = {
-        tag_symbol = "  ";
+        tag_symbol = " ";
         format = "\\[[\\($hash$tag\\)]($style)\\]";
       };
       mise = {
@@ -245,7 +245,7 @@
         disabled = false;
         style = "bold teal";
       };
-      "os.symbols" = {
+      os.symbols = {
         Alpaquita = " ";
         Alpine = " ";
         AlmaLinux = " ";
@@ -274,7 +274,7 @@
         MidnightBSD = " ";
         Mint = " ";
         NetBSD = " ";
-        NixOS = " ";
+        NixOS = " ";
         Nobara = " ";
         OpenBSD = "󰈺 ";
         openSUSE = " ";
@@ -325,6 +325,8 @@
     vscode
     rstudio
     jq
+    btop
+    rclone
     new.atuin
     new.quickshell
     new.wezterm
