@@ -7,9 +7,9 @@
 
 {
   home.stateVersion = "24.05";
-  home.sessionPath = [ 
-    "$HOME/.npm-global/bin" 
-    "$HOME/.local/bin" 
+  home.sessionPath = [
+    "$HOME/.npm-global/bin"
+    "$HOME/.local/bin"
   ];
   home.file = {
     ".npmrc" = {
@@ -166,6 +166,153 @@
         success_symbol = "[⟫](bold teal)";
         error_symbol = "[✕](bold red)";
       };
+      aws = {
+        symbol = "  ";
+        format = "\\[[$symbol($profile)(\\($region\\))(\\[$duration\\])]($style)\\]";
+      };
+      buf.symbol = " ";
+      c = {
+        symbol = " ";
+        format = "\\[[$symbol($version(-$name))]($style)\\]";
+      };
+      cmake.symbol = " ";
+      conda = {
+        symbol = " ";
+        ignore_base = false;
+        format = "\\[[$symbol$environment]($style)\\]";
+      };
+      crystal.symbol = " ";
+      dart.symbol = " ";
+      directory = {
+        read_only = " 󰌾";
+        style = "bold blue";
+      };
+      docker_context.symbol = " ";
+      elixir.symbol = " ";
+      elm.symbol = " ";
+      fennel.symbol = " ";
+      username = {
+        show_always = true;
+        style_user = "bold italic darkred";
+        format = "[▲](bold teal) ‹[$user]($style)› ";
+      };
+      fossil_branch = {
+        symbol = " ";
+        format = "\\[[$symbol$branch]($style)\\]";
+      };
+      git_branch = {
+        symbol = " ";
+        format = "\\[[$symbol$branch]($style)\\]";
+      };
+      git_commit = {
+        tag_symbol = "  ";
+        format = "\\[[\\($hash$tag\\)]($style)\\]";
+      };
+      mise = {
+        disabled = false;
+        symbol = "◆ ";
+        format = "\\[[$symbol$health]($style)\\]";
+      };
+      golang = {
+        symbol = " ";
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
+      guix_shell.symbol = " ";
+      haskell = {
+        symbol = " ";
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
+      haxe.symbol = " ";
+      hg_branch.symbol = " ";
+      hostname.ssh_symbol = " ";
+      java.symbol = " ";
+      julia.symbol = " ";
+      kotlin.symbol = " ";
+      lua.symbol = " ";
+      memory_usage.symbol = "󰍛 ";
+      meson = {
+        symbol = "󰔷 ";
+        format = "\\[[$symbol$project]($style)\\]";
+      };
+      nim.symbol = "󰆥 ";
+      nix_shell.symbol = " ";
+      nodejs = {
+        symbol = " ";
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
+      ocaml.symbol = " ";
+      os = {
+        disabled = false;
+        style = "bold teal";
+      };
+      "os.symbols" = {
+        Alpaquita = " ";
+        Alpine = " ";
+        AlmaLinux = " ";
+        Amazon = " ";
+        Android = " ";
+        Arch = " ";
+        Artix = " ";
+        CachyOS = " ";
+        CentOS = " ";
+        Debian = " ";
+        DragonFly = " ";
+        Emscripten = " ";
+        EndeavourOS = " ";
+        Fedora = " ";
+        FreeBSD = " ";
+        Garuda = "󰛓 ";
+        Gentoo = " ";
+        HardenedBSD = "󰞌 ";
+        Illumos = "󰈸 ";
+        Kali = " ";
+        Linux = " ";
+        Mabox = " ";
+        Macos = " ";
+        Manjaro = " ";
+        Mariner = " ";
+        MidnightBSD = " ";
+        Mint = " ";
+        NetBSD = " ";
+        NixOS = " ";
+        Nobara = " ";
+        OpenBSD = "󰈺 ";
+        openSUSE = " ";
+        OracleLinux = "󰌷 ";
+        Pop = " ";
+        Raspbian = " ";
+        Redhat = " ";
+        RedHatEnterprise = " ";
+        RockyLinux = " ";
+        Redox = "󰀘 ";
+        Solus = "󰠳 ";
+        SUSE = " ";
+        Ubuntu = " ";
+        Unknown = " ";
+        Void = " ";
+        Windows = "󰍲 ";
+      };
+      package = {
+        symbol = "󰏗 ";
+        format = "\\[[$symbol$version]($style)\\]";
+      };
+      perl.symbol = " ";
+      php.symbol = " ";
+      pijul_channel.symbol = " ";
+      python = {
+        symbol = " ";
+        format = "\\[[\${symbol}\${pyenv_prefix}(\${version})(\\($virtualenv\\))]($style)\\]";
+      };
+      rlang.symbol = "󰟔 ";
+      ruby.symbol = " ";
+      rust = {
+        symbol = "󱘗 ";
+        format = "\\[[$symbol($version)]($style)\\]";
+      };
+      scala.symbol = " ";
+      swift.symbol = " ";
+      zig.symbol = " ";
+      gradle.symbol = " ";
     };
   };
   nixpkgs.config.allowUnfree = true;
