@@ -315,7 +315,6 @@
       gradle.symbol = " ";
     };
   };
-  nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     fzf
     ripgrep
