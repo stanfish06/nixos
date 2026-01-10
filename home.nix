@@ -7,11 +7,14 @@
 
 {
   home.stateVersion = "24.05";
-  home.sessionPath = [ "$HOME/.npm-global/bin" ];
+  home.sessionPath = [ 
+    "$HOME/.npm-global/bin" 
+    "$HOME/.local/bin" 
+  ];
   home.file = {
     ".npmrc" = {
       text = ''
-        prefex=~/.npm-global
+        prefix=~/.npm-global
       '';
     };
     ".tmux.conf" = {
@@ -164,9 +167,6 @@
         error_symbol = "[✕](bold red)";
       };
     };
-  };
-  home.sessionVariables = {
-    PATH = "$HOME/.local/bin:$PATH";
   };
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
