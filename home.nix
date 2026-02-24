@@ -201,7 +201,7 @@
         format = "\\[[$symbol$branch]($style)\\]";
       };
       git_branch = {
-        symbol = "";
+        symbol = " ";
         format = "\\[[$symbol$branch]($style)\\]";
       };
       git_commit = {
@@ -332,6 +332,7 @@
     new.wezterm
     new.wlroots_0_19
     new.brave
+    new.chromium
     new.mise
     # c/c++
     clang-tools

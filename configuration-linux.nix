@@ -33,6 +33,8 @@
     enable = true;
     capSysNice = true;
   };
+  # enable dynamic linkage for tools like uv
+  programs.nix-ld.enable = true;
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
