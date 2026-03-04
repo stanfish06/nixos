@@ -60,6 +60,8 @@
         systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
         dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
         systemctl --user start wayland-session.target
+	# this requires wlr-randr
+	wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
 
         while systemctl --user is-active -q dwl-session.scope; do
             sleep 1
@@ -316,7 +318,9 @@
     };
   };
   home.packages = with pkgs; [
+    wlr-randr
     fzf
+    new.atuin
     ripgrep
     rofi-wayland
     gh
