@@ -41,6 +41,7 @@
   networking.hostName = "nixos"; # Define your hostname.
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
   # Set your time zone.
   time.timeZone = "America/New_York";
   # Select internationalisation properties.

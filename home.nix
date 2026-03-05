@@ -122,6 +122,10 @@
         file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
       }
     ];
+    initContent = ''
+      eval "$(atuin init zsh)"
+      eval "$(zoxide init zsh)"
+    '';
   };
   programs.emacs = {
     enable = true;
@@ -321,6 +325,7 @@
     wlr-randr
     fzf
     new.atuin
+    new.zoxide
     ripgrep
     rofi-wayland
     gh
@@ -331,7 +336,6 @@
     jq
     btop
     rclone
-    new.atuin
     new.quickshell
     new.wezterm
     new.wlroots_0_19
