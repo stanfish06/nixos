@@ -34,40 +34,40 @@
     };
     ".local/bin/start-dwl" = {
       text = ''
-        #!/usr/bin/env bash
+                #!/usr/bin/env bash
 
-        if systemctl --user is-active -q dwl-session.scope; then
-            systemctl --user stop dwl-session.scope
-        fi
-        if systemctl --user is-active -q wayland-session.target; then
-            systemctl --user stop wayland-session.target
-        fi
+                if systemctl --user is-active -q dwl-session.scope; then
+                    systemctl --user stop dwl-session.scope
+                fi
+                if systemctl --user is-active -q wayland-session.target; then
+                    systemctl --user stop wayland-session.target
+                fi
 
-        systemd-run --user --scope --unit=dwl-session --collect dwl &
+                systemd-run --user --scope --unit=dwl-session --collect dwl &
 
-        # wait until socket is ready, then start services
-        unset WAYLAND_DISPLAY
-        while [ -z "$WAYLAND_DISPLAY" ]; do 
-            sleep 0.1
-            export WAYLAND_DISPLAY=wayland-0
-            if [ -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]; then
-                echo "socket found"
-                break
-            fi
-            unset WAYLAND_DISPLAY
-        done
+                # wait until socket is ready, then start services
+                unset WAYLAND_DISPLAY
+                while [ -z "$WAYLAND_DISPLAY" ]; do 
+                    sleep 0.1
+                    export WAYLAND_DISPLAY=wayland-0
+                    if [ -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]; then
+                        echo "socket found"
+                        break
+                    fi
+                    unset WAYLAND_DISPLAY
+                done
 
-        systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-        systemctl --user start wayland-session.target
-	# this requires wlr-randr
-	wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
+                systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+                dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+                systemctl --user start wayland-session.target
+        	# this requires wlr-randr
+        	wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
 
-        while systemctl --user is-active -q dwl-session.scope; do
-            sleep 1
-        done
-        # reset wayland-session so other services will work upon rerun
-        systemctl --user stop wayland-session.target || true
+                while systemctl --user is-active -q dwl-session.scope; do
+                    sleep 1
+                done
+                # reset wayland-session so other services will work upon rerun
+                systemctl --user stop wayland-session.target || true
       '';
       executable = true;
     };
@@ -126,6 +126,68 @@
       eval "$(atuin init zsh)"
       eval "$(zoxide init zsh)"
     '';
+  };
+  programs.i3status = {
+    enable = true;
+    general = {
+      output_format = "none";
+      interval = 1;
+    };
+    modules = {
+      "wireless _first_" = {
+        position = 1;
+        settings = {
+          format_up = "W: (%quality at %essid) %ip";
+          format_down = "W: down";
+        };
+      };
+      "ethernet _first_" = {
+        position = 2;
+        settings = {
+          format_up = "E: %ip";
+          format_down = "E: down";
+        };
+      };
+      cpu_usage = {
+        position = 3;
+        settings = {
+          format = "CPU: %usage";
+        };
+      };
+      "cpu_temperature 0" = {
+        position = 4;
+        settings = {
+          format = "T: %degrees °C";
+          path = "/sys/class/hwmon/hwmon7/temp1_input";
+        };
+      };
+      memory = {
+        position = 5;
+        settings = {
+          format = "RAM: %used/%total";
+        };
+      };
+      "tztime local" = {
+        position = 6;
+        settings = {
+          format = "%Y-%m-%d %H:%M:%S";
+        };
+      };
+      "battery 0" = {
+        position = 7;
+        settings = {
+          format = "%status %percentage %remaining %emptytime";
+          format_down = "No battery";
+          status_chr = "⚡ CHR";
+          status_bat = "🔋 BAT";
+          status_unk = "? UNK";
+          status_full = "☻ FULL";
+          status_idle = "☻ IDLE";
+          path = "/sys/class/power_supply/BAT%d/uevent";
+          low_threshold = 10;
+        };
+      };
+    };
   };
   programs.emacs = {
     enable = true;
