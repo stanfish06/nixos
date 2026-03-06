@@ -158,7 +158,7 @@
         position = 4;
         settings = {
           format = "T: %degrees °C";
-          path = "/sys/class/hwmon/hwmon7/temp2_input";
+          path = "/sys/class/hwmon/hwmon2/temp1_input";
         };
       };
       memory = {
