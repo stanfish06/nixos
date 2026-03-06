@@ -158,7 +158,7 @@
         position = 4;
         settings = {
           format = "T: %degrees °C";
-          path = "/sys/class/hwmon/hwmon7/temp1_input";
+          path = "/sys/class/hwmon/hwmon7/temp2_input";
         };
       };
       memory = {
@@ -368,7 +368,7 @@
       php.symbol = " ";
       pijul_channel.symbol = " ";
       python = {
-        symbol = " ";
+        symbol = " ";
         format = "\\[[\${symbol}\${pyenv_prefix}(\${version})(\\($virtualenv\\))]($style)\\]";
       };
       rlang.symbol = "󰟔 ";
