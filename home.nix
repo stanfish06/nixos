@@ -32,6 +32,12 @@
     ".emacs.d/myDarkTheme-theme.el" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/emacs/myDarkTheme-theme.el";
     };
+    ".config/yazi/yazi.toml" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/yazi/yazi.toml";
+    };
+    ".config/yazi/keymap.toml" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/yazi/keymap.toml";
+    };
     ".local/bin/start-dwl" = {
       text = ''
                 #!/usr/bin/env bash
@@ -398,6 +404,7 @@
     jq
     btop
     rclone
+    new.yazi
     new.quickshell
     new.wezterm
     new.wlroots_0_19
