@@ -110,6 +110,9 @@
       recursive = true;
     };
   };
+  services.mako = {
+    enable = true;
+  };
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
@@ -131,6 +134,7 @@
     initContent = ''
       eval "$(atuin init zsh)"
       eval "$(zoxide init zsh)"
+      export PATH="$PATH:$HOME/.config/kitty/scripts"
     '';
   };
   programs.i3status = {
@@ -390,6 +394,7 @@
     };
   };
   home.packages = with pkgs; [
+    # useful tools
     wlr-randr
     fzf
     new.atuin
@@ -399,18 +404,21 @@
     gh
     i3status
     lazygit
-    vscode
-    rstudio
     jq
     btop
     rclone
     new.yazi
     new.quickshell
-    new.wezterm
     new.wlroots_0_19
+    new.mise
+    # terms
+    new.kitty
+    new.wezterm
+    # gui apps
+    vscode
     new.brave
     new.chromium
-    new.mise
+    unstable.zed-editor
     # c/c++
     clang-tools
     gcc
@@ -436,5 +444,10 @@
     autoconf
     automake
     libtool
+    # notification
+    libnotify
+    # dev deps
+    libxml2
+    libxml2.dev
   ];
 }
