@@ -113,8 +113,23 @@
   services.mako = {
     enable = true;
   };
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+    icons = true;
+    git = false;
+  };
   programs.zsh = {
     enable = true;
+    shellAliases = {
+      ls = "eza --group-directories-first";
+      l = "eza -1 --group-directories-first";
+      la = "eza -a --group-directories-first";
+      ll = "eza -lh --git --group-directories-first";
+      lla = "eza -lah --git --group-directories-first";
+      lt = "eza --tree --level=2 --group-directories-first";
+      lta = "eza --tree --level=2 -a --group-directories-first";
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [
