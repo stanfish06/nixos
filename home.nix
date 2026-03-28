@@ -7,6 +7,7 @@
 
 {
   home.stateVersion = "24.05";
+  nixpkgs.config.allowUnfree = true;
   home.sessionPath = [
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
@@ -116,17 +117,20 @@
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
-    icons = true;
+    icons = "auto";
     git = false;
   };
   programs.zsh = {
     enable = true;
     shellAliases = {
-      ls = "eza --group-directories-first";
+      ls = "ls";
       l = "eza -1 --group-directories-first";
+      le = "eza --group-directories-first";
+      led = "eza --group-directories-last";
       la = "eza -a --group-directories-first";
       ll = "eza -lh --git --group-directories-first";
       lla = "eza -lah --git --group-directories-first";
+      larth = "eza -lah -snew --git --group-directories-first";
       lt = "eza --tree --level=2 --group-directories-first";
       lta = "eza --tree --level=2 -a --group-directories-first";
     };
@@ -442,6 +446,7 @@
     new.wezterm
     # gui apps
     vscode
+    unstable.code-cursor
     new.brave
     new.chromium
     unstable.zed-editor
