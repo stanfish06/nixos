@@ -120,6 +120,10 @@
     icons = "auto";
     git = false;
   };
+  programs.television = {
+    enable = true;
+    enableZshIntegration = true;
+  };
   programs.zsh = {
     enable = true;
     shellAliases = {
