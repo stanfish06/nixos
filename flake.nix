@@ -10,6 +10,7 @@
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   # outputs is a lamdba
@@ -50,6 +51,7 @@
                 unstable = import inputs.nixpkgs-unstable {
                   system = prev.system;
                   config.allowUnfree = true;
+                  overlays = [ inputs.neovim-nightly.overlays.default ];
                 };
                 new = import inputs.nixpkgs-new {
                   system = prev.system;
