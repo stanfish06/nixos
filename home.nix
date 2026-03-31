@@ -445,6 +445,7 @@
     new.quickshell
     new.wlroots_0_19
     new.mise
+    wl-clipboard
     # terms
     new.kitty
     new.wezterm
