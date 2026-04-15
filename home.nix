@@ -7,7 +7,6 @@
 
 {
   home.stateVersion = "24.05";
-  nixpkgs.config.allowUnfree = true;
   home.sessionPath = [
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
@@ -168,7 +167,9 @@
     initContent = ''
       eval "$(atuin init zsh)"
       eval "$(zoxide init zsh)"
+      eval "$(mise activate zsh)"
       export PATH="$PATH:$HOME/.config/kitty/scripts"
+      export XDG_DATA_HOME="$HOME/.local/share"
     '';
   };
   programs.i3status = {
@@ -434,6 +435,7 @@
     new.atuin
     new.zoxide
     ripgrep
+    fd
     rofi-wayland
     gh
     i3status
@@ -453,8 +455,6 @@
     vscode
     unstable.code-cursor
     new.brave
-    new.chromium
-    unstable.zed-editor
     # c/c++
     clang-tools
     gcc
@@ -472,9 +472,6 @@
     unstable.pyright
     unstable.python3Packages.pip
     unstable.python3Packages.virtualenv
-    # js
-    unstable.nodejs
-    unstable.nodePackages.bash-language-server
     # bulid tools
     pkg-config
     autoconf
