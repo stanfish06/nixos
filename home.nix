@@ -77,6 +77,20 @@
       '';
       executable = true;
     };
+    ".local/bin/screenshot-region" = {
+      text = ''
+                        #!/usr/bin/env bash
+        		grim -g "$(slurp)" - | wl-copy
+      '';
+      executable = true;
+    };
+    ".local/bin/screenshot-fullscreen" = {
+      text = ''
+                        #!/usr/bin/env bash
+        		grim - | wl-copy
+      '';
+      executable = true;
+    };
   };
   systemd.user.targets.wayland-session = {
     Unit = {
@@ -448,6 +462,9 @@
     new.wlroots_0_19
     new.mise
     wl-clipboard
+    # screenshot
+    grim
+    slurp
     # terms
     new.kitty
     new.wezterm
