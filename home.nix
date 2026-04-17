@@ -79,15 +79,15 @@
     };
     ".local/bin/screenshot-region" = {
       text = ''
-                        #!/usr/bin/env bash
-        		grim -g "$(slurp)" - | wl-copy
+        #!/usr/bin/env bash
+        grim -g "$(slurp)" - | wl-copy
       '';
       executable = true;
     };
     ".local/bin/screenshot-fullscreen" = {
       text = ''
-                        #!/usr/bin/env bash
-        		grim - | wl-copy
+        #!/usr/bin/env bash
+        grim - | wl-copy
       '';
       executable = true;
     };
