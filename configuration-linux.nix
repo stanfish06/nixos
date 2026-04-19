@@ -117,7 +117,7 @@
     unstable.neovim
     new.zsh
     new.alacritty
-    new.nixfmt-rfc-style
+    new.nixfmt
     new.nixfmt-tree
   ];
   environment.variables.EDITOR = "nvim";

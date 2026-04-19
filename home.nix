@@ -250,7 +250,6 @@
   };
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs;
   };
   programs.starship = {
     enable = true;
