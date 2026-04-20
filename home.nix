@@ -488,7 +488,7 @@
     unstable.pyright
     unstable.python3Packages.pip
     unstable.python3Packages.virtualenv
-    # bulid tools
+    # build tools
     pkg-config
     autoconf
     automake

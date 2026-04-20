@@ -13,14 +13,14 @@
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
   };
 
-  # outputs is a lamdba
+  # outputs is a lambda
   # add @inputs here so that you can access all stuffs inside inputs
   # TODO: create modules for vim, neovim, zsh
   outputs =
     { self, nixpkgs, ... }@inputs:
     {
       # nixos is the hostname (e.g. you can have config for laptop1, desktop1, server1,...)
-      # you can select specific config to rebuild with nixos-rebuild swtich --flake /etc/nixos#hostname
+      # you can select specific config to rebuild with nixos-rebuild switch --flake /etc/nixos#hostname
       nixosConfigurations.nixos_wsl = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         # modules can import configs, install packages, enable services, etc
