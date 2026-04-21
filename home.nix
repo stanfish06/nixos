@@ -179,12 +179,25 @@
       }
     ];
     initContent = ''
-      eval "$(atuin init zsh)"
-      eval "$(zoxide init zsh)"
       eval "$(mise activate zsh)"
       export PATH="$PATH:$HOME/.config/kitty/scripts"
       export XDG_DATA_HOME="$HOME/.local/share"
     '';
+  };
+  programs.nushell = {
+    enable = true;
+  };
+  programs.atuin = {
+    enable = true;
+    package = pkgs.new.atuin;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+  };
+  programs.zoxide = {
+    enable = true;
+    package = pkgs.new.zoxide;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
   };
   programs.i3status = {
     enable = true;
@@ -253,6 +266,7 @@
   };
   programs.starship = {
     enable = true;
+    enableNushellIntegration = true;
     settings = {
       add_newline = false;
       palette = "catppuccin_macchiato";
@@ -445,8 +459,6 @@
     # useful tools
     wlr-randr
     fzf
-    new.atuin
-    new.zoxide
     ripgrep
     fd
     rofi-wayland
