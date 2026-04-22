@@ -264,6 +264,17 @@
   programs.emacs = {
     enable = true;
   };
+  programs.git = {
+    enable = true;
+    delta = {
+      enable = true;
+      options = {
+        navigate = true;
+        line-numbers = true;
+        dark = true;
+      };
+    };
+  };
   programs.starship = {
     enable = true;
     enableNushellIntegration = true;
@@ -468,7 +479,7 @@
     jq
     btop
     rclone
-    delta # need to configure
+
     new.yazi
     new.quickshell
     new.wlroots_0_19
