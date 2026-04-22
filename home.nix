@@ -468,6 +468,7 @@
     jq
     btop
     rclone
+    delta # need to configure
     new.yazi
     new.quickshell
     new.wlroots_0_19
