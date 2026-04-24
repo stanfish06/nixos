@@ -127,6 +127,9 @@
   services.mako = {
     enable = true;
   };
+  programs.bat = {
+    enable = true;
+  };
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
