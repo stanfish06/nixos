@@ -189,10 +189,25 @@
   };
   programs.nushell = {
     enable = true;
+    shellAliases = {
+      l = "ls";
+      ll = "ls -l";
+      eza = "eza --icons auto";
+      le = "eza --group-directories-first";
+      led = "eza --group-directories-last";
+      larth = "eza -lah -snew --git --group-directories-first";
+      lt = "eza --tree --level=2 --group-directories-first";
+      lta = "eza --tree --level=2 -a --group-directories-first";
+    };
   };
   programs.atuin = {
     enable = true;
     package = pkgs.new.atuin;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+  };
+  programs.mise = {
+    enable = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
   };
@@ -486,7 +501,6 @@
     new.yazi
     new.quickshell
     new.wlroots_0_19
-    new.mise
     wl-clipboard
     # screenshot
     grim
