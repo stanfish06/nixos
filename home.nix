@@ -210,6 +210,17 @@
     enable = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
+    globalConfig = {
+      tools = {
+        uv = "latest";
+        node = "latest";
+        bun = "latest";
+      };
+      settings = {
+        idiomatic_version_file_enable_tools = [ ];
+        experimental = true;
+      };
+    };
   };
   programs.zoxide = {
     enable = true;
