@@ -502,7 +502,7 @@
     fzf
     ripgrep
     fd
-    rofi-wayland
+    rofi
     gh
     i3status
     lazygit

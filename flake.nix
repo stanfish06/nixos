@@ -2,10 +2,10 @@
   description = "basic system setup";
   # enable both stable and unstable package indices
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-new.url = "github:NixOS/nixpkgs/nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05"; # keep home manager same version as nixpkgs
+      url = "github:nix-community/home-manager/release-25.11"; # keep home manager same version as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
