@@ -136,10 +136,6 @@
     icons = "auto";
     git = false;
   };
-  programs.television = {
-    enable = true;
-    enableZshIntegration = true;
-  };
   programs.zsh = {
     enable = true;
     shellAliases = {
@@ -514,6 +510,7 @@
     new.quickshell
     new.wlroots_0_19
     wl-clipboard
+    unstable.television
     # screenshot
     grim
     slurp
