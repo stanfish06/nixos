@@ -54,7 +54,7 @@
     neovim
     zsh
   ];
-  environment.variables.EDITOR = "vim";
+  environment.variables.EDITOR = "nvim";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
