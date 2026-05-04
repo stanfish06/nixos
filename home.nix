@@ -500,7 +500,6 @@
     fd
     rofi
     gh
-    i3status
     lazygit
     jq
     btop
