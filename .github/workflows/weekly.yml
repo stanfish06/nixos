@@ -1,0 +1,53 @@
+name: Weekly Maintenance
+
+on:
+  schedule:
+    - cron: '0 9 * * 1' # Every Monday at 09:00 UTC
+  workflow_dispatch:
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Run weekly maintenance agent
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          additional_permissions: |
+            actions: read
+          prompt: |
+            You are a weekly maintenance agent for the stanfish06/nixos repo (a personal NixOS flake).
+
+            Do the following in order, and produce ONE pull request at the end summarizing all findings + applied updates:
+
+            1. Run `nix flake update` in the repo root and commit the updated flake.lock.
+            2. Inspect the diff of flake.lock and the flake's inputs/outputs. Audit for:
+               - Known CVEs or security advisories in updated packages (check NVD, GitHub advisories, nixpkgs security issues).
+               - Package incompatibilities introduced by the update (deprecated options, breaking changes, module renames).
+               - Config issues in the existing modules (dead options, anti-patterns, hardcoded values that should be parameterized).
+               - Areas of improvement (module structure, unused imports, duplication, opportunities to use newer nixpkgs abstractions).
+               - Potentially useful new packages, features, or setups worth considering (e.g. new home-manager modules, nixpkgs additions relevant to the existing config).
+            3. Apply low-risk fixes directly (deprecated option renames, obvious cleanups). Do NOT apply risky or opinionated changes — list those as suggestions in the PR body instead.
+            4. Open a PR titled `weekly: flake update + audit (YYYY-MM-DD)` (today's date) with a body containing:
+               - ## Flake update summary (which inputs changed, old rev → new rev)
+               - ## Security findings (CVEs / advisories, if any)
+               - ## Incompatibilities (with suggested fixes)
+               - ## Config issues fixed in this PR
+               - ## Suggestions (not applied) — improvements, new packages/features to consider
+               - If nothing notable, still open the PR for the flake.lock bump with a short summary.
+
+            If a step fails (e.g. `nix flake update` errors), include the failure and partial findings in the PR body rather than aborting silently.
