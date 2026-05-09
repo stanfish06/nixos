@@ -19,17 +19,26 @@
     nerd-fonts.victor-mono
     maple-mono.NF
     iosevka
+    inter
+    ibm-plex
+    noto-fonts
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
   ];
   fonts.fontconfig.defaultFonts = {
     sansSerif = [
+      "Inter"
       "Noto Sans CJK SC"
       "Noto Sans"
     ];
     serif = [
+      "IBM Plex Serif"
       "Noto Serif CJK SC"
       "Noto Serif"
+    ];
+    monospace = [
+      "Iosevka"
+      "Noto Sans Mono CJK SC"
     ];
   };
   # steam

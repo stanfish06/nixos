@@ -29,6 +29,7 @@ in
   home.sessionPath = [
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
+    "$HOME/.config/dots/my-configs/rofi/scripts" # rofi scripts
   ];
   home.file = {
     ".npmrc" = {
@@ -56,6 +57,10 @@ in
     };
     ".config/yazi/keymap.toml" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/yazi/keymap.toml";
+    };
+    ".local/bin/rofi-scripts" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/rofi/scripts";
+      recursive = true;
     };
     ".local/bin/start-dwl" = {
       text = ''
