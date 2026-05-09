@@ -2,9 +2,26 @@
   config,
   lib,
   pkgs,
+  appimageTools,
+  fetchurl,
   ...
 }:
-
+let
+  # hiddify (proxy client)
+  hiddify =
+    let
+      version = "4.1.1";
+    in
+    pkgs.appimageTools.wrapType2 {
+      pname = "hiddify-app";
+      version = version;
+      src = pkgs.fetchurl {
+        url = "https://github.com/hiddify/hiddify-app/releases/download/v${version}/Hiddify-Linux-x64-AppImage.AppImage";
+        hash = "sha256-6yu2wIlxuY4tCgH8W2R+KboXsWYRScyfl+2g53v1vcM=";
+      };
+    };
+  extraPkgs = pkgs: with pkgs; [ libepoxy ];
+in
 {
   home.stateVersion = "24.05";
   home.sessionPath = [
@@ -181,7 +198,7 @@
       eval "$(mise activate zsh)"
       export PATH="$PATH:$HOME/.config/kitty/scripts"
       export XDG_DATA_HOME="$HOME/.local/share"
-      export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib/:${pkgs.zlib}/lib/
+      #export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib/:${pkgs.zlib}/lib/
     '';
   };
   programs.nushell = {
@@ -504,12 +521,16 @@
     jq
     btop
     rclone
-
     new.yazi
     new.quickshell
     new.wlroots_0_19
     wl-clipboard
     unstable.television
+    # vps
+    hiddify
+    libepoxy
+    # notes
+    unstable.obsidian
     # screenshot
     grim
     slurp
@@ -549,4 +570,14 @@
     libxml2
     libxml2.dev
   ];
+  home.sessionVariables = {
+    LD_LIBRARY_PATH = lib.concatStringsSep ":" [
+      (lib.makeLibraryPath [
+        pkgs.libepoxy
+        pkgs.stdenv.cc.cc.lib
+        pkgs.zlib
+      ])
+      "$LD_LIBRARY_PATH"
+    ];
+  };
 }
