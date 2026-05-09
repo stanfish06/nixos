@@ -1,9 +1,6 @@
 {
   config,
-  lib,
   pkgs,
-  appimageTools,
-  fetchurl,
   ...
 }:
 let
@@ -19,8 +16,12 @@ let
         url = "https://github.com/hiddify/hiddify-app/releases/download/v${version}/Hiddify-Linux-x64-AppImage.AppImage";
         hash = "sha256-6yu2wIlxuY4tCgH8W2R+KboXsWYRScyfl+2g53v1vcM=";
       };
+      extraPkgs =
+        pkgs: with pkgs; [
+          libepoxy
+          zstd
+        ];
     };
-  extraPkgs = pkgs: with pkgs; [ libepoxy ];
 in
 {
   home.stateVersion = "24.05";
@@ -57,40 +58,40 @@ in
     };
     ".local/bin/start-dwl" = {
       text = ''
-                #!/usr/bin/env bash
+                        #!/usr/bin/env bash
 
-                if systemctl --user is-active -q dwl-session.scope; then
-                    systemctl --user stop dwl-session.scope
-                fi
-                if systemctl --user is-active -q wayland-session.target; then
-                    systemctl --user stop wayland-session.target
-                fi
+                        if systemctl --user is-active -q dwl-session.scope; then
+                            systemctl --user stop dwl-session.scope
+                        fi
+                        if systemctl --user is-active -q wayland-session.target; then
+                            systemctl --user stop wayland-session.target
+                        fi
 
-                systemd-run --user --scope --unit=dwl-session --collect dwl &
+                        systemd-run --user --scope --unit=dwl-session --collect dwl &
 
-                # wait until socket is ready, then start services
-                unset WAYLAND_DISPLAY
-                while [ -z "$WAYLAND_DISPLAY" ]; do 
-                    sleep 0.1
-                    export WAYLAND_DISPLAY=wayland-0
-                    if [ -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]; then
-                        echo "socket found"
-                        break
-                    fi
-                    unset WAYLAND_DISPLAY
-                done
+                        # wait until socket is ready, then start services
+                        unset WAYLAND_DISPLAY
+                        while [ -z "$WAYLAND_DISPLAY" ]; do 
+                            sleep 0.1
+                            export WAYLAND_DISPLAY=wayland-0
+                            if [ -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]; then
+                                echo "socket found"
+                                break
+                            fi
+                            unset WAYLAND_DISPLAY
+                        done
 
-                systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-                dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-                systemctl --user start wayland-session.target
-        	# this requires wlr-randr
-        	wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
+                        systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+                        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+                        systemctl --user start wayland-session.target
+        		# this requires wlr-randr
+        		wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
 
-                while systemctl --user is-active -q dwl-session.scope; do
-                    sleep 1
-                done
-                # reset wayland-session so other services will work upon rerun
-                systemctl --user stop wayland-session.target || true
+                        while systemctl --user is-active -q dwl-session.scope; do
+                            sleep 1
+                        done
+                        # reset wayland-session so other services will work upon rerun
+                        systemctl --user stop wayland-session.target || true
       '';
       executable = true;
     };
@@ -307,15 +308,13 @@ in
   programs.emacs = {
     enable = true;
   };
-  programs.git = {
+  programs.delta = {
     enable = true;
-    delta = {
-      enable = true;
-      options = {
-        navigate = true;
-        line-numbers = true;
-        dark = true;
-      };
+    enableGitIntegration = true;
+    options = {
+      navigate = true;
+      line-numbers = true;
+      dark = true;
     };
   };
   programs.starship = {
@@ -528,7 +527,6 @@ in
     unstable.television
     # vps
     hiddify
-    libepoxy
     # notes
     unstable.obsidian
     # screenshot
@@ -573,7 +571,6 @@ in
   home.sessionVariables = {
     LD_LIBRARY_PATH = lib.concatStringsSep ":" [
       (lib.makeLibraryPath [
-        pkgs.libepoxy
         pkgs.stdenv.cc.cc.lib
         pkgs.zlib
       ])

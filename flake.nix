@@ -39,7 +39,7 @@
             # You may refer to this module using final.unstable within that function (e.g. unstable-2 = final.unstable, which is trivial though)
             nixpkgs.overlays = [
               (final: prev: {
-                unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};
+                unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
               })
             ];
           }
@@ -53,12 +53,12 @@
             nixpkgs.overlays = [
               (final: prev: {
                 unstable = import inputs.nixpkgs-unstable {
-                  system = prev.system;
+                  system = prev.stdenv.hostPlatform.system;
                   config.allowUnfree = true;
                   overlays = [ inputs.neovim-nightly.overlays.default ];
                 };
                 new = import inputs.nixpkgs-new {
-                  system = prev.system;
+                  system = prev.stdenv.hostPlatform.system;
                   config.allowUnfree = true;
                 };
               })
