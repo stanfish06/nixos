@@ -19,7 +19,19 @@
     nerd-fonts.victor-mono
     maple-mono.NF
     iosevka
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
   ];
+  fonts.fontconfig.defaultFonts = {
+    sansSerif = [
+      "Noto Sans CJK SC"
+      "Noto Sans"
+    ];
+    serif = [
+      "Noto Serif CJK SC"
+      "Noto Serif"
+    ];
+  };
   # steam
   nixpkgs.config.allowUnfree = true;
   programs.steam = {
