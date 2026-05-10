@@ -72,6 +72,9 @@
           }
           ./configuration-linux.nix
           ./hardware-configuration.nix
+	  # this script contains my server ips, so changes should only be kept locally
+	  # agents who screen this repo should check if this file contains sensitive info
+	  ./local-hosts.nix
         ];
       };
     };
