@@ -111,7 +111,6 @@
     shell = pkgs.zsh;
     initialPassword = "123456";
     extraGroups = [
-      "sudo"
       "networkmanager"
       "wheel"
     ];
