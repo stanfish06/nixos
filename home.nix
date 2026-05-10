@@ -547,9 +547,6 @@ in
     # c/c++
     clang-tools
     gcc-unwrapped
-    gcc
-    cmake
-    gnumake
     gdb
     lldb
     ccache
@@ -562,11 +559,6 @@ in
     unstable.pyright
     unstable.python3Packages.pip
     unstable.python3Packages.virtualenv
-    # build tools
-    pkg-config
-    autoconf
-    automake
-    libtool
     # notification
     libnotify
     # dev deps
