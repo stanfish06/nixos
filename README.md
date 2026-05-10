@@ -1,4 +1,4 @@
-# Pushing to remote
+# Push to remote
 ```{bash}
 ./run-before-commit.sh
 git add .
