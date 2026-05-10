@@ -205,7 +205,6 @@ in
       eval "$(mise activate zsh)"
       export PATH="$PATH:$HOME/.config/kitty/scripts"
       export XDG_DATA_HOME="$HOME/.local/share"
-      #export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib/:${pkgs.zlib}/lib/
     '';
   };
   programs.nushell = {
@@ -548,9 +547,6 @@ in
     # c/c++
     clang-tools
     gcc-unwrapped
-    gcc
-    cmake
-    gnumake
     gdb
     lldb
     ccache
@@ -563,11 +559,6 @@ in
     unstable.pyright
     unstable.python3Packages.pip
     unstable.python3Packages.virtualenv
-    # build tools
-    pkg-config
-    autoconf
-    automake
-    libtool
     # notification
     libnotify
     # dev deps
