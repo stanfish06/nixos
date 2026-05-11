@@ -25,7 +25,7 @@ let
     };
 in
 {
-  home.stateVersion = "24.05";
+  home.stateVersion = "25.11";
   home.sessionPath = [
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
@@ -565,13 +565,4 @@ in
     libxml2
     libxml2.dev
   ];
-  home.sessionVariables = {
-    LD_LIBRARY_PATH = lib.concatStringsSep ":" [
-      (lib.makeLibraryPath [
-        pkgs.stdenv.cc.cc.lib
-        pkgs.zlib
-      ])
-      "$LD_LIBRARY_PATH"
-    ];
-  };
 }
