@@ -222,7 +222,6 @@ in
   };
   programs.atuin = {
     enable = true;
-    package = pkgs.new.atuin;
     enableZshIntegration = true;
     enableNushellIntegration = true;
   };
@@ -244,7 +243,6 @@ in
   };
   programs.zoxide = {
     enable = true;
-    package = pkgs.new.zoxide;
     enableZshIntegration = true;
     enableNushellIntegration = true;
   };
