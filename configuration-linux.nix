@@ -14,6 +14,11 @@
     "nix-command"
     "flakes"
   ];
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.victor-mono
@@ -63,6 +68,9 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # CVE-2026-31431 (Copy Fail): disable algif_aead until a patched kernel (6.18.22+) is in use.
+  # The algif_aead AF_ALG interface is not needed on a desktop system.
+  boot.extraModprobeConfig = "install algif_aead /bin/false";
   networking.hostName = "nixos"; # Define your hostname.
   # Enable networking
   networking.networkmanager.enable = true;
