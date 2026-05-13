@@ -3,9 +3,9 @@
   # enable both stable and unstable package indices
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    # nixpkgs-new mirrors nixpkgs (same branch) but is imported separately
-    # with allowUnfree = true as the 'new' overlay; could be unified with nixpkgs.
-    nixpkgs-new.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # nixpkgs-new follows nixpkgs so they are always locked to the same revision;
+    # it is imported separately in the overlay with allowUnfree = true.
+    nixpkgs-new.follows = "nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11"; # keep home manager same version as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
