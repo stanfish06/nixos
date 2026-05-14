@@ -132,7 +132,7 @@ in
       After = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.new.quickshell}/bin/quickshell";
+      ExecStart = "${pkgs.quickshell}/bin/quickshell";
       Restart = "on-failure";
       Environment = [
         "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
@@ -523,9 +523,9 @@ in
     jq
     btop
     rclone
-    new.yazi
-    new.quickshell
-    new.wlroots_0_19
+    yazi
+    quickshell
+    wlroots_0_19
     wl-clipboard
     unstable.television
     # vps
@@ -536,12 +536,12 @@ in
     grim
     slurp
     # terms
-    new.kitty
-    new.wezterm
+    kitty
+    wezterm
     # gui apps
     vscode
     unstable.code-cursor
-    new.brave
+    brave
     # c/c++
     clang-tools
     gcc-unwrapped

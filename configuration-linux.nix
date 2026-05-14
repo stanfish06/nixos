@@ -132,25 +132,25 @@
   };
   environment.systemPackages = with pkgs; [
     # basic tools
-    new.git
-    new.vim
-    new.wget
-    new.curl
+    git
+    vim
+    wget
+    curl
     # build tools
-    new.gcc
-    new.gnumake
-    new.cmake
-    new.pkg-config
-    new.autoconf
-    new.automake
-    new.libtool
+    gcc
+    gnumake
+    cmake
+    pkg-config
+    autoconf
+    automake
+    libtool
     # others
-    new.tmux
+    tmux
     unstable.neovim
-    new.zsh
-    new.alacritty
-    new.nixfmt
-    new.nixfmt-tree
+    zsh
+    alacritty
+    nixfmt
+    nixfmt-tree
   ];
   environment.variables.EDITOR = "nvim";
 
