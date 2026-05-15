@@ -283,9 +283,9 @@ in
       bind = $mod SHIFT, up, movewindow, u
       bind = $mod SHIFT, down, movewindow, d
 
-      bind = $mainMod_SHIFT, G, togglegroup
-      bind = $mainMod_SHIFT, J, changegroupactive, f
-      bind = $mainMod_SHIFT, K, changegroupactive, b
+      bind = $mod SHIFT, G, togglegroup
+      bind = $mod SHIFT, J, changegroupactive, f
+      bind = $mod SHIFT, K, changegroupactive, b
 
       bind = $mod, 1, workspace, 1
       bind = $mod, 2, workspace, 2
