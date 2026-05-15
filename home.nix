@@ -202,7 +202,6 @@ in
       }
     ];
     initContent = ''
-      eval "$(mise activate zsh)"
       export PATH="$PATH:$HOME/.config/kitty/scripts"
       export XDG_DATA_HOME="$HOME/.local/share"
     '';
