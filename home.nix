@@ -218,8 +218,8 @@ in
       }
 
       general {
-          gaps_in = 5
-          gaps_out = 10
+          gaps_in = 2
+          gaps_out = 4
           border_size = 2
           col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
           col.inactive_border = rgba(595959aa)
@@ -228,16 +228,12 @@ in
       }
 
       decoration {
-          rounding = 10
+          rounding = 0
           blur {
               enabled = true
               size = 3
               passes = 1
           }
-          drop_shadow = true
-          shadow_range = 4
-          shadow_render_power = 3
-          col.shadow = rgba(1a1a1aee)
       }
 
       animations {
@@ -267,7 +263,7 @@ in
       $mod = SUPER
 
       bind = $mod, Return, exec, wezterm
-      bind = $mod, Q, killactive
+      bind = $mod, C, killactive
       bind = $mod, M, exit
       bind = $mod, E, exec, dolphin
       bind = $mod, V, togglefloating
@@ -286,6 +282,10 @@ in
       bind = $mod SHIFT, right, movewindow, r
       bind = $mod SHIFT, up, movewindow, u
       bind = $mod SHIFT, down, movewindow, d
+
+      bind = $mainMod_SHIFT, G, togglegroup
+      bind = $mainMod_SHIFT, J, changegroupactive, f
+      bind = $mainMod_SHIFT, K, changegroupactive, b
 
       bind = $mod, 1, workspace, 1
       bind = $mod, 2, workspace, 2
@@ -317,6 +317,19 @@ in
 
       bind = , Print, exec, screenshot-fullscreen
       bind = SHIFT, Print, exec, screenshot-region
+
+      bind = ALT, R, submap, resize
+      # Start a submap called "resize".
+      submap = resize
+      # Set repeatable binds for resizing the active window.
+      binde = , right, resizeactive, 10 0
+      binde = , left, resizeactive, -10 0
+      binde = , up, resizeactive, 0 -10
+      binde = , down, resizeactive, 0 10
+      # Use `reset` to go back to the global submap
+      bind = , escape, submap, reset
+      # Reset the submap, which will return to the globalsubmap
+      submap = reset
     '';
   };
   services.mako = {
