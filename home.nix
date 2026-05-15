@@ -740,7 +740,7 @@ in
     new.kitty
     new.wezterm
     # theming
-    qt6ct
+    qt6Packages.qt6ct
     # gui apps
     vscode
     unstable.code-cursor
