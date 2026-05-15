@@ -104,6 +104,47 @@ in
       '';
       executable = true;
     };
+    ".local/bin/start-hyprland" = {
+      text = ''
+        #!/usr/bin/env bash
+
+        if systemctl --user is-active -q hyprland-session.scope; then
+            systemctl --user stop hyprland-session.scope
+        fi
+        if systemctl --user is-active -q wayland-session.target; then
+            systemctl --user stop wayland-session.target
+        fi
+
+        export XDG_CURRENT_DESKTOP=Hyprland
+        export XDG_SESSION_TYPE=wayland
+        existing_sockets=$(ls "$XDG_RUNTIME_DIR"/wayland-* 2>/dev/null)
+
+        systemd-run --user --scope --unit=hyprland-session --collect Hyprland &
+
+        # wait until Hyprland's wayland socket appears
+        unset WAYLAND_DISPLAY
+        while [ -z "$WAYLAND_DISPLAY" ]; do
+            sleep 0.1
+            for sock in "$XDG_RUNTIME_DIR"/wayland-*; do
+                [ -S "$sock" ] || continue
+                echo "$existing_sockets" | grep -qF "$sock" && continue
+                export WAYLAND_DISPLAY=$(basename "$sock")
+                echo "socket found: $WAYLAND_DISPLAY"
+                break 2
+            done
+        done
+
+        systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
+        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE
+        systemctl --user start wayland-session.target
+
+        while systemctl --user is-active -q hyprland-session.scope; do
+            sleep 1
+        done
+        systemctl --user stop wayland-session.target || true
+      '';
+      executable = true;
+    };
     ".local/bin/screenshot-region" = {
       text = ''
         #!/usr/bin/env bash
