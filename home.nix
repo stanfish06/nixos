@@ -207,6 +207,11 @@ in
 
       env = XCURSOR_SIZE,24
       env = HYPRCURSOR_SIZE,24
+      env = QT_QPA_PLATFORMTHEME,qt6ct
+
+      # Dark theme for GTK3 and GTK4 apps
+      exec-once = gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
+      exec-once = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 
       input {
           kb_layout = us
@@ -344,6 +349,15 @@ in
     icons = "auto";
     git = false;
   };
+  gtk = {
+    enable = true;
+    theme = {
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
+    };
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = true;
+  };
   programs.zsh = {
     enable = true;
     shellAliases = {
@@ -388,6 +402,10 @@ in
     initContent = ''
       export PATH="$PATH:$HOME/.config/kitty/scripts"
       export XDG_DATA_HOME="$HOME/.local/share"
+      # Unset WAYLAND_DISPLAY if the socket doesn't actually exist (fixes wl-copy in SSH/TTY)
+      if [[ -n "''${WAYLAND_DISPLAY:-}" ]] && [[ -n "''${XDG_RUNTIME_DIR:-}" ]] && [[ ! -S "''${XDG_RUNTIME_DIR}/''${WAYLAND_DISPLAY}" ]]; then
+          unset WAYLAND_DISPLAY
+      fi
     '';
   };
   programs.nushell = {
@@ -721,6 +739,8 @@ in
     # terms
     new.kitty
     new.wezterm
+    # theming
+    qt6ct
     # gui apps
     vscode
     unstable.code-cursor
