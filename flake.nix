@@ -21,6 +21,7 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    dolphin-overlay.url = "github:rumboon/dolphin-overlay";
   };
 
   # outputs is a lambda
@@ -66,6 +67,7 @@
                   config.allowUnfree = true;
                 };
               })
+              inputs.dolphin-overlay.overlays.default
             ];
           }
           inputs.home-manager.nixosModules.home-manager

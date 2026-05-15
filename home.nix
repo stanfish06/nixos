@@ -541,9 +541,9 @@ in
     vscode
     unstable.code-cursor
     new.brave
-    new.kdePackages.dolphin
-    new.kdePackages.gwenview
-    new.kdePackages.konsole
+    kdePackages.dolphin
+    kdePackages.gwenview
+    kdePackages.konsole
     # c/c++
     clang-tools
     gcc-unwrapped
