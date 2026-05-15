@@ -104,6 +104,44 @@ in
       '';
       executable = true;
     };
+    ".local/bin/start-hyprland" = {
+      text = ''
+        #!/usr/bin/env bash
+
+        if systemctl --user is-active -q hyprland-session.scope; then
+            systemctl --user stop hyprland-session.scope
+        fi
+        if systemctl --user is-active -q wayland-session.target; then
+            systemctl --user stop wayland-session.target
+        fi
+
+        export XDG_CURRENT_DESKTOP=Hyprland
+        export XDG_SESSION_DESKTOP=Hyprland
+        systemd-run --user --scope --unit=hyprland-session --collect Hyprland &
+
+        # wait until wayland socket is ready
+        unset WAYLAND_DISPLAY
+        for i in $(seq 1 50); do
+            for sock in wayland-0 wayland-1; do
+                if [ -S "$XDG_RUNTIME_DIR/$sock" ]; then
+                    export WAYLAND_DISPLAY=$sock
+                    break 2
+                fi
+            done
+            sleep 0.1
+        done
+
+        systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+        systemctl --user start wayland-session.target
+
+        while systemctl --user is-active -q hyprland-session.scope; do
+            sleep 1
+        done
+        systemctl --user stop wayland-session.target || true
+      '';
+      executable = true;
+    };
     ".local/bin/screenshot-region" = {
       text = ''
         #!/usr/bin/env bash
@@ -150,6 +188,136 @@ in
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
       recursive = true;
     };
+  };
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = [ "org.kde.dolphin.desktop" ];
+      "application/x-directory" = [ "org.kde.dolphin.desktop" ];
+    };
+  };
+  wayland.windowManager.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    systemd.enable = false; # use custom start-hyprland script instead
+    extraConfig = ''
+      # Monitor setup — prioritize HDMI-A-1, auto-detect everything else
+      monitor=HDMI-A-1,1920x1080@120,0x0,1
+      monitor=,preferred,auto,1
+
+      env = XCURSOR_SIZE,24
+      env = HYPRCURSOR_SIZE,24
+
+      input {
+          kb_layout = us
+          follow_mouse = 1
+          touchpad {
+              natural_scroll = false
+          }
+          sensitivity = 0
+      }
+
+      general {
+          gaps_in = 5
+          gaps_out = 10
+          border_size = 2
+          col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+          col.inactive_border = rgba(595959aa)
+          layout = dwindle
+          allow_tearing = false
+      }
+
+      decoration {
+          rounding = 10
+          blur {
+              enabled = true
+              size = 3
+              passes = 1
+          }
+          drop_shadow = true
+          shadow_range = 4
+          shadow_render_power = 3
+          col.shadow = rgba(1a1a1aee)
+      }
+
+      animations {
+          enabled = true
+          bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+          animation = windows, 1, 7, myBezier
+          animation = windowsOut, 1, 7, default, popin 80%
+          animation = border, 1, 10, default
+          animation = fade, 1, 7, default
+          animation = workspaces, 1, 6, default
+      }
+
+      dwindle {
+          pseudotile = true
+          preserve_split = true
+      }
+
+      master {
+          new_status = master
+      }
+
+      misc {
+          force_default_wallpaper = 0
+          disable_hyprland_logo = true
+      }
+
+      $mod = SUPER
+
+      bind = $mod, Return, exec, wezterm
+      bind = $mod, Q, killactive
+      bind = $mod, M, exit
+      bind = $mod, E, exec, dolphin
+      bind = $mod, V, togglefloating
+      bind = $mod, R, exec, rofi -show drun
+      bind = $mod SHIFT, R, exec, rofi -show run
+      bind = $mod, P, pseudo
+      bind = $mod, J, togglesplit
+      bind = $mod, F, fullscreen
+
+      bind = $mod, left, movefocus, l
+      bind = $mod, right, movefocus, r
+      bind = $mod, up, movefocus, u
+      bind = $mod, down, movefocus, d
+
+      bind = $mod SHIFT, left, movewindow, l
+      bind = $mod SHIFT, right, movewindow, r
+      bind = $mod SHIFT, up, movewindow, u
+      bind = $mod SHIFT, down, movewindow, d
+
+      bind = $mod, 1, workspace, 1
+      bind = $mod, 2, workspace, 2
+      bind = $mod, 3, workspace, 3
+      bind = $mod, 4, workspace, 4
+      bind = $mod, 5, workspace, 5
+      bind = $mod, 6, workspace, 6
+      bind = $mod, 7, workspace, 7
+      bind = $mod, 8, workspace, 8
+      bind = $mod, 9, workspace, 9
+      bind = $mod, 0, workspace, 10
+
+      bind = $mod SHIFT, 1, movetoworkspace, 1
+      bind = $mod SHIFT, 2, movetoworkspace, 2
+      bind = $mod SHIFT, 3, movetoworkspace, 3
+      bind = $mod SHIFT, 4, movetoworkspace, 4
+      bind = $mod SHIFT, 5, movetoworkspace, 5
+      bind = $mod SHIFT, 6, movetoworkspace, 6
+      bind = $mod SHIFT, 7, movetoworkspace, 7
+      bind = $mod SHIFT, 8, movetoworkspace, 8
+      bind = $mod SHIFT, 9, movetoworkspace, 9
+      bind = $mod SHIFT, 0, movetoworkspace, 10
+
+      bind = $mod, mouse_down, workspace, e+1
+      bind = $mod, mouse_up, workspace, e-1
+
+      bindm = $mod, mouse:272, movewindow
+      bindm = $mod, mouse:273, resizewindow
+
+      bind = , Print, exec, screenshot-fullscreen
+      bind = SHIFT, Print, exec, screenshot-region
+    '';
   };
   services.mako = {
     enable = true;
