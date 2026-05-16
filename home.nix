@@ -269,6 +269,16 @@ in
           preserve_split = true
       }
 
+      group {
+          groupbar {
+              gradients = false
+              col.active = rgba(101520ff)
+              col.inactive = rgba(101520aa)
+              text_color = rgba(d8d4cdff)
+              font_size = 16
+          }
+      }
+
       master {
           new_status = master
       }
