@@ -157,6 +157,13 @@ in
       executable = true;
     };
   };
+  home.pointerCursor = {
+    gtk.enable = true;
+    x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
   systemd.user.targets.wayland-session = {
     Unit = {
       Description = "Wayland compositor session";
@@ -250,6 +257,9 @@ in
           animation = fade, 1, 7, default
           animation = workspaces, 1, 6, default
       }
+
+      # window rules
+      windowrule = opacity 0.6 0.6, class:^(firefox|brave-browser)$
 
       dwindle {
           pseudotile = true
@@ -355,8 +365,20 @@ in
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
     };
-    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
-    gtk4.extraConfig.gtk-application-prefer-dark-theme = true;
+    cursorTheme = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+    };
+    gtk3.extraConfig = {
+      "gtk-cursor-theme-name" = "Bibata-Modern-Classic";
+      "gtk-application-prefer-dark-theme" = true;
+    };
+    gtk4.extraConfig = {
+      Settings = ''
+        gtk-cursor-theme-name=Bibata-Modern-Classic
+      '';
+      "gtk-application-prefer-dark-theme" = true;
+    };
   };
   programs.zsh = {
     enable = true;
