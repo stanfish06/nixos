@@ -23,7 +23,7 @@ let
           zstd
         ];
     };
-  wallpaper = "${config.home.homeDirectory}/dots/my-configs/img/ubuntu_win.png";
+  wallpaper = "${config.home.homeDirectory}/.config/dots/my-configs/img/robot-1-darker.jpg";
 in
 {
   home.stateVersion = "25.11";
@@ -163,7 +163,7 @@ in
     x11.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
-    size = 16;
+    size = 14;
   };
   systemd.user.targets.wayland-session = {
     Unit = {
@@ -262,7 +262,7 @@ in
       }
 
       # window rules
-      windowrule = opacity 0.6 0.6, class:^(firefox|brave-browser)$
+      windowrule = opacity 0.95 0.95, class:^(firefox|brave-browser)$
 
       dwindle {
           pseudotile = true
