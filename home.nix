@@ -23,6 +23,7 @@ let
           zstd
         ];
     };
+  wallpaper = "${config.home.homeDirectory}/dots/my-configs/img/ubuntu_win.png";
 in
 {
   home.stateVersion = "25.11";
@@ -219,6 +220,8 @@ in
       # Dark theme for GTK3 and GTK4 apps
       exec-once = gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark"
       exec-once = gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+
+      exec-once = swaybg -i ${wallpaper} -m fill
 
       input {
           kb_layout = us
@@ -750,6 +753,7 @@ in
     new.quickshell
     new.wlroots_0_19
     wl-clipboard
+    swaybg
     unstable.television
     # vps
     hiddify
