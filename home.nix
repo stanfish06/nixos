@@ -475,6 +475,7 @@ in
         uv = "latest";
         node = "latest";
         bun = "latest";
+        "aqua:LuaLS/lua-language-server" = "latest";
       };
       settings = {
         idiomatic_version_file_enable_tools = [ ];
