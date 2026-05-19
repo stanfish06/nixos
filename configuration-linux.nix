@@ -69,9 +69,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   # CVE-2026-31431 (Copy Fail): disable algif_aead until a patched kernel (6.18.22+) is in use.
-  # CVE-2026-43284 / CVE-2026-43500 (Dirty Frag): disable esp4, esp6 (IPsec ESP) and rxrpc (AFS).
-  # Safe to disable on a desktop system that does not use IPsec VPN tunnels or AFS.
-  # VPN needs to be enabled
+  # CVE-2026-43284 / CVE-2026-43500 (Dirty Frag): only rxrpc (AFS) is blacklisted.
+  # esp4/esp6 (IPsec ESP) are intentionally kept enabled for VPN use.
   boot.extraModprobeConfig = ''
     install algif_aead /bin/false
     install rxrpc /bin/false
