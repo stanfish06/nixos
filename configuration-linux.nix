@@ -70,6 +70,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # CVE-2026-31431 (Copy Fail): disable algif_aead until a patched kernel (6.18.22+) is in use.
   # CVE-2026-43284 / CVE-2026-43500 (Dirty Frag): only rxrpc (AFS) is blacklisted.
+  # CVE-2026-31635 (DirtyDecrypt, CVSS 7.5): rxrpc blacklist covers this (RXGK auth runs atop rxrpc).
+  # CVE-2026-46300 (Fragnesia, CVSS 7.8): XFRM ESP-in-TCP priv-esc via skb_try_coalesce;
+  #   esp4/esp6 kept for VPN — accepted risk, monitor for kernel patch.
   # esp4/esp6 (IPsec ESP) are intentionally kept enabled for VPN use.
   boot.extraModprobeConfig = ''
     install algif_aead /bin/false

@@ -21,7 +21,10 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    dolphin-overlay.url = "github:rumboon/dolphin-overlay";
+    dolphin-overlay = {
+      url = "github:rumboon/dolphin-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # outputs is a lambda
