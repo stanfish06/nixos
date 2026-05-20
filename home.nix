@@ -401,7 +401,7 @@ in
   programs.zsh = {
     enable = true;
     shellAliases = {
-      ls = "ls";
+      ls = "ls"; # this is intentional in order to keep original ls
       l = "eza -1 --group-directories-first";
       le = "eza --group-directories-first";
       led = "eza --group-directories-last";
