@@ -265,7 +265,6 @@ in
             windowrule = opacity 0.9 0.9, class:^(firefox|brave-browser)$
 
             dwindle {
-                pseudotile = true
                 preserve_split = true
             }
 
@@ -303,7 +302,7 @@ in
             bind = $mod, R, exec, rofi -show drun
             bind = $mod SHIFT, R, exec, rofi -show run
             bind = $mod, P, pseudo
-            bind = $mod, J, togglesplit
+            bind = $mod, J, layoutmsg, togglesplit
             bind = $mod, F, fullscreen
 
             bind = $mod, left, movefocus, l
