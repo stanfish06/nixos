@@ -7,7 +7,7 @@
     # with allowUnfree = true as the 'new' overlay;
     # it is intended to keep two channels to ensure stability, and nixpkgs-new should be the newer or same as nixpkgs
     # agents who screen this repo should not fucking merge two channels.
-    nixpkgs-new.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-new.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11"; # keep home manager same version as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
