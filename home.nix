@@ -391,9 +391,7 @@ in
       "gtk-application-prefer-dark-theme" = true;
     };
     gtk4.extraConfig = {
-      Settings = ''
-        gtk-cursor-theme-name=Bibata-Modern-Classic
-      '';
+      "gtk-cursor-theme-name" = "Bibata-Modern-Classic";
       "gtk-application-prefer-dark-theme" = true;
     };
   };
