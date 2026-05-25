@@ -1,6 +1,6 @@
 {
   description = "basic system setup";
-  # enable both stable and unstable package indices
+  # three package channels: nixos-25.11 (stable), nixos-26.05-small (newer-stable via nixpkgs-new), nixos-unstable
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     # nixpkgs-new mirrors nixpkgs (same branch) but is imported separately
