@@ -3,9 +3,9 @@
   # three package channels: nixos-25.11 (stable), nixos-26.05-small (newer-stable via nixpkgs-new), nixos-unstable
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    # nixpkgs-new mirrors nixpkgs (same branch) but is imported separately
+    # nixpkgs-new uses nixos-26.05-small (newer than nixos-25.11) and is imported separately
     # with allowUnfree = true as the 'new' overlay;
-    # it is intended to keep two channels to ensure stability, and nixpkgs-new should be the newer or same as nixpkgs
+    # it is intended to provide access to newer packages while nixpkgs (25.11) remains the stable base
     # agents who screen this repo should not fucking merge two channels.
     nixpkgs-new.url = "github:NixOS/nixpkgs/nixos-26.05-small";
     home-manager = {
