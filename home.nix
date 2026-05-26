@@ -485,6 +485,15 @@ in
     enableZshIntegration = true;
     enableNushellIntegration = true;
   };
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+    enableBashIntegration = true;
+    mise = {
+      enable = true;
+    };
+  };
   programs.i3status = {
     enable = true;
     general = {
