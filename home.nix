@@ -688,8 +688,7 @@ in
       os = {
         disabled = false;
         style = "bold teal";
-      };
-      os.symbols = {
+        symbols = {
         Alpaquita = " ";
         Alpine = " ";
         AlmaLinux = " ";
@@ -735,6 +734,7 @@ in
         Unknown = " ";
         Void = " ";
         Windows = "󰍲 ";
+        };
       };
       package = {
         symbol = "󰏗 ";
