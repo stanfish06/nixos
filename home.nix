@@ -236,8 +236,8 @@ in
                 gaps_in = 2
                 gaps_out = 4
                 border_size = 2
-                active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-                inactive_border = rgba(595959aa)
+                col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+                col.inactive_border = rgba(595959aa)
                 layout = dwindle
                 allow_tearing = false
             }
@@ -262,7 +262,7 @@ in
             }
 
             # window rules
-            windowrulev2 = opacity 0.9 0.9, class:^(firefox|brave-browser)$
+            windowrule = opacity 0.9 0.9, class:^(firefox|brave-browser)$
 
             dwindle {
                 preserve_split = true
@@ -271,8 +271,8 @@ in
             group {
                 groupbar {
                     gradients = false
-                    active = rgba(101520ff)
-                    inactive = rgba(101520aa)
+                    col.active = rgba(101520ff)
+                    col.inactive = rgba(101520aa)
                     text_color = rgba(d8d4cdff)
       	      # this is used to set background color for groupbar, basically make indicator taller
       	      height = 1
