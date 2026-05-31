@@ -262,7 +262,7 @@ in
             }
 
             # window rules
-            windowrule = opacity 0.9 0.9, class:^(firefox|brave-browser)$
+            windowrulev2 = opacity 0.9 0.9, class:^(firefox|brave-browser)$
 
             dwindle {
                 preserve_split = true
