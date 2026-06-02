@@ -689,51 +689,51 @@ in
         disabled = false;
         style = "bold teal";
         symbols = {
-        Alpaquita = " ";
-        Alpine = " ";
-        AlmaLinux = " ";
-        Amazon = " ";
-        Android = " ";
-        Arch = " ";
-        Artix = " ";
-        CachyOS = " ";
-        CentOS = " ";
-        Debian = " ";
-        DragonFly = " ";
-        Emscripten = " ";
-        EndeavourOS = " ";
-        Fedora = " ";
-        FreeBSD = " ";
-        Garuda = "󰛓 ";
-        Gentoo = " ";
-        HardenedBSD = "󰞌 ";
-        Illumos = "󰈸 ";
-        Kali = " ";
-        Linux = " ";
-        Mabox = " ";
-        Macos = " ";
-        Manjaro = " ";
-        Mariner = " ";
-        MidnightBSD = " ";
-        Mint = " ";
-        NetBSD = " ";
-        NixOS = " ";
-        Nobara = " ";
-        OpenBSD = "󰈺 ";
-        openSUSE = " ";
-        OracleLinux = "󰌷 ";
-        Pop = " ";
-        Raspbian = " ";
-        Redhat = " ";
-        RedHatEnterprise = " ";
-        RockyLinux = " ";
-        Redox = "󰀘 ";
-        Solus = "󰠳 ";
-        SUSE = " ";
-        Ubuntu = " ";
-        Unknown = " ";
-        Void = " ";
-        Windows = "󰍲 ";
+          Alpaquita = " ";
+          Alpine = " ";
+          AlmaLinux = " ";
+          Amazon = " ";
+          Android = " ";
+          Arch = " ";
+          Artix = " ";
+          CachyOS = " ";
+          CentOS = " ";
+          Debian = " ";
+          DragonFly = " ";
+          Emscripten = " ";
+          EndeavourOS = " ";
+          Fedora = " ";
+          FreeBSD = " ";
+          Garuda = "󰛓 ";
+          Gentoo = " ";
+          HardenedBSD = "󰞌 ";
+          Illumos = "󰈸 ";
+          Kali = " ";
+          Linux = " ";
+          Mabox = " ";
+          Macos = " ";
+          Manjaro = " ";
+          Mariner = " ";
+          MidnightBSD = " ";
+          Mint = " ";
+          NetBSD = " ";
+          NixOS = " ";
+          Nobara = " ";
+          OpenBSD = "󰈺 ";
+          openSUSE = " ";
+          OracleLinux = "󰌷 ";
+          Pop = " ";
+          Raspbian = " ";
+          Redhat = " ";
+          RedHatEnterprise = " ";
+          RockyLinux = " ";
+          Redox = "󰀘 ";
+          Solus = "󰠳 ";
+          SUSE = " ";
+          Ubuntu = " ";
+          Unknown = " ";
+          Void = " ";
+          Windows = "󰍲 ";
         };
       };
       package = {
@@ -762,6 +762,7 @@ in
   home.packages = with pkgs; [
     # useful tools
     wlr-randr
+    alsa-utils
     fzf
     ripgrep
     fd
