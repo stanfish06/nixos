@@ -1,6 +1,6 @@
 {
   description = "basic system setup";
-  # three package channels: nixos-25.11 (stable), nixos-26.05 (newer-stable via nixpkgs-new), nixos-unstable
+  # three package channels: nixos-25.11 (EOL 2026-06-30), nixos-26.05 (current stable via nixpkgs-new), nixos-unstable
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     # nixpkgs-new uses nixos-26.05 (newer than nixos-25.11) and is imported separately
