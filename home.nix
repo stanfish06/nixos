@@ -143,6 +143,44 @@ in
       '';
       executable = true;
     };
+    ".local/bin/start-niri" = {
+      text = ''
+        #!/usr/bin/env bash
+
+        if systemctl --user is-active -q niri-session.scope; then
+            systemctl --user stop niri-session.scope
+        fi
+        if systemctl --user is-active -q wayland-session.target; then
+            systemctl --user stop wayland-session.target
+        fi
+
+        export XDG_CURRENT_DESKTOP=niri
+        export XDG_SESSION_DESKTOP=niri
+        systemd-run --user --scope --unit=niri-session --collect niri &
+
+        # wait until wayland socket is ready
+        unset WAYLAND_DISPLAY
+        for i in $(seq 1 50); do
+            for sock in wayland-0 wayland-1; do
+                if [ -S "$XDG_RUNTIME_DIR/$sock" ]; then
+                    export WAYLAND_DISPLAY=$sock
+                    break 2
+                fi
+            done
+            sleep 0.1
+        done
+
+        systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+        systemctl --user start wayland-session.target
+
+        while systemctl --user is-active -q niri-session.scope; do
+            sleep 1
+        done
+        systemctl --user stop wayland-session.target || true
+      '';
+      executable = true;
+    };
     ".local/bin/screenshot-region" = {
       text = ''
         #!/usr/bin/env bash
@@ -195,6 +233,95 @@ in
     "nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
       recursive = true;
+    };
+    "niri/config.kdl" = {
+      text = ''
+        output "HDMI-A-1" {
+            mode "1920x1080@120.000"
+            position x=0 y=0
+        }
+
+        environment {
+            QT_QPA_PLATFORMTHEME "qt6ct"
+            XCURSOR_THEME "Bibata-Modern-Classic"
+            XCURSOR_SIZE "24"
+        }
+
+        prefer-no-csd
+
+        input {
+            keyboard {
+                xkb {
+                    layout "us"
+                }
+            }
+        }
+
+        layout {
+            gaps 8
+            focus-ring {
+                width 2
+                active-color "#33ccff"
+                inactive-color "#595959"
+            }
+            border {
+                off
+            }
+        }
+
+        spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "gtk-theme" "adw-gtk3-dark"
+        spawn-at-startup "gsettings" "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+        spawn-at-startup "swaybg" "-i" "${wallpaper}" "-m" "fill"
+
+        binds {
+            Mod+Return { spawn "wezterm"; }
+            Mod+E { spawn "dolphin"; }
+            Mod+R { spawn "rofi" "-show" "drun"; }
+            Mod+Shift+R { spawn "rofi" "-show" "run"; }
+            Mod+C { close-window; }
+            Mod+Shift+E { quit skip-confirmation=true; }
+            Mod+F { fullscreen-window; }
+            Mod+V { toggle-window-floating; }
+
+            Mod+Left { focus-column-left; }
+            Mod+Right { focus-column-right; }
+            Mod+Up { focus-window-up; }
+            Mod+Down { focus-window-down; }
+
+            Mod+Shift+Left { move-column-left; }
+            Mod+Shift+Right { move-column-right; }
+            Mod+Shift+Up { move-window-up; }
+            Mod+Shift+Down { move-window-down; }
+
+            Mod+1 { focus-workspace 1; }
+            Mod+2 { focus-workspace 2; }
+            Mod+3 { focus-workspace 3; }
+            Mod+4 { focus-workspace 4; }
+            Mod+5 { focus-workspace 5; }
+            Mod+6 { focus-workspace 6; }
+            Mod+7 { focus-workspace 7; }
+            Mod+8 { focus-workspace 8; }
+            Mod+9 { focus-workspace 9; }
+            Mod+0 { focus-workspace 10; }
+
+            Mod+Shift+1 { move-window-to-workspace 1; }
+            Mod+Shift+2 { move-window-to-workspace 2; }
+            Mod+Shift+3 { move-window-to-workspace 3; }
+            Mod+Shift+4 { move-window-to-workspace 4; }
+            Mod+Shift+5 { move-window-to-workspace 5; }
+            Mod+Shift+6 { move-window-to-workspace 6; }
+            Mod+Shift+7 { move-window-to-workspace 7; }
+            Mod+Shift+8 { move-window-to-workspace 8; }
+            Mod+Shift+9 { move-window-to-workspace 9; }
+            Mod+Shift+0 { move-window-to-workspace 10; }
+
+            Print { spawn "screenshot-fullscreen"; }
+            Shift+Print { spawn "screenshot-region"; }
+
+            Mod+Minus { set-column-width "-10%"; }
+            Mod+Equal { set-column-width "+10%"; }
+        }
+      '';
     };
   };
   xdg.mimeApps = {
