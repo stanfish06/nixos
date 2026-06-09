@@ -45,7 +45,7 @@
     automake
     libtool
     # others
-    unstable.tmux
+    tmux
     neovim
     zsh
   ];
