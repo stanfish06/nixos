@@ -897,7 +897,7 @@ in
     fzf
     ripgrep
     fd
-    rofi
+    rofi-wayland
     gh
     lazygit
     jq
