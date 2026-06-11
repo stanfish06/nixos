@@ -79,6 +79,10 @@
   # CVE-2026-46300 (Fragnesia, CVSS 7.8): XFRM ESP-in-TCP priv-esc via skb_try_coalesce;
   #   esp4/esp6 kept for VPN — accepted risk; kernel patch released 2026-05-13,
   #   rebuild when nixpkgs ships a kernel that includes the upstream fix.
+  # CVE-2026-23111 (nf_tables use-after-free, CVSS 7.8): public exploit released 2026-06-08;
+  #   upstream fix landed 2026-02-05; nf_tables cannot safely be blacklisted (used by
+  #   iptables/nftables/container networking); ensure kernel is up-to-date and consider
+  #   boot.kernel.sysctl."kernel.unprivileged_userns_clone" = 0 if browsers are not needed.
   # esp4/esp6 (IPsec ESP) are intentionally kept enabled for VPN use.
   boot.extraModprobeConfig = ''
     install algif_aead /bin/false
