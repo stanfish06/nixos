@@ -51,6 +51,10 @@
       "Noto Sans Mono CJK SC"
     ];
   };
+  # docker
+  virtualisation.docker = {
+    enable = true;
+  };
   # steam
   nixpkgs.config.allowUnfree = true;
   programs.steam = {
@@ -137,6 +141,7 @@
     initialPassword = "123456";
     extraGroups = [
       "networkmanager"
+      "docker"
       "wheel"
     ];
   };
