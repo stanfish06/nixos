@@ -2,7 +2,7 @@
   description = "basic system setup";
   # three package channels: nixos-25.11 (EOL 2026-06-30), nixos-26.05 (current stable via nixpkgs-new), nixos-unstable
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     # nixpkgs-new uses nixos-26.05 (newer than nixos-25.11) and is imported separately
     # with allowUnfree = true as the 'new' overlay;
     # it is intended to provide access to newer packages while nixpkgs (25.11) remains the stable base
@@ -22,7 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     dolphin-overlay = {
-      url = "github:rumboon/dolphin-overlay";
+      url = "path:./dolphin-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
