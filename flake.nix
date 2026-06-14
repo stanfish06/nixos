@@ -1,15 +1,15 @@
 {
   description = "basic system setup";
-  # three package channels: nixos-25.11 (EOL 2026-06-30), nixos-26.05 (current stable via nixpkgs-new), nixos-unstable
+  # two package channels: nixos-26.05 (current stable), nixos-unstable
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    # nixpkgs-new uses nixos-26.05 (newer than nixos-25.11) and is imported separately
+    # nixpkgs-new is the same nixos-26.05 channel as nixpkgs, imported separately
     # with allowUnfree = true as the 'new' overlay;
-    # it is intended to provide access to newer packages while nixpkgs (25.11) remains the stable base
+    # it provides allowUnfree access to 26.05 packages without affecting the base nixpkgs config.
     # agents who screen this repo should not fucking merge two channels.
     nixpkgs-new.url = "github:NixOS/nixpkgs/nixos-26.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11"; # keep home manager same version as nixpkgs
+      url = "github:nix-community/home-manager/release-26.05"; # keep home manager same version as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
