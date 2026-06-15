@@ -25,6 +25,10 @@
       url = "path:./dolphin-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    codex-desktop = {
+      url = "github:ilysenko/codex-desktop-linux";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # outputs is a lambda
@@ -77,7 +81,12 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.stan = ./home.nix;
+            home-manager.users.stan = {
+              imports = [
+                ./home.nix
+                inputs.codex-desktop.homeManagerModules.codex-desktop-linux
+              ];
+            };
           }
           ./configuration-linux.nix
           ./hardware-configuration.nix

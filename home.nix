@@ -675,6 +675,9 @@ in
   programs.emacs = {
     enable = true;
   };
+  programs.codexDesktopLinux = {
+    enable = true;
+  };
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
