@@ -105,41 +105,42 @@ in
       '';
       executable = true;
     };
-    ".local/bin/start-hyprland" = {
+    ".local/bin/start-hyprland-custom" = {
       text = ''
-        #!/usr/bin/env bash
+                #!/usr/bin/env bash
 
-        if systemctl --user is-active -q hyprland-session.scope; then
-            systemctl --user stop hyprland-session.scope
-        fi
-        if systemctl --user is-active -q wayland-session.target; then
-            systemctl --user stop wayland-session.target
-        fi
-
-        export XDG_CURRENT_DESKTOP=Hyprland
-        export XDG_SESSION_DESKTOP=Hyprland
-        systemd-run --user --scope --unit=hyprland-session --collect Hyprland &
-
-        # wait until wayland socket is ready
-        unset WAYLAND_DISPLAY
-        for i in $(seq 1 50); do
-            for sock in wayland-0 wayland-1; do
-                if [ -S "$XDG_RUNTIME_DIR/$sock" ]; then
-                    export WAYLAND_DISPLAY=$sock
-                    break 2
+                if systemctl --user is-active -q hyprland-session.scope; then
+                    systemctl --user stop hyprland-session.scope
                 fi
-            done
-            sleep 0.1
-        done
+                if systemctl --user is-active -q wayland-session.target; then
+                    systemctl --user stop wayland-session.target
+                fi
 
-        systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
-        dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
-        systemctl --user start wayland-session.target
+                export XDG_CURRENT_DESKTOP=Hyprland
+                export XDG_SESSION_DESKTOP=Hyprland
+        	# use official binary start-hyprland to launch hyprland
+                systemd-run --user --scope --unit=hyprland-session --collect start-hyprland &
 
-        while systemctl --user is-active -q hyprland-session.scope; do
-            sleep 1
-        done
-        systemctl --user stop wayland-session.target || true
+                # wait until wayland socket is ready
+                unset WAYLAND_DISPLAY
+                for i in $(seq 1 50); do
+                    for sock in wayland-0 wayland-1; do
+                        if [ -S "$XDG_RUNTIME_DIR/$sock" ]; then
+                            export WAYLAND_DISPLAY=$sock
+                            break 2
+                        fi
+                    done
+                    sleep 0.1
+                done
+
+                systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+                dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_DESKTOP
+                systemctl --user start wayland-session.target
+
+                while systemctl --user is-active -q hyprland-session.scope; do
+                    sleep 1
+                done
+                systemctl --user stop wayland-session.target || true
       '';
       executable = true;
     };

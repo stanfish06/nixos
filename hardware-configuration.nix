@@ -41,7 +41,7 @@
     { device = "/dev/disk/by-uuid/1f38fb1d-bb77-4276-afe2-82f81ec25af5"; }
     {
       device = "/var/lib/swapfile";
-      size = 16 * 1024; # MiB
+      size = 48 * 1024; # MiB
     }
   ];
 
