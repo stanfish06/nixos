@@ -26,7 +26,7 @@ let
   wallpaper = "${config.home.homeDirectory}/.config/dots/my-configs/img/robot-1-darker.jpg";
 in
 {
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
   home.sessionPath = [
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
