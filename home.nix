@@ -355,7 +355,7 @@ in
           gaps_in = 2,
           gaps_out = 4,
           border_size = 2,
-          ["col.active_border"] = "rgba(33ccffee) rgba(00ff99ee) 45deg",
+          ["col.active_border"] = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
           ["col.inactive_border"] = "rgba(595959aa)",
           layout = "dwindle",
           allow_tearing = false,
