@@ -81,8 +81,10 @@
   # CVE-2026-43284 / CVE-2026-43500 (Dirty Frag): only rxrpc (AFS) is blacklisted.
   # CVE-2026-31635 (DirtyDecrypt, CVSS 7.5): rxrpc blacklist covers this (RXGK auth runs atop rxrpc).
   # CVE-2026-46300 (Fragnesia, CVSS 7.8): XFRM ESP-in-TCP priv-esc via skb_try_coalesce;
-  #   esp4/esp6 kept for VPN — accepted risk; kernel patch released 2026-05-13,
-  #   rebuild when nixpkgs ships a kernel that includes the upstream fix.
+  #   esp4/esp6 kept for VPN — accepted risk; kernel patch released 2026-05-13.
+  #   As of 2026-06-16 (~34 days post-patch), this fix is likely in nixpkgs-unstable;
+  #   verify with `nix eval .#nixosConfigurations.nixos_linux.config.boot.kernelPackages.kernel.version`
+  #   and remove this comment once running 6.18.22+ or a kernel that includes the fix.
   # esp4/esp6 (IPsec ESP) are intentionally kept enabled for VPN use.
   boot.extraModprobeConfig = ''
     install algif_aead /bin/false
