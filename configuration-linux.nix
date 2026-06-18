@@ -25,6 +25,7 @@
   };
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
+    nerd-fonts.geist-mono
     nerd-fonts.victor-mono
     nerd-fonts.iosevka-term
     maple-mono.NF
