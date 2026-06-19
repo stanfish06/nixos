@@ -916,6 +916,7 @@ in
     kdePackages.dolphin
     kdePackages.gwenview
     kdePackages.konsole
+    unstable.vial
     # c/c++
     clang-tools
     gcc-unwrapped
