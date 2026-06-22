@@ -21,10 +21,6 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    dolphin-overlay = {
-      url = "path:./dolphin-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     codex-desktop = {
       url = "github:ilysenko/codex-desktop-linux";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -74,7 +70,7 @@
                   config.allowUnfree = true;
                 };
               })
-              inputs.dolphin-overlay.overlays.default
+              (import ./dolphin-overlay/default.nix)
             ];
           }
           inputs.home-manager.nixosModules.home-manager
