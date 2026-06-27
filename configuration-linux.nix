@@ -72,7 +72,29 @@
   # enable dynamic linkage for tools like uv
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
+    alsa-lib
+    at-spi2-atk
+    atk
+    cairo
+    cups
+    dbus
+    expat
+    glib
+    libgbm
+    libgcc
+    libxkbcommon
+    nspr
+    nss
+    pango
     stdenv.cc.cc.lib
+    systemd
+    libx11
+    libxcomposite
+    libxdamage
+    libxext
+    libxfixes
+    libxrandr
+    libxcb
     zlib
   ];
   # Bootloader.
