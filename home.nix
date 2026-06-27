@@ -911,6 +911,7 @@ in
     qt6Packages.qt6ct
     # gui apps
     vscode
+    gimp
     unstable.code-cursor
     new.brave
     kdePackages.dolphin
