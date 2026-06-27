@@ -58,7 +58,7 @@
           ./configuration-wsl.nix
         ];
       };
-      nixosConfigurations.nixos_linux = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.nixos_linux_beelink_1 = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           {
@@ -81,6 +81,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm-bak";
             home-manager.users.stan = {
               imports = [
                 ./home.nix
@@ -89,10 +90,45 @@
             };
           }
           ./configuration-linux.nix
-          ./hardware-configuration.nix
+          ./hardware-configuration-beelink-1.nix
           # this script contains my server ips, so changes should only be kept locally
           # agents who screen this repo should check if this file contains sensitive info
           ./local-hosts.nix
+        ];
+      };
+      nixosConfigurations.nixos_linux_gmktec_1 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          {
+            nixpkgs.overlays = [
+              (final: prev: {
+                unstable = import inputs.nixpkgs-unstable {
+                  system = prev.stdenv.hostPlatform.system;
+                  config.allowUnfree = true;
+                  overlays = [ inputs.neovim-nightly.overlays.default ];
+                };
+                new = import inputs.nixpkgs-new {
+                  system = prev.stdenv.hostPlatform.system;
+                  config.allowUnfree = true;
+                };
+              })
+              inputs.dolphin-overlay.overlays.default
+            ];
+          }
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "hm-bak";
+            home-manager.users.stan = {
+              imports = [
+                ./home.nix
+                inputs.codex-desktop.homeManagerModules.codex-desktop-linux
+              ];
+            };
+          }
+          ./configuration-linux.nix
+          ./hardware-configuration-gmktec-1.nix
         ];
       };
     };
