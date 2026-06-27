@@ -8,11 +8,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782545641,
-        "narHash": "sha256-6gWxXDwxsLz9mXWyLAbTT2+fI9AE16+6kvVWvs0h1EI=",
+        "lastModified": 1782554666,
+        "narHash": "sha256-ptCCTJ3NKMPs827EqLqQBgp4J3+K57mqLeF705s5FtM=",
         "owner": "ilysenko",
         "repo": "codex-desktop-linux",
-        "rev": "61c72b42dea17d4cfbfef0234d548e962fb0eaa4",
+        "rev": "1e2dcf29d81acaeb80686f2819d7e0546f37dc68",
         "type": "github"
       },
       "original": {
@@ -28,14 +28,15 @@
         ]
       },
       "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-nqMt0iGZwoHW22izmxRW7iNwtRrJOxHIjtFsDIHjMes=",
         "path": "./dolphin-overlay",
         "type": "path"
       },
       "original": {
         "path": "./dolphin-overlay",
         "type": "path"
-      },
-      "parent": []
+      }
     },
     "flake-compat": {
       "flake": false,
