@@ -5,11 +5,6 @@ script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd "$script_dir"
 
 declare -a hosts=()
-for host_config in hosts/*/default.nix; do
-  if [[ -f "$host_config" ]]; then
-    hosts+=("$(basename -- "$(dirname -- "$host_config")")")
-  fi
-done
 
 usage() {
   cat <<EOF
@@ -31,6 +26,19 @@ usage_error() {
   usage >&2
   exit 2
 }
+
+for host_config in hosts/*/default.nix; do
+  if [[ -f "$host_config" ]]; then
+    host="$(basename -- "$(dirname -- "$host_config")")"
+    if [[ ! "$host" =~ ^[a-z0-9][a-z0-9-]*$ ]]; then
+      usage_error "invalid host directory '$host'; expected [a-z0-9][a-z0-9-]*"
+    fi
+    if [[ "$host" == "all" ]]; then
+      usage_error "host directory 'all' uses a reserved selector"
+    fi
+    hosts+=("$host")
+  fi
+done
 
 is_valid_host() {
   local candidate="$1"
@@ -90,6 +98,8 @@ switch_host() {
   system_hostname="$(hostname -s)"
   if current_host="$(managed_host_for_hostname "$system_hostname")"; then
     :
+  elif [[ "$system_hostname" == nixos-* ]]; then
+    usage_error "hostname '$system_hostname' is in the managed 'nixos-' namespace but has no discovered host"
   fi
 
   if (( $# == 0 )); then
