@@ -115,7 +115,6 @@
     install algif_aead /bin/false
     install rxrpc /bin/false
   '';
-  networking.hostName = "nixos"; # Define your hostname.
   # Enable networking
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = false;

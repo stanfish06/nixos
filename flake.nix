@@ -35,101 +35,77 @@
   # add @inputs here so that you can access all stuffs inside inputs
   # TODO: create modules for vim, neovim, zsh
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    { nixpkgs, ... }@inputs:
+    let
+      system = "x86_64-linux";
+
+      mkLinuxSystem =
+        hostModule:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            {
+              nixpkgs.overlays = [
+                (final: prev: {
+                  unstable = import inputs.nixpkgs-unstable {
+                    system = prev.stdenv.hostPlatform.system;
+                    config.allowUnfree = true;
+                    overlays = [ inputs.neovim-nightly.overlays.default ];
+                  };
+                  new = import inputs.nixpkgs-new {
+                    system = prev.stdenv.hostPlatform.system;
+                    config.allowUnfree = true;
+                  };
+                })
+                inputs.dolphin-overlay.overlays.default
+              ];
+            }
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-bak";
+              home-manager.users.stan = {
+                imports = [
+                  ./home.nix
+                  inputs.codex-desktop.homeManagerModules.codex-desktop-linux
+                ];
+              };
+            }
+            ./configuration-linux.nix
+            # this script contains my server ips, so changes should only be kept locally
+            # agents who screen this repo should check if this file contains sensitive info
+            ./local-hosts.nix
+            hostModule
+          ];
+        };
+    in
     {
-      # nixos is the hostname (e.g. you can have config for laptop1, desktop1, server1,...)
-      # you can select specific config to rebuild with nixos-rebuild switch --flake /etc/nixos#hostname
-      nixosConfigurations.nixos_wsl = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        # modules can import configs, install packages, enable services, etc
-        # configuration.nix is just a lambda, and you can embed it here directly
-        modules = [
-          inputs.nixos-wsl.nixosModules.wsl
-          {
-            # overlays are functions, final extends prev, and you can do some changes
-            # for instance, unstable = nixpkgs-unstable.legacyPackages.${prev.system}; is a nixpkgs-unstable that uses same system as parent overlay.
-            # You may refer to this module using final.unstable within that function (e.g. unstable-2 = final.unstable, which is trivial though)
-            nixpkgs.overlays = [
-              (final: prev: {
-                unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
-              })
-            ];
-          }
-          ./configuration-wsl.nix
-        ];
-      };
-      nixosConfigurations.nixos_linux_beelink_1 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          {
-            nixpkgs.overlays = [
-              (final: prev: {
-                unstable = import inputs.nixpkgs-unstable {
-                  system = prev.stdenv.hostPlatform.system;
-                  config.allowUnfree = true;
-                  overlays = [ inputs.neovim-nightly.overlays.default ];
-                };
-                new = import inputs.nixpkgs-new {
-                  system = prev.stdenv.hostPlatform.system;
-                  config.allowUnfree = true;
-                };
-              })
-              inputs.dolphin-overlay.overlays.default
-            ];
-          }
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "hm-bak";
-            home-manager.users.stan = {
-              imports = [
-                ./home.nix
-                inputs.codex-desktop.homeManagerModules.codex-desktop-linux
+      nixosConfigurations = {
+        # nixos is the hostname (e.g. you can have config for laptop1, desktop1, server1,...)
+        # you can select specific config to rebuild with nixos-rebuild switch --flake /etc/nixos#hostname
+        nixos_wsl = nixpkgs.lib.nixosSystem {
+          inherit system;
+          # modules can import configs, install packages, enable services, etc
+          # configuration.nix is just a lambda, and you can embed it here directly
+          modules = [
+            inputs.nixos-wsl.nixosModules.wsl
+            {
+              # overlays are functions, final extends prev, and you can do some changes
+              # for instance, unstable = nixpkgs-unstable.legacyPackages.${prev.system}; is a nixpkgs-unstable that uses same system as parent overlay.
+              # You may refer to this module using final.unstable within that function (e.g. unstable-2 = final.unstable, which is trivial though)
+              nixpkgs.overlays = [
+                (final: prev: {
+                  unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
+                })
               ];
-            };
-          }
-          ./configuration-linux.nix
-          ./hardware-configuration-beelink-1.nix
-          # this script contains my server ips, so changes should only be kept locally
-          # agents who screen this repo should check if this file contains sensitive info
-          ./local-hosts.nix
-        ];
-      };
-      nixosConfigurations.nixos_linux_gmktec_1 = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          {
-            nixpkgs.overlays = [
-              (final: prev: {
-                unstable = import inputs.nixpkgs-unstable {
-                  system = prev.stdenv.hostPlatform.system;
-                  config.allowUnfree = true;
-                  overlays = [ inputs.neovim-nightly.overlays.default ];
-                };
-                new = import inputs.nixpkgs-new {
-                  system = prev.stdenv.hostPlatform.system;
-                  config.allowUnfree = true;
-                };
-              })
-              inputs.dolphin-overlay.overlays.default
-            ];
-          }
-          inputs.home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "hm-bak";
-            home-manager.users.stan = {
-              imports = [
-                ./home.nix
-                inputs.codex-desktop.homeManagerModules.codex-desktop-linux
-              ];
-            };
-          }
-          ./configuration-linux.nix
-          ./hardware-configuration-gmktec-1.nix
-        ];
+            }
+            ./configuration-wsl.nix
+          ];
+        };
+
+        nixos-beelink-1 = mkLinuxSystem ./hosts/beelink-1/default.nix;
+        nixos-gmktec-1 = mkLinuxSystem ./hosts/gmktec-1/default.nix;
       };
     };
 }
