@@ -80,7 +80,7 @@ Use this workflow:
 ./run-before-commit.sh
 git add .
 git status --short
-git diff --cached -- local-hosts.nix
+git diff --cached --quiet -- local-hosts.nix
 git commit -m "..."
 git push
 ```
@@ -89,4 +89,5 @@ git push
 working tree or index differs from `HEAD`, and restores the committed empty
 dummy to both places. When the root file already matches the dummy, it retains
 an existing backup instead of replacing it. Review the staged status before
-committing; `git diff --cached -- local-hosts.nix` should produce no output.
+committing. The quiet check emits no file contents; exit status 0 means
+`local-hosts.nix` is not staged differently from `HEAD`.
