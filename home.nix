@@ -933,6 +933,8 @@ in
     unstable.pyright
     unstable.python3Packages.pip
     unstable.python3Packages.virtualenv
+    # js
+    unstable.nodejs
     # notification
     libnotify
     # dev deps

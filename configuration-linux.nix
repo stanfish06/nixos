@@ -108,14 +108,14 @@
   #   As of 2026-06-20 (~38 days post-patch), nixpkgs tracks the fast-moving "mainline"
   #   6.18 branch (not LTS), which typically picks up such fixes within days; confidence
   #   the fix is present is now high but unconfirmed without running nix.
-  #   verify with `nix eval .#nixosConfigurations.nixos_linux.config.boot.kernelPackages.kernel.version`
+  #   verify with `nix eval .#nixosConfigurations.nixos-beelink-1.config.boot.kernelPackages.kernel.version`
+  #   and `nix eval .#nixosConfigurations.nixos-gmktec-1.config.boot.kernelPackages.kernel.version`
   #   and remove this comment once running 6.18.22+ or a kernel that includes the fix.
   # esp4/esp6 (IPsec ESP) are intentionally kept enabled for VPN use.
   boot.extraModprobeConfig = ''
     install algif_aead /bin/false
     install rxrpc /bin/false
   '';
-  networking.hostName = "nixos"; # Define your hostname.
   # Enable networking
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = false;
