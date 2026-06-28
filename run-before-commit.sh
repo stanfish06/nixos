@@ -2,23 +2,8 @@
 set -euo pipefail
 
 backup="${XDG_STATE_HOME:-$HOME/.local/state}/nixos/local-hosts.nix"
-mkdir -p "$(dirname "$backup")"
 
-treefmt
-
-working_changed=false
-if git diff --quiet --no-ext-diff --no-textconv HEAD -- local-hosts.nix; then
-  :
-else
-  diff_status=$?
-  if ((diff_status == 1)); then
-    working_changed=true
-  else
-    printf 'error: cannot safely compare working local-hosts.nix with HEAD\n' >&2
-    exit "$diff_status"
-  fi
-fi
-
+# Complete the read-only conflict preflight before treefmt or filesystem writes.
 index_changed=false
 if git diff --cached --quiet --no-ext-diff --no-textconv HEAD -- local-hosts.nix; then
   :
@@ -32,7 +17,41 @@ else
   fi
 fi
 
-if [[ "$working_changed" == true ]]; then
+working_changed_from_head=false
+if git diff --quiet --no-ext-diff --no-textconv HEAD -- local-hosts.nix; then
+  :
+else
+  diff_status=$?
+  if ((diff_status == 1)); then
+    working_changed_from_head=true
+  else
+    printf 'error: cannot safely compare working local-hosts.nix with HEAD\n' >&2
+    exit "$diff_status"
+  fi
+fi
+
+working_changed_from_index=false
+if git diff --quiet --no-ext-diff --no-textconv -- local-hosts.nix; then
+  :
+else
+  diff_status=$?
+  if ((diff_status == 1)); then
+    working_changed_from_index=true
+  else
+    printf 'error: cannot safely compare working and staged local-hosts.nix\n' >&2
+    exit "$diff_status"
+  fi
+fi
+
+if [[ "$index_changed" == true && "$working_changed_from_head" == true && "$working_changed_from_index" == true ]]; then
+  printf 'error: staged and working local-hosts.nix mappings conflict; reconcile them before retrying\n' >&2
+  exit 1
+fi
+
+treefmt
+mkdir -p "$(dirname "$backup")"
+
+if [[ "$working_changed_from_head" == true ]]; then
   cp -- local-hosts.nix "$backup"
   printf 'Saved private local-hosts.nix to %s.\n' "$backup"
 elif [[ "$index_changed" == true ]]; then

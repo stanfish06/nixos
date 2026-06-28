@@ -91,4 +91,6 @@ dummy to both places. When the root file already matches the dummy, it retains
 an existing backup instead of replacing it. Review the staged status before
 committing. The quiet check emits no file contents; exit status 0 means
 `local-hosts.nix` is not staged differently from `HEAD`. If staging or that
-check fails, the `&&` chain prevents the commit and push.
+check fails, the `&&` chain prevents the commit and push. If staged and working
+private mappings conflict, `run-before-commit.sh` stops before changing either
+copy or the backup; reconcile them and rerun it.
