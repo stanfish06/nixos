@@ -78,11 +78,11 @@ Use this workflow:
 
 ```bash
 ./run-before-commit.sh
-git add .
-git status --short
-git diff --cached --quiet -- local-hosts.nix
-git commit -m "..."
-git push
+git add . &&
+  git status --short &&
+  git diff --cached --quiet -- local-hosts.nix &&
+  git commit -m "..." &&
+  git push
 ```
 
 `run-before-commit.sh` formats the repository, saves private mappings when the
@@ -90,4 +90,5 @@ working tree or index differs from `HEAD`, and restores the committed empty
 dummy to both places. When the root file already matches the dummy, it retains
 an existing backup instead of replacing it. Review the staged status before
 committing. The quiet check emits no file contents; exit status 0 means
-`local-hosts.nix` is not staged differently from `HEAD`.
+`local-hosts.nix` is not staged differently from `HEAD`. If staging or that
+check fails, the `&&` chain prevents the commit and push.
