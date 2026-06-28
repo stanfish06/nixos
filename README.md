@@ -10,7 +10,8 @@ This flake manages two physical NixOS hosts and retains the WSL configuration.
 Shared physical-host configuration stays in `configuration-linux.nix` and
 `home.nix`. Each host module supplies its hostname and hardware configuration.
 Both physical hosts import the root `local-hosts.nix`; WSL continues to use its
-separate configuration.
+separate configuration. `build.sh` discovers only physical hosts under
+`hosts/`; the WSL flake output is outside this dispatcher.
 
 ## Build and switch
 
@@ -27,8 +28,11 @@ Select a host explicitly, including when bootstrapping a machine:
 ./build.sh switch gmktec-1
 ```
 
-If the current hostname already identifies a managed host, switching to a
-different managed host is rejected. `switch` accepts only one host.
+On an unmanaged hostname, an explicit selector is an override with no hardware
+identity check. Run `./build.sh build <host>` before the first switch. If the
+current hostname identifies a managed host, switching to a different managed
+host is rejected; unknown names in the `nixos-*` namespace fail closed.
+`switch` accepts at most one selector.
 
 Build one or more system closures without activating them:
 
@@ -52,14 +56,21 @@ inputs explicitly:
 
 ## Private host mappings
 
-The committed `local-hosts.nix` is an empty dummy. Before building or switching
-either physical host, `build.sh` restores a private copy when one exists at:
+The committed root `local-hosts.nix` is an empty dummy. Keep the private state
+backup as the source of truth:
 
 ```text
 ${XDG_STATE_HOME:-$HOME/.local/state}/nixos/local-hosts.nix
 ```
 
-Edit the working copy of `local-hosts.nix` when private host mappings change.
+Before editing that backup, run `./run-before-commit.sh` to save any current
+root mappings and restore the dummy. Then edit the backup. Before building or
+switching either physical host, `build.sh` restores it into the root file.
+
+If you instead edit the root `local-hosts.nix`, run
+`./run-before-commit.sh` before building or switching. It saves the divergent
+private mappings and sanitizes the root file; `build.sh` refuses to overwrite
+divergent unsaved mappings with the backup.
 
 ## Before committing
 
@@ -68,9 +79,14 @@ Use this workflow:
 ```bash
 ./run-before-commit.sh
 git add .
+git status --short
+git diff --cached -- local-hosts.nix
 git commit -m "..."
 git push
 ```
 
-`run-before-commit.sh` formats the repository, saves the private mappings to the
-state path above, and restores the committed empty dummy before the commit.
+`run-before-commit.sh` formats the repository, saves private mappings when the
+working tree or index differs from `HEAD`, and restores the committed empty
+dummy to both places. When the root file already matches the dummy, it retains
+an existing backup instead of replacing it. Review the staged status before
+committing; `git diff --cached -- local-hosts.nix` should produce no output.
