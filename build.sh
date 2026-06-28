@@ -80,8 +80,29 @@ detect_managed_host() {
 
 sync_local_hosts() {
   local backup="${XDG_STATE_HOME:-$HOME/.local/state}/nixos/local-hosts.nix"
+  local compare_status
+  local diff_status
 
   if [[ -f "$backup" ]]; then
+    if git diff --quiet --no-ext-diff --no-textconv HEAD -- local-hosts.nix; then
+      :
+    else
+      diff_status=$?
+      if (( diff_status > 1 )); then
+        usage_error "cannot safely compare local-hosts.nix with HEAD"
+      fi
+
+      if cmp --silent -- local-hosts.nix "$backup"; then
+        :
+      else
+        compare_status=$?
+        if (( compare_status > 1 )); then
+          usage_error "cannot safely compare local-hosts.nix with its private backup"
+        fi
+        usage_error "local-hosts.nix has unsaved changes that differ from its private backup; save the new mappings with ./run-before-commit.sh before building or switching"
+      fi
+    fi
+
     cp -- "$backup" local-hosts.nix
   fi
 }
