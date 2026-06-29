@@ -29,6 +29,10 @@
       url = "github:ilysenko/codex-desktop-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    claude-desktop = {
+      url = "github:aaddrick/claude-desktop-debian";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # outputs is a lambda
@@ -58,6 +62,7 @@
                   };
                 })
                 inputs.dolphin-overlay.overlays.default
+                inputs.claude-desktop.overlays.default
               ];
             }
             inputs.home-manager.nixosModules.home-manager

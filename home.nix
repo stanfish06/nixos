@@ -910,6 +910,7 @@ in
     # theming
     qt6Packages.qt6ct
     # gui apps
+    claude-desktop-fhs
     vscode
     gimp
     unstable.code-cursor
