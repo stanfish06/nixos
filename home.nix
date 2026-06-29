@@ -24,6 +24,24 @@ let
         ];
     };
   wallpaper = "${config.home.homeDirectory}/.config/dots/my-configs/img/robot-1-darker.jpg";
+  mkWebApp =
+    {
+      name,
+      url,
+      icon,
+    }:
+    {
+      inherit name icon;
+      genericName = "Web Application";
+      comment = "Open ${name} in a dedicated Brave window";
+      exec = "${pkgs.new.brave}/bin/brave --app=${url}";
+      terminal = false;
+      categories = [
+        "Network"
+        "WebBrowser"
+      ];
+      startupNotify = true;
+    };
 in
 {
   home.stateVersion = "26.05";
@@ -323,6 +341,18 @@ in
             Mod+Equal { set-column-width "+10%"; }
         }
       '';
+    };
+  };
+  xdg.desktopEntries = {
+    youtube = mkWebApp {
+      name = "YouTube";
+      url = "https://www.youtube.com/";
+      icon = ./assets/web-apps/youtube.svg;
+    };
+    spotify = mkWebApp {
+      name = "Spotify";
+      url = "https://open.spotify.com/";
+      icon = ./assets/web-apps/spotify.svg;
     };
   };
   xdg.mimeApps = {
