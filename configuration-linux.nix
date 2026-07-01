@@ -55,6 +55,9 @@
   # docker
   virtualisation.docker = {
     enable = true;
+    daemon.settings = {
+      bip = "172.30.0.1/24"; # Need to set this otherwise it collides with school's netauth gateway
+    };
   };
   # steam
   nixpkgs.config.allowUnfree = true;

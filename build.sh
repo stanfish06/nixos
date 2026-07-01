@@ -142,6 +142,7 @@ switch_host() {
   fi
 
   sync_local_hosts
+  # sudo nixos-rebuild switch --no-write-lock-file --flake ".#nixos-$target_host" --offline (in case network issue and need rebuild)
   sudo nixos-rebuild switch --no-write-lock-file --flake ".#nixos-$target_host"
 }
 
