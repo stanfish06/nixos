@@ -706,8 +706,8 @@ in
     enable = true;
   };
   programs.codexDesktopLinux = {
-    enable = false;
-  }; # some build issues (2026-07-01), solve it later
+    enable = true;
+  };
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
