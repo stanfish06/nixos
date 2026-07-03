@@ -515,6 +515,7 @@ in
   programs.eza = {
     enable = true;
     enableZshIntegration = true;
+    enableNushellIntegration = true;
     icons = "auto";
     git = false;
   };
