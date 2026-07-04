@@ -236,6 +236,8 @@ in
       Description = "QuickShell";
       PartOf = [ "graphical-session.target" ];
       After = [ "graphical-session.target" ];
+      StartLimitIntervalSec = 60;
+      StartLimitBurst = 3;
     };
     Service = {
       ExecStart = "${pkgs.new.quickshell}/bin/quickshell";
@@ -529,7 +531,6 @@ in
       package = pkgs.bibata-cursors;
     };
     gtk3.extraConfig = {
-      "gtk-cursor-theme-name" = "Bibata-Modern-Classic";
       "gtk-application-prefer-dark-theme" = true;
     };
     gtk4.theme = {
@@ -537,7 +538,6 @@ in
       package = pkgs.adw-gtk3;
     };
     gtk4.extraConfig = {
-      "gtk-cursor-theme-name" = "Bibata-Modern-Classic";
       "gtk-application-prefer-dark-theme" = true;
     };
   };
@@ -915,7 +915,7 @@ in
     fzf
     ripgrep
     fd
-    rofi
+    rofi-wayland
     gh
     lazygit
     jq
@@ -923,7 +923,6 @@ in
     rclone
     new.yazi
     new.quickshell
-    new.wlroots_0_19
     wl-clipboard
     swaybg
     unstable.television
