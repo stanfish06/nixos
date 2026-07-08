@@ -203,14 +203,37 @@ in
     ".local/bin/screenshot-region" = {
       text = ''
         #!/usr/bin/env bash
-        grim -g "$(slurp)" - | wl-copy
+        set -u
+        dir="$HOME/Pictures/screenshots"
+        mkdir -p "$dir"
+        region="$(slurp)" || exit 0
+        file="$dir/$(date +%Y-%m-%d_%H-%M-%S-%3N)-region.png"
+        if grim -g "$region" "$file"; then
+            wl-copy < "$file"
+            notify-send -i "$file" "Screenshot saved" "$file"
+        else
+            rm -f "$file"
+            notify-send -u critical "Screenshot failed" "grim exited with an error"
+            exit 1
+        fi
       '';
       executable = true;
     };
     ".local/bin/screenshot-fullscreen" = {
       text = ''
         #!/usr/bin/env bash
-        grim - | wl-copy
+        set -u
+        dir="$HOME/Pictures/screenshots"
+        mkdir -p "$dir"
+        file="$dir/$(date +%Y-%m-%d_%H-%M-%S-%3N)-full.png"
+        if grim "$file"; then
+            wl-copy < "$file"
+            notify-send -i "$file" "Screenshot saved" "$file"
+        else
+            rm -f "$file"
+            notify-send -u critical "Screenshot failed" "grim exited with an error"
+            exit 1
+        fi
       '';
       executable = true;
     };
