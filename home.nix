@@ -355,6 +355,7 @@ in
             Mod+Shift+E { quit skip-confirmation=true; }
             Mod+F { fullscreen-window; }
             Mod+V { toggle-window-floating; }
+            Mod+D { spawn "quickshell" "ipc" "call" "clipboard" "toggle"; }
 
             Mod+Left { focus-column-left; }
             Mod+Right { focus-column-right; }
@@ -507,6 +508,7 @@ in
       hl.bind(mod .. " + V", hl.dsp.window.float())
       hl.bind(mod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
       hl.bind(mod .. " + SHIFT + R", hl.dsp.exec_cmd("rofi -show run"))
+      hl.bind(mod .. " + D", hl.dsp.exec_cmd("quickshell ipc call clipboard toggle"))
       hl.bind(mod .. " + P", hl.dsp.window.pseudo())
       hl.bind(mod .. " + J", hl.dsp.layout("togglesplit"))
       hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
