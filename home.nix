@@ -271,6 +271,34 @@ in
       WantedBy = [ "wayland-session.target" ];
     };
   };
+  systemd.user.services.cliphist-text = {
+    Unit = {
+      Description = "Clipboard history recorder (text)";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "wayland-session.target" ];
+    };
+  };
+  systemd.user.services.cliphist-image = {
+    Unit = {
+      Description = "Clipboard history recorder (image)";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "wayland-session.target" ];
+    };
+  };
   xdg.configFile = {
     "nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
@@ -948,6 +976,7 @@ in
     new.quickshell
     new.wlroots_0_19
     wl-clipboard
+    cliphist
     swaybg
     unstable.television
     # vps
