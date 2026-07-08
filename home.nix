@@ -304,6 +304,9 @@ in
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
       recursive = true;
     };
+    "quickshell" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/quickshell";
+    };
     "niri/config.kdl" = {
       text = ''
         output "HDMI-A-1" {
