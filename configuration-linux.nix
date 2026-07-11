@@ -19,6 +19,7 @@
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCUSeBc="
     ];
+    trusted-users = [ "@wheel" ];
   };
   nix.gc = {
     automatic = true;
@@ -118,7 +119,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = false;
-  networking.networkmanager.wifi.backend = "iwd"; # this is somehow needed for enterprise wifi
+  networking.networkmanager.wifi.backend = "wpa_supplicant"; # this is needed for enterprise wifi
   # Set your time zone.
   time.timeZone = "America/New_York";
   # Select internationalisation properties.

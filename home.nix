@@ -203,14 +203,37 @@ in
     ".local/bin/screenshot-region" = {
       text = ''
         #!/usr/bin/env bash
-        grim -g "$(slurp)" - | wl-copy
+        set -u
+        dir="$HOME/Pictures/screenshots"
+        mkdir -p "$dir"
+        region="$(slurp)" || exit 0
+        file="$dir/$(date +%Y-%m-%d_%H-%M-%S-%3N)-region.png"
+        if grim -g "$region" "$file"; then
+            wl-copy < "$file"
+            notify-send -i "$file" "Screenshot saved" "$file"
+        else
+            rm -f "$file"
+            notify-send -u critical "Screenshot failed" "grim exited with an error"
+            exit 1
+        fi
       '';
       executable = true;
     };
     ".local/bin/screenshot-fullscreen" = {
       text = ''
         #!/usr/bin/env bash
-        grim - | wl-copy
+        set -u
+        dir="$HOME/Pictures/screenshots"
+        mkdir -p "$dir"
+        file="$dir/$(date +%Y-%m-%d_%H-%M-%S-%3N)-full.png"
+        if grim "$file"; then
+            wl-copy < "$file"
+            notify-send -i "$file" "Screenshot saved" "$file"
+        else
+            rm -f "$file"
+            notify-send -u critical "Screenshot failed" "grim exited with an error"
+            exit 1
+        fi
       '';
       executable = true;
     };
@@ -248,10 +271,41 @@ in
       WantedBy = [ "wayland-session.target" ];
     };
   };
+  systemd.user.services.cliphist-text = {
+    Unit = {
+      Description = "Clipboard history recorder (text)";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type text --watch ${pkgs.cliphist}/bin/cliphist store";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "wayland-session.target" ];
+    };
+  };
+  systemd.user.services.cliphist-image = {
+    Unit = {
+      Description = "Clipboard history recorder (image)";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --type image --watch ${pkgs.cliphist}/bin/cliphist store";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "wayland-session.target" ];
+    };
+  };
   xdg.configFile = {
     "nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
       recursive = true;
+    };
+    "quickshell" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/quickshell";
     };
     "niri/config.kdl" = {
       text = ''
@@ -301,6 +355,7 @@ in
             Mod+Shift+E { quit skip-confirmation=true; }
             Mod+F { fullscreen-window; }
             Mod+V { toggle-window-floating; }
+            Mod+D { spawn "quickshell" "ipc" "call" "clipboard" "toggle"; }
 
             Mod+Left { focus-column-left; }
             Mod+Right { focus-column-right; }
@@ -453,6 +508,7 @@ in
       hl.bind(mod .. " + V", hl.dsp.window.float())
       hl.bind(mod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
       hl.bind(mod .. " + SHIFT + R", hl.dsp.exec_cmd("rofi -show run"))
+      hl.bind(mod .. " + D", hl.dsp.exec_cmd("quickshell ipc call clipboard toggle"))
       hl.bind(mod .. " + P", hl.dsp.window.pseudo())
       hl.bind(mod .. " + J", hl.dsp.layout("togglesplit"))
       hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
@@ -925,6 +981,7 @@ in
     new.quickshell
     new.wlroots_0_19
     wl-clipboard
+    cliphist
     swaybg
     unstable.television
     # vps
