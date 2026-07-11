@@ -18,6 +18,7 @@
   nix.settings.extra-trusted-public-keys = [
     "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCUSeBc="
   ];
+  nix.settings.trusted-users = [ "@wheel" ];
   nix.gc = {
     automatic = true;
     dates = "weekly";
@@ -140,7 +141,6 @@
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
-    variant = "";
   };
   # Enable CUPS to print documents.
   services.printing.enable = true;
