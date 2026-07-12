@@ -979,7 +979,6 @@ in
     rclone
     new.yazi
     new.quickshell
-    new.wlroots_0_19
     wl-clipboard
     cliphist
     swaybg
