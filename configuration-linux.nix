@@ -26,6 +26,7 @@
     dates = "weekly";
     options = "--delete-older-than 14d";
   };
+  nix.optimise.automatic = true;
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.geist-mono
