@@ -10,15 +10,17 @@
 }:
 
 {
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-  nix.settings.extra-substituters = [ "https://nix-community.cachix.org" ];
-  nix.settings.extra-trusted-public-keys = [
-    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCUSeBc="
-  ];
-  nix.settings.trusted-users = [ "@wheel" ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCUSeBc="
+    ];
+    trusted-users = [ "@wheel" ];
+  };
   nix.gc = {
     automatic = true;
     dates = "weekly";
