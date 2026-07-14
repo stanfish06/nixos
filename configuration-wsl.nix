@@ -27,7 +27,7 @@
   users.users.root = {
     initialPassword = "123456";
   };
-  # (do not massively use 25.11/unstable on wsl - 12/11/2025)
+  # (do not massively use 26.05/unstable on wsl - channel is now nixos-26.05)
   environment.systemPackages = with pkgs; [
     # basic tools
     git
