@@ -984,6 +984,8 @@ in
     cliphist
     swaybg
     unstable.television
+    zip
+    unzip
     # vps
     hiddify
     # notes
