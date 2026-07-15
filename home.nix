@@ -262,7 +262,7 @@ in
       After = [ "wayland-session.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.wayvnc}/bin/wayvnc 0.0.0.0 5900";
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc --gpu --max-fps=60 0.0.0.0 5900";
       Restart = "always";
       RestartSec = 2;
     };
