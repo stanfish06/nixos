@@ -607,7 +607,6 @@ in
       package = pkgs.bibata-cursors;
     };
     gtk3.extraConfig = {
-      "gtk-cursor-theme-name" = "Bibata-Modern-Classic";
       "gtk-application-prefer-dark-theme" = true;
     };
     gtk4.theme = {
@@ -615,7 +614,6 @@ in
       package = pkgs.adw-gtk3;
     };
     gtk4.extraConfig = {
-      "gtk-cursor-theme-name" = "Bibata-Modern-Classic";
       "gtk-application-prefer-dark-theme" = true;
     };
   };
