@@ -156,7 +156,10 @@
     pulse.enable = true;
   };
   # Remote desktop over Tailscale
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    extraSetFlags = [ "--ssh" ];
+  };
   programs.wayvnc.enable = true;
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 5900 ];
 

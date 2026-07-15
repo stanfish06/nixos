@@ -263,7 +263,7 @@ in
     };
     Service = {
       ExecStart = "${pkgs.wayvnc}/bin/wayvnc 0.0.0.0 5900";
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 2;
     };
     Install = {
@@ -567,6 +567,12 @@ in
         hl.bind("up",    hl.dsp.window.resize({ x = 0,   y = -10, relative = true }), { repeating = true })
         hl.bind("down",  hl.dsp.window.resize({ x = 0,   y = 10,  relative = true }), { repeating = true })
         hl.bind("escape", hl.dsp.submap("reset"))
+      end)
+
+      -- Disable local keybinds while controlling a remote desktop.
+      hl.bind(mod .. " + F12", hl.dsp.submap("passthrough"))
+      hl.define_submap("passthrough", function()
+        hl.bind(mod .. " + F12", hl.dsp.submap("reset"))
       end)
 
       -- Autostart (exec-once equivalents)
