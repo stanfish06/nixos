@@ -155,8 +155,10 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  # Talescale
+  # Remote desktop over Tailscale
   services.tailscale.enable = true;
+  programs.wayvnc.enable = true;
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 5900 ];
 
   # Vial keyboard access over hidraw (https://get.vial.today/manual/linux-udev.html)
   services.udev.extraRules = ''

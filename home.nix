@@ -254,6 +254,22 @@ in
       After = [ "graphical-session-pre.target" ];
     };
   };
+  systemd.user.services.wayvnc = {
+    Unit = {
+      Description = "WayVNC server for Hyprland";
+      ConditionEnvironment = "XDG_CURRENT_DESKTOP=Hyprland";
+      PartOf = [ "wayland-session.target" ];
+      After = [ "wayland-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.wayvnc}/bin/wayvnc 0.0.0.0 5900";
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
+    Install = {
+      WantedBy = [ "wayland-session.target" ];
+    };
+  };
   systemd.user.services.quickshell = {
     Unit = {
       Description = "QuickShell";
@@ -966,6 +982,7 @@ in
   };
   home.packages = with pkgs; [
     # useful tools
+    tigervnc
     wlr-randr
     alsa-utils
     fzf
