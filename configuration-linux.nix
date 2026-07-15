@@ -155,6 +155,8 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+  # Talescale
+  services.tailscale.enable = true;
 
   # Vial keyboard access over hidraw (https://get.vial.today/manual/linux-udev.html)
   services.udev.extraRules = ''
