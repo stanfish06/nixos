@@ -175,6 +175,13 @@
 
   programs.firefox.enable = true;
 
+  # weekly audit (2026-07-16): initialPassword is a weak, hardcoded first-boot
+  # password. It only seeds the account if unset, so re-applying this config
+  # will not reset a password you've since changed. Still, consider migrating
+  # to users.users.<name>.hashedPasswordFile (e.g. via sops-nix/agenix) so the
+  # weak default isn't checked into git at all. Left as-is this week: changing
+  # password handling is opinionated and risked lockout without a way to
+  # verify a full nixos-rebuild in this sandboxed audit environment.
   users.users.stan = {
     isNormalUser = true;
     description = "stan";

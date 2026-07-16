@@ -19,6 +19,8 @@
   ];
 
   programs.zsh.enable = true;
+  # weekly audit (2026-07-16): see configuration-linux.nix for the
+  # initialPassword note — same weak hardcoded first-boot password here.
   users.users.nixos = {
     isNormalUser = true;
     shell = pkgs.zsh;
