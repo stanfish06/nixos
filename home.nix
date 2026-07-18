@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 let
@@ -601,10 +600,6 @@ in
     theme = {
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
-    };
-    cursorTheme = {
-      name = "Bibata-Modern-Classic";
-      package = pkgs.bibata-cursors;
     };
     gtk3.extraConfig = {
       "gtk-application-prefer-dark-theme" = true;
