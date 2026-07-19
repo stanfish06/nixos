@@ -112,8 +112,8 @@ in
                         systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
                         dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
                         systemctl --user start wayland-session.target
-        		# this requires wlr-randr
-        		wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
+                        # this requires wlr-randr
+                        wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
 
                         while systemctl --user is-active -q dwl-session.scope; do
                             sleep 1
@@ -136,7 +136,7 @@ in
 
                 export XDG_CURRENT_DESKTOP=Hyprland
                 export XDG_SESSION_DESKTOP=Hyprland
-        	# use official binary start-hyprland to launch hyprland
+                # use official binary start-hyprland to launch hyprland
                 systemd-run --user --scope --unit=hyprland-session --collect start-hyprland &
 
                 # wait until wayland socket is ready
