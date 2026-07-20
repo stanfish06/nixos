@@ -119,6 +119,7 @@
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = false;
   networking.networkmanager.wifi.backend = "wpa_supplicant"; # this is needed for enterprise wifi
+  services.resolved.enable = true;
   # Set your time zone.
   time.timeZone = "America/New_York";
   # Select internationalisation properties.
