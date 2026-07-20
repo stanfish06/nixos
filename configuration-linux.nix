@@ -112,6 +112,10 @@
   # CVE-2026-46300 (Fragnesia, CVSS 7.8): XFRM ESP-in-TCP priv-esc via skb_try_coalesce;
   #   esp4/esp6 kept for VPN — accepted risk; kernel patch released 2026-05-13.
   # esp4/esp6 (IPsec ESP) are intentionally kept enabled for VPN use.
+  # CVE-2026-53366 (IPv4 OOB write in ip_output.c, CVSS 7.8, local): fixed upstream in
+  #   6.18.38; the pinned nixpkgs kernel was already confirmed at 6.18.38 as of the
+  #   2026-07-19 audit, so no blacklist/mitigation is needed here — tracked for the next
+  #   `nix flake update` to confirm the pin hasn't regressed below that version.
   boot.extraModprobeConfig = ''
     install rxrpc /bin/false
   '';
