@@ -47,6 +47,8 @@ With no selector, `build` auto-detects the current managed hostname. Multi-host
 builds only build closures in the local Nix store; they do not activate or
 deploy configurations to other machines.
 
+If switch through ssh, spawn a tmux server first then switch inside of it.
+
 Routine `build` and `switch` commands do not write `flake.lock`. Update locked
 inputs explicitly:
 
