@@ -694,6 +694,9 @@ in
       settings = {
         idiomatic_version_file_enable_tools = [ ];
         experimental = true;
+        # nix-ld handles upstream Node binaries without pinning them to a
+        # garbage-collectable Nix store interpreter.
+        node.compile = false;
       };
     };
   };
