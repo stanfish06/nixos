@@ -1,6 +1,8 @@
 # NixOS configuration
 
-This flake manages two physical NixOS hosts and retains the WSL configuration.
+This flake manages two physical NixOS hosts, retains the WSL configuration,
+and carries a draft nix-darwin profile for the MacBook (see
+[macOS](#macos-nix-darwin) below).
 
 | Selector | Hostname / flake output | Host module |
 | --- | --- | --- |
@@ -48,6 +50,30 @@ builds only build closures in the local Nix store; they do not activate or
 deploy configurations to other machines.
 
 If switch through ssh, spawn a tmux server first then switch inside of it.
+
+## macOS (nix-darwin)
+
+`darwinConfigurations.macbook-1` manages the Apple Silicon MacBook with
+[nix-darwin](https://github.com/nix-darwin/nix-darwin);
+`configuration-darwin.nix` and `home-darwin.nix` hold the system and
+home-manager halves. `build.sh` only dispatches NixOS hosts, so use
+darwin-rebuild directly. Bootstrap after installing Nix:
+
+```bash
+nix flake lock
+sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#macbook-1
+```
+
+Subsequent switches:
+
+```bash
+sudo darwin-rebuild switch --flake .#macbook-1
+```
+
+Casks without a nixpkgs equivalent stay in Homebrew, declared under
+`homebrew.casks` in `configuration-darwin.nix`;
+`homebrew.onActivation.cleanup = "none"` keeps existing brew installs
+untouched while the migration is in progress.
 
 Routine `build` and `switch` commands do not write `flake.lock`. Update locked
 inputs explicitly:
