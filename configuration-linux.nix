@@ -209,6 +209,7 @@
     new.libtool
     # others
     new.tmux
+    new.mosh # resilient ssh connection
     unstable.neovim
     new.zsh
     new.alacritty
