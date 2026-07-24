@@ -219,6 +219,8 @@
     # others
     new.tmux
     new.eternal-terminal
+    # xterm-ghostty terminfo so ssh/et from Ghostty resolves TERM 
+    ghostty.terminfo
     unstable.neovim
     new.zsh
     new.alacritty
