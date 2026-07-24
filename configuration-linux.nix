@@ -179,6 +179,8 @@
 
   programs.firefox.enable = true;
 
+  programs.mosh.enable = true; # resilient ssh connection
+
   users.users.stan = {
     isNormalUser = true;
     description = "stan";
@@ -209,7 +211,6 @@
     new.libtool
     # others
     new.tmux
-    new.mosh # resilient ssh connection
     unstable.neovim
     new.zsh
     new.alacritty
