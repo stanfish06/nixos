@@ -168,7 +168,14 @@
     extraSetFlags = [ "--ssh" ];
   };
   programs.wayvnc.enable = true;
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 5900 ];
+  # 5900: wayvnc remote desktop; 2022: eternal-terminal (etserver)
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
+    5900
+    2022
+  ];
+
+  # Resilient ssh
+  services.eternal-terminal.enable = true;
 
   # Vial keyboard access over hidraw (https://get.vial.today/manual/linux-udev.html)
   services.udev.extraRules = ''
@@ -211,6 +218,7 @@
     new.libtool
     # others
     new.tmux
+    new.eternal-terminal
     unstable.neovim
     new.zsh
     new.alacritty
