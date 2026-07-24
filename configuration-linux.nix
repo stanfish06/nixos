@@ -165,7 +165,11 @@
   # Remote desktop over Tailscale
   services.tailscale = {
     enable = true;
-    extraSetFlags = [ "--ssh" ];
+    # --operator lets `stan` run tailscale (incl. Taildrop `file cp`) without sudo
+    extraSetFlags = [
+      "--ssh"
+      "--operator=stan"
+    ];
   };
   programs.wayvnc.enable = true;
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 5900 ];
