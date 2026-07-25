@@ -656,6 +656,12 @@ in
     initContent = ''
       export PATH="$PATH:$HOME/.config/kitty/scripts"
       export XDG_DATA_HOME="$HOME/.local/share"
+      # send <file>...  — Taildrop file(s) back to the MacBook over Tailscale.
+      # Receive them there with `getfiles`. Needs --operator=stan (set in config).
+      send() {
+        if [ "$#" -eq 0 ]; then echo "usage: send <file>..."; return 1; fi
+        tailscale file cp "$@" stans-macbook-pro:
+      }
       # Unset WAYLAND_DISPLAY if the socket doesn't actually exist (fixes wl-copy in SSH/TTY)
       if [[ -n "''${WAYLAND_DISPLAY:-}" ]] && [[ -n "''${XDG_RUNTIME_DIR:-}" ]] && [[ ! -S "''${XDG_RUNTIME_DIR}/''${WAYLAND_DISPLAY}" ]]; then
           unset WAYLAND_DISPLAY
