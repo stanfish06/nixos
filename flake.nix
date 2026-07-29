@@ -12,6 +12,10 @@
       url = "github:nix-community/home-manager/release-26.05"; # keep home manager same version as nixpkgs
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05"; # keep nix-darwin same version as nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
@@ -111,6 +115,41 @@
 
         nixos-beelink-1 = mkLinuxSystem ./hosts/beelink-1/default.nix;
         nixos-gmktec-1 = mkLinuxSystem ./hosts/gmktec-1/default.nix;
+      };
+
+      # macOS is outside build.sh (that dispatcher only discovers NixOS hosts
+      # under hosts/); switch with darwin-rebuild directly:
+      #   sudo darwin-rebuild switch --flake .#macbook-1
+      darwinConfigurations = {
+        macbook-1 = inputs.nix-darwin.lib.darwinSystem {
+          modules = [
+            {
+              nixpkgs.hostPlatform = "aarch64-darwin";
+              # same unstable/new overlays as the linux hosts, minus the
+              # linux-only overlays (dolphin, claude-desktop, neovim-nightly)
+              nixpkgs.overlays = [
+                (final: prev: {
+                  unstable = import inputs.nixpkgs-unstable {
+                    system = prev.stdenv.hostPlatform.system;
+                    config.allowUnfree = true;
+                  };
+                  new = import inputs.nixpkgs-new {
+                    system = prev.stdenv.hostPlatform.system;
+                    config.allowUnfree = true;
+                  };
+                })
+              ];
+            }
+            inputs.home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-bak";
+              home-manager.users.stan = ./home-darwin.nix;
+            }
+            ./configuration-darwin.nix
+          ];
+        };
       };
     };
 }
