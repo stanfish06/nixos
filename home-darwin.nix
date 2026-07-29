@@ -73,7 +73,7 @@
     # its own ssh, and the nix one lacks keychain (UseKeychain) integration
     openssh
     # macos gui (replaces casks)
-    aerospace
+    unstable.aerospace # 26.05's 0.20.3 ignores after-startup-command; 0.21.x works
     sketchybar
     kitty
     wezterm

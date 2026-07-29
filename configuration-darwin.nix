@@ -39,11 +39,15 @@
 
   # not services.aerospace: that module always passes a nix-generated
   # --config-path, ignoring the chezmoi-managed ~/.config/aerospace config.
-  # systemPath on PATH so exec-and-forget/exec-on-workspace-change resolve
-  # sketchybar and lua from the nix profiles.
+  # PATH so exec-and-forget/exec-on-workspace-change resolve sketchybar and
+  # lua from the nix profiles; the per-user dir must be spelled out because
+  # systemPath's $USER/$HOME entries are never expanded by launchd.
   launchd.user.agents.aerospace = {
-    command = "${pkgs.aerospace}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace";
-    path = [ config.environment.systemPath ];
+    command = "${pkgs.unstable.aerospace}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace";
+    path = [
+      "/etc/profiles/per-user/stan/bin"
+      config.environment.systemPath
+    ];
     serviceConfig = {
       KeepAlive = true;
       RunAtLoad = true;
