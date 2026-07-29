@@ -53,7 +53,7 @@
     # lua tooling
     lua5_4
     lua-language-server
-    luacheck
+    lua54Packages.luacheck # not a top-level attr; match lua5_4 above
     stylua
     # build tools
     cmake

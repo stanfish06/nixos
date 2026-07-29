@@ -3,7 +3,6 @@
   # nix-darwin system configuration for the macbook (draft).
   #
   # Bootstrap (after installing nix itself):
-  #   nix flake lock   # add the new nix-darwin input to flake.lock
   #   sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#macbook-1
   # Subsequent switches:
   #   sudo darwin-rebuild switch --flake .#macbook-1

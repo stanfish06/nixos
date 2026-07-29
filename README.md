@@ -60,7 +60,6 @@ home-manager halves. `build.sh` only dispatches NixOS hosts, so use
 darwin-rebuild directly. Bootstrap after installing Nix:
 
 ```bash
-nix flake lock
 sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#macbook-1
 ```
 
