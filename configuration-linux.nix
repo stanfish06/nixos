@@ -116,6 +116,15 @@
   #   6.18.38; the pinned nixpkgs kernel was already confirmed at 6.18.38 as of the
   #   2026-07-19 audit, so no blacklist/mitigation is needed here — tracked for the next
   #   `nix flake update` to confirm the pin hasn't regressed below that version.
+  # CVE-2026-53362 (ipv6_frag_escape, OOB write in __ip6_append_data() -> container/
+  #   namespace escape to host root): fixed upstream in 6.18.38, same point release
+  #   already confirmed above — relevant here since virtualisation.docker is enabled
+  #   and `stan` is in the docker group (unprivileged netns creation). No further
+  #   action needed while the pin stays >= 6.18.38; re-check on the next flake update.
+  # CVE-2026-53359 ("Januscape", KVM shadow-MMU use-after-free, guest-to-host escape):
+  #   fixed upstream in 6.18.38, also covered by the confirmed pin. Lower relevance
+  #   here since this flake has no KVM/libvirt guests configured, tracked for
+  #   completeness alongside the other 2026-07-19-window kernel CVEs.
   boot.extraModprobeConfig = ''
     install rxrpc /bin/false
   '';
