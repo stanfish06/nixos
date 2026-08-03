@@ -116,6 +116,11 @@
   #   6.18.38; the pinned nixpkgs kernel was already confirmed at 6.18.38 as of the
   #   2026-07-19 audit, so no blacklist/mitigation is needed here — tracked for the next
   #   `nix flake update` to confirm the pin hasn't regressed below that version.
+  # CVE-2026-46242 (Bad Epoll, CVSS 7.8, local root via eventpoll UAF): fixed in
+  #   stable 6.18.33+; pinned kernel confirmed 6.18.38 as of 2026-07-19, so already
+  #   patched — no action needed, re-verify on the next successful flake update.
+  # CVE-2026-64600 (RefluXFS, XFS reflink race, local root): both physical hosts use
+  #   ext4 (see hosts/*/hardware-configuration.nix), not XFS — not applicable here.
   boot.extraModprobeConfig = ''
     install rxrpc /bin/false
   '';
