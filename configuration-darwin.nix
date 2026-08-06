@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 {
+  imports = [
+    ./miniflux-darwin.nix
+  ];
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
@@ -37,11 +41,6 @@
     ];
   };
 
-  # not services.aerospace: that module always passes a nix-generated
-  # --config-path, ignoring the chezmoi-managed ~/.config/aerospace config.
-  # PATH so exec-and-forget/exec-on-workspace-change resolve sketchybar and
-  # lua from the nix profiles; the per-user dir must be spelled out because
-  # systemPath's $USER/$HOME entries are never expanded by launchd.
   launchd.user.agents.aerospace = {
     command = "${pkgs.unstable.aerospace}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace";
     path = [

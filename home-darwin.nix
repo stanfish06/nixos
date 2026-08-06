@@ -1,23 +1,7 @@
 { pkgs, ... }:
 {
-  # home-manager configuration for the macbook (draft).
-  #
-  # This intentionally does not import home.nix: that file mixes portable
-  # config with linux-only packages (wayland tools, rofi, dolphin, ...).
-  # The long-term plan is to split home.nix into home-common.nix +
-  # home-linux.nix + home-darwin.nix and import the common part here, which
-  # brings the programs.* blocks (zsh, starship, atuin, mise, ...) along.
-  # Dotfiles keep coming from chezmoi / ~/.config/dots for now; port the
-  # mkOutOfStoreSymlink entries from home.nix when ready. Note home-manager
-  # generating ~/.zshrc etc. will conflict with chezmoi-managed copies
-  # (existing files get backed up with the .hm-bak suffix).
-
   home.stateVersion = "26.05";
 
-  # replaces the explicitly installed brew formulas (brew leaves) and the
-  # gui casks that exist in nixpkgs. brew-only dependencies (libpng,
-  # icu4c, ...) disappear once the formulas that pulled them in are
-  # uninstalled. gui apps land in ~/Applications/Home Manager Apps.
   home.packages = with pkgs; [
     # shell + cli
     atuin
@@ -61,6 +45,9 @@
     automake
     libtool
     shellcheck
+    # formatters
+    treefmt
+    nixfmt
     # runtimes / version manager
     mise
     nodejs

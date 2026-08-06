@@ -74,6 +74,31 @@ Casks without a nixpkgs equivalent stay in Homebrew, declared under
 `homebrew.onActivation.cleanup = "none"` keeps existing brew installs
 untouched while the migration is in progress.
 
+### Miniflux
+
+`miniflux-darwin.nix` runs a local [Miniflux](https://miniflux.app) reader at
+<http://localhost:8080> backed by PostgreSQL. Both are `launchd` user agents
+owned by `stan`, so they start at login, not at boot:
+
+| Agent | Data | Log |
+| --- | --- | --- |
+| `org.nixos.postgresql` | `~/.local/share/postgresql/17` | `~/Library/Logs/postgresql.log` |
+| `org.nixos.miniflux` | that cluster's `miniflux` database | `~/Library/Logs/miniflux.log` |
+
+Create admin account:
+
+```bash
+miniflux-cli -create-admin
+```
+
+`miniflux-cli` is a wrapper that supplies `DATABASE_URL`; use it for the other
+maintenance subcommands too (`-reset-password`, `-flush-sessions`,
+`-refresh-feeds`). Restart the reader with:
+
+```bash
+launchctl kickstart -k gui/$(id -u)/org.nixos.miniflux
+```
+
 Routine `build` and `switch` commands do not write `flake.lock`. Update locked
 inputs explicitly:
 
