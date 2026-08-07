@@ -24,6 +24,8 @@
     # git
     gh
     lazygit
+    # agent sandboxes
+    new.docker-sbx
     # terminal multiplexing
     tmux
     sesh

@@ -1033,6 +1033,8 @@ in
     kdePackages.gwenview
     kdePackages.konsole
     unstable.vial
+    # agent sandboxes; `sbx` needs the docker daemon from configuration-linux.nix
+    new.docker-sbx
     # c/c++
     clang-tools
     gcc-unwrapped
