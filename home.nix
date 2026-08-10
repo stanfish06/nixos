@@ -23,6 +23,18 @@ let
         ];
     };
   wallpaper = "${config.home.homeDirectory}/.config/dots/my-configs/img/robot-1-darker.jpg";
+  # Single source of truth for the primary monitor, referenced from the dwl
+  # launcher script, the niri config, and the Hyprland config below.
+  monitorOutput = "HDMI-A-1";
+  monitorResolution = "1920x1080";
+  monitorRefreshHz = "120";
+  sharedLsAliases = {
+    le = "eza --group-directories-first";
+    led = "eza --group-directories-last";
+    larth = "eza -lah -snew --git --group-directories-first";
+    lt = "eza --tree --level=2 --group-directories-first";
+    lta = "eza --tree --level=2 -a --group-directories-first";
+  };
   mkWebApp =
     {
       name,
@@ -112,7 +124,7 @@ in
         dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
         systemctl --user start wayland-session.target
         # this requires wlr-randr
-        wlr-randr --output HDMI-A-1 --mode 1920x1080@120Hz
+        wlr-randr --output ${monitorOutput} --mode ${monitorResolution}@${monitorRefreshHz}Hz
 
         while systemctl --user is-active -q dwl-session.scope; do
             sleep 1
@@ -324,8 +336,8 @@ in
     };
     "niri/config.kdl" = {
       text = ''
-        output "HDMI-A-1" {
-            mode "1920x1080@120.000"
+        output "${monitorOutput}" {
+            mode "${monitorResolution}@${monitorRefreshHz}.000"
             position x=0 y=0
         }
 
@@ -441,8 +453,8 @@ in
     extraConfig = ''
       local mod = "SUPER"
 
-      -- Monitors: prioritize HDMI-A-1, auto-detect everything else
-      hl.monitor({ output = "HDMI-A-1", mode = "1920x1080@120", position = "0x0", scale = 1 })
+      -- Monitors: prioritize ${monitorOutput}, auto-detect everything else
+      hl.monitor({ output = "${monitorOutput}", mode = "${monitorResolution}@${monitorRefreshHz}", position = "0x0", scale = 1 })
       hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 
       -- Environment
@@ -614,17 +626,12 @@ in
   };
   programs.zsh = {
     enable = true;
-    shellAliases = {
+    shellAliases = sharedLsAliases // {
       ls = "ls"; # this is intentional in order to keep original ls
       l = "eza -1 --group-directories-first";
-      le = "eza --group-directories-first";
-      led = "eza --group-directories-last";
       la = "eza -a --group-directories-first";
       ll = "eza -lh --git --group-directories-first";
       lla = "eza -lah --git --group-directories-first";
-      larth = "eza -lah -snew --git --group-directories-first";
-      lt = "eza --tree --level=2 --group-directories-first";
-      lta = "eza --tree --level=2 -a --group-directories-first";
     };
     oh-my-zsh = {
       enable = true;
@@ -670,15 +677,10 @@ in
   };
   programs.nushell = {
     enable = true;
-    shellAliases = {
+    shellAliases = sharedLsAliases // {
       l = "ls";
       ll = "ls -l";
       eza = "eza --icons auto";
-      le = "eza --group-directories-first";
-      led = "eza --group-directories-last";
-      larth = "eza -lah -snew --git --group-directories-first";
-      lt = "eza --tree --level=2 --group-directories-first";
-      lta = "eza --tree --level=2 -a --group-directories-first";
     };
   };
   programs.atuin = {
