@@ -1011,6 +1011,7 @@ in
     unstable.television
     zip
     unzip
+    worktrunk
     # vps
     hiddify
     # notes
