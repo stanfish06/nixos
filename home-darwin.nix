@@ -21,6 +21,7 @@
     television
     yazi
     zoxide
+    worktrunk
     # git
     gh
     lazygit
