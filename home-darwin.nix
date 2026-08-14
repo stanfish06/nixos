@@ -68,6 +68,7 @@
     kitty
     wezterm
     ghostty-bin # ghostty on darwin ships as a prebuilt binary package
+    unstable.t3code
     # editor
     emacs
   ];
