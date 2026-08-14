@@ -49,11 +49,11 @@
         ]
       },
       "locked": {
-        "path": "./dolphin-overlay",
+        "path": "./pkgs/dolphin-overlay",
         "type": "path"
       },
       "original": {
-        "path": "./dolphin-overlay",
+        "path": "./pkgs/dolphin-overlay",
         "type": "path"
       },
       "parent": []
@@ -306,7 +306,8 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
         "nixpkgs-new": "nixpkgs-new",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "t3code-nightly": "t3code-nightly"
       }
     },
     "systems": {
@@ -321,6 +322,23 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "t3code-nightly": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786707310,
+        "narHash": "sha256-19X1cOK6NJLmNeNwCi4nWZNl0yKLesSIFmodpFjBn6Q=",
+        "owner": "pingdotgg",
+        "repo": "t3code",
+        "rev": "184d8ef33b8f42869fb84f66a33984185b81dc47",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pingdotgg",
+        "ref": "v0.0.34-nightly.20260814.1093",
+        "repo": "t3code",
         "type": "github"
       }
     }

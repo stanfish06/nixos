@@ -15,6 +15,12 @@ Both physical hosts import the root `local-hosts.nix`; WSL continues to use its
 separate configuration. `build.sh` discovers only physical hosts under
 `hosts/`; the WSL flake output is outside this dispatcher.
 
+Locally maintained packages and overlays live in `pkgs/`: the `dolphin-overlay`
+path flake input, plus the `t3code-nightly.nix` and `vial-darwin.nix` overlays
+consumed by `darwinConfigurations.macbook-1`. Service modules live in
+`modules/`, currently `miniflux-darwin.nix` imported by
+`configuration-darwin.nix`.
+
 ## Build and switch
 
 Switch the current managed host by auto-detecting its hostname:
@@ -76,7 +82,7 @@ untouched while the migration is in progress.
 
 ### Miniflux
 
-`miniflux-darwin.nix` runs a local [Miniflux](https://miniflux.app) reader at
+`modules/miniflux-darwin.nix` runs a local [Miniflux](https://miniflux.app) reader at
 <http://localhost:8080> backed by PostgreSQL. Both are `launchd` user agents
 owned by `stan`, so they start at login, not at boot:
 

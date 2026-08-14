@@ -47,7 +47,7 @@ in
   home.sessionPath = [
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
-    "$HOME/.config/dots/my-configs/rofi/scripts" # rofi scripts
+    "$HOME/.config/dots/my-configs/rofi/scripts"
   ];
   home.file = {
     ".npmrc" = {
@@ -135,7 +135,6 @@ in
 
         export XDG_CURRENT_DESKTOP=Hyprland
         export XDG_SESSION_DESKTOP=Hyprland
-        # use official binary start-hyprland to launch hyprland
         systemd-run --user --scope --unit=hyprland-session --collect start-hyprland &
 
         # wait until wayland socket is ready
@@ -437,7 +436,6 @@ in
     xwayland.enable = true;
     systemd.enable = false; # use custom start-hyprland script instead
     configType = "lua"; # Hyprland 0.55+ / home-manager 26.05 default
-    # Lua config (hl.* API). Translated from the old hyprlang block.
     extraConfig = ''
       local mod = "SUPER"
 

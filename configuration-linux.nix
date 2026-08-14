@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 {
   pkgs,
   ...
@@ -54,19 +50,17 @@
       "Noto Sans Mono CJK SC"
     ];
   };
-  # docker
   virtualisation.docker = {
     enable = true;
     daemon.settings = {
       bip = "172.30.0.1/24"; # Need to set this otherwise it collides with school's netauth gateway
     };
   };
-  # steam
   nixpkgs.config.allowUnfree = true;
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
   };
   # currently not working well: have weird pixels
@@ -102,7 +96,6 @@
     libxcb
     zlib
   ];
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   # CVE-2026-31431 (Copy Fail): algif_aead blacklist lifted — both hosts confirmed on
@@ -111,7 +104,6 @@
   # CVE-2026-31635 (DirtyDecrypt, CVSS 7.5): rxrpc blacklist covers this (RXGK auth runs atop rxrpc).
   # CVE-2026-46300 (Fragnesia, CVSS 7.8): XFRM ESP-in-TCP priv-esc via skb_try_coalesce;
   #   esp4/esp6 kept for VPN — accepted risk; kernel patch released 2026-05-13.
-  # esp4/esp6 (IPsec ESP) are intentionally kept enabled for VPN use.
   # CVE-2026-53366 (IPv4 OOB write in ip_output.c, CVSS 7.8, local): fixed upstream in
   #   6.18.38; the pinned nixpkgs kernel was already confirmed at 6.18.38 as of the
   #   2026-07-19 audit, so no blacklist/mitigation is needed here — tracked for the next
@@ -119,14 +111,11 @@
   boot.extraModprobeConfig = ''
     install rxrpc /bin/false
   '';
-  # Enable networking
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.powersave = false;
   networking.networkmanager.wifi.backend = "wpa_supplicant"; # this is needed for enterprise wifi
   services.resolved.enable = true;
-  # Set your time zone.
   time.timeZone = "America/New_York";
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
@@ -139,21 +128,17 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-  # Enable the X11 windowing system.
   services.xserver.enable = true;
-  # Enable the GNOME Desktop Environment.
   services.displayManager.gdm = {
     enable = true;
     autoSuspend = false;
   };
   services.desktopManager.gnome.enable = true;
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
   };
-  # Enable CUPS to print documents.
   services.printing.enable = true;
-  # Enable sound with pipewire.
+  # sound: pipewire replaces pulseaudio
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {

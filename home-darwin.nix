@@ -68,7 +68,8 @@
     kitty
     wezterm
     ghostty-bin # ghostty on darwin ships as a prebuilt binary package
-    unstable.t3code
+    t3code-nightly # nightly channel, see pkgs/t3code-nightly.nix
+    vial-darwin # linux uses unstable.vial; darwin repacks the dmg, see pkgs/vial-darwin.nix
     # editor
     emacs
   ];

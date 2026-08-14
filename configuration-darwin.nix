@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./miniflux-darwin.nix
+    ./modules/miniflux-darwin.nix
   ];
 
   nix.settings.experimental-features = [

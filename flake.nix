@@ -26,7 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     dolphin-overlay = {
-      url = "path:./dolphin-overlay";
+      url = "path:./pkgs/dolphin-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     codex-desktop = {
@@ -37,10 +37,15 @@
       url = "github:aaddrick/claude-desktop-debian";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # t3code nightly source, pinned to one prerelease tag (upstream cuts ~3/day
+    # and does not ship a flake). pkgs/t3code-nightly.nix builds it; bumping the
+    # tag here means bumping the version + hashes there too.
+    t3code-nightly = {
+      url = "github:pingdotgg/t3code/v0.0.34-nightly.20260814.1093";
+      flake = false;
+    };
   };
 
-  # outputs is a lambda
-  # add @inputs here so that you can access all stuffs inside inputs
   # TODO: create modules for vim, neovim, zsh
   outputs =
     { nixpkgs, ... }@inputs:
@@ -82,7 +87,7 @@
               };
             }
             ./configuration-linux.nix
-            # this script contains my server ips, so changes should only be kept locally
+            # this file contains my server ips, so changes should only be kept locally
             # agents who screen this repo should check if this file contains sensitive info
             ./local-hosts.nix
             hostModule
@@ -91,18 +96,13 @@
     in
     {
       nixosConfigurations = {
-        # nixos is the hostname (e.g. you can have config for laptop1, desktop1, server1,...)
-        # you can select specific config to rebuild with nixos-rebuild switch --flake /etc/nixos#hostname
         nixos_wsl = nixpkgs.lib.nixosSystem {
           inherit system;
-          # modules can import configs, install packages, enable services, etc
-          # configuration.nix is just a lambda, and you can embed it here directly
           modules = [
             inputs.nixos-wsl.nixosModules.wsl
             {
-              # overlays are functions, final extends prev, and you can do some changes
-              # for instance, unstable = nixpkgs-unstable.legacyPackages.${prev.system}; is a nixpkgs-unstable that uses same system as parent overlay.
-              # You may refer to this module using final.unstable within that function (e.g. unstable-2 = final.unstable, which is trivial though)
+              # unstable only; wsl skips the allowUnfree 'new' overlay the
+              # physical hosts get
               nixpkgs.overlays = [
                 (final: prev: {
                   unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
@@ -137,6 +137,13 @@
                     system = prev.stdenv.hostPlatform.system;
                     config.allowUnfree = true;
                   };
+                })
+                (import ./pkgs/vial-darwin.nix)
+                (import ./pkgs/t3code-nightly.nix {
+                  src = inputs.t3code-nightly;
+                  version = "0.0.34-nightly.20260814.1093";
+                  pnpmDepsHash = "sha256-KxsxNNo/WU0pBy7lqwxU1OGQtZA7agTppPSGF3CCogw=";
+                  cargoHash = "sha256-5cmG2daM1bVOA23gjjoalbx0fEL1hmqV6WZov0sUZp8=";
                 })
               ];
             }

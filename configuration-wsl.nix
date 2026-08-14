@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 # NixOS-WSL specific options are documented on the NixOS-WSL repository:
 # https://github.com/nix-community/NixOS-WSL
 
@@ -27,7 +23,8 @@
   users.users.root = {
     initialPassword = "123456";
   };
-  # (do not massively use 26.05/unstable on wsl - channel is now nixos-26.05)
+  # plain nixpkgs here on purpose; the physical hosts' unstable/new pins are
+  # deliberately not used on wsl
   environment.systemPackages = with pkgs; [
     # basic tools
     git
