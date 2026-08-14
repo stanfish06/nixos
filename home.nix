@@ -23,8 +23,7 @@ let
         ];
     };
   wallpaper = "${config.home.homeDirectory}/.config/dots/my-configs/img/robot-1-darker.jpg";
-  # Single source of truth for the primary monitor, referenced from the dwl
-  # launcher script, the niri config, and the Hyprland config below.
+  # primary monitor; the dwl, niri and hyprland configs below all derive from this
   monitorOutput = "HDMI-A-1";
   monitorResolution = "1920x1080";
   monitorRefreshHz = "120";
@@ -451,7 +450,7 @@ in
     extraConfig = ''
       local mod = "SUPER"
 
-      -- Monitors: prioritize ${monitorOutput}, auto-detect everything else
+      -- Monitors: the primary output first, then an empty match to auto-detect the rest
       hl.monitor({ output = "${monitorOutput}", mode = "${monitorResolution}@${monitorRefreshHz}", position = "0x0", scale = 1 })
       hl.monitor({ output = "", mode = "preferred", position = "auto", scale = 1 })
 
