@@ -2,6 +2,7 @@
 {
   imports = [
     ./modules/miniflux-darwin.nix
+    ./modules/apple-container-darwin.nix
   ];
 
   nix.settings.experimental-features = [
