@@ -39,6 +39,7 @@
       "codexbar"
       "copilot-cli"
       "miniconda"
+      "raycast"
     ];
   };
 
