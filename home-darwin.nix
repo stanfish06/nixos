@@ -56,6 +56,9 @@
     nodejs
     # media
     ffmpeg
+    imagemagick
+    ghostscript
+    tectonic
     # libs that were explicitly brew-installed (likely for local builds)
     hdf5
     c-blosc
