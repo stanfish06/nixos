@@ -60,6 +60,15 @@
             {
               nixpkgs.overlays = [
                 (final: prev: {
+                  deskflow = prev.deskflow.overrideAttrs (_old: {
+                    version = "1.26.0.399";
+                    src = final.fetchFromGitHub {
+                      owner = "deskflow";
+                      repo = "deskflow";
+                      rev = "a0a368928c2c3ff93e85456aa6f4f9d90d0ef28e";
+                      hash = "sha256-l2bEN77A/VsIdphq4WU9vNkzs43Cursb/EGSbZMvUF0=";
+                    };
+                  });
                   unstable = import inputs.nixpkgs-unstable {
                     system = prev.stdenv.hostPlatform.system;
                     config.allowUnfree = true;

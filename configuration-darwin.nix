@@ -32,12 +32,17 @@
     enable = true;
     onActivation.cleanup = "none";
     taps = [
+      {
+        name = "deskflow/homebrew-tap";
+        trusted = true;
+      }
       "manaflow-ai/cmux"
     ];
     casks = [
       "cmux"
       "codexbar"
       "copilot-cli"
+      "deskflow-dev"
       "miniconda"
       "raycast"
     ];
@@ -51,6 +56,17 @@
     ];
     serviceConfig = {
       KeepAlive = true;
+      RunAtLoad = true;
+    };
+  };
+
+  launchd.user.agents.deskflow = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/usr/bin/open"
+        "-a"
+        "Deskflow"
+      ];
       RunAtLoad = true;
     };
   };

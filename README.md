@@ -105,6 +105,24 @@ maintenance subcommands too (`-reset-password`, `-flush-sessions`,
 launchctl kickstart -k gui/$(id -u)/org.nixos.miniflux
 ```
 
+### Deskflow
+
+The Beelink is the keyboard/mouse server. The GMKtec and MacBook are clients:
+
+```text
+nixos-gmktec-1 <- nixos-beelink-1 -> stans-macbook-pro
+```
+
+Deskflow starts with each graphical login. The clients connect to the Beelink's
+LAN address (`192.168.8.222`) with mDNS as a fallback. The first connection on
+each machine still requires accepting the TLS fingerprint and granting the
+Wayland or macOS input-control permission. On macOS, allow Deskflow under both
+Privacy & Security > Accessibility and Input Monitoring.
+
+Clipboard sharing is disabled. TCP 24800 is accepted on the Beelink only from
+`192.168.8.0/24`. Linux and macOS are pinned to Deskflow continuous build
+`1.26.0.399`, which includes the security fixes published after stable 1.26.0.
+
 Routine `build` and `switch` commands do not write `flake.lock`. Update locked
 inputs explicitly:
 
