@@ -7,7 +7,7 @@
 let
   initialDeskflowSettings = pkgs.writeText "deskflow-client-settings" ''
     [client]
-    remoteHost=192.168.8.222,nixos-beelink-1.local
+    remoteHost=192.168.8.222
 
     [core]
     computerName=stans-macbook-pro

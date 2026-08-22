@@ -1,8 +1,20 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
 
   networking.hostName = "nixos-beelink-1";
+
+  # InputCapture-capable portal stack for the Deskflow Wayland server.
+  nixpkgs.overlays = [
+    (final: _prev: {
+      xdg-desktop-portal = final.unstable.xdg-desktop-portal;
+    })
+  ];
+
+  programs.hyprland = {
+    package = pkgs.unstable.hyprland;
+    portalPackage = pkgs.unstable.xdg-desktop-portal-hyprland;
+  };
 
   # Deskflow server for trusted LAN clients.
   networking.firewall.extraCommands = ''
@@ -43,6 +55,12 @@
       '';
     in
     {
+      # NixOS installs Hyprland and its portal for this host.
+      wayland.windowManager.hyprland = {
+        package = null;
+        portalPackage = null;
+      };
+
       home.packages = [ pkgs.deskflow ];
 
       xdg.configFile."Deskflow/deskflow-server.conf".text = ''

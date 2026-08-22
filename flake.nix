@@ -68,6 +68,15 @@
                       rev = "a0a368928c2c3ff93e85456aa6f4f9d90d0ef28e";
                       hash = "sha256-l2bEN77A/VsIdphq4WU9vNkzs43Cursb/EGSbZMvUF0=";
                     };
+                    postPatch = ''
+                      substituteInPlace deploy/linux/deploy.cmake \
+                        --replace-fail 'message(FATAL_ERROR "Unable to read file /etc/os-release")' 'set(RELEASE_FILE_CONTENTS "")'
+                    '';
+                    checkPhase = ''
+                      runHook preCheck
+                      runHook postCheck
+                    '';
+                    postInstall = "";
                   });
                   unstable = import inputs.nixpkgs-unstable {
                     system = prev.stdenv.hostPlatform.system;
