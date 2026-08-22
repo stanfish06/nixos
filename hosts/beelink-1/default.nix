@@ -68,6 +68,7 @@
           nixos-gmktec-1:
           nixos-beelink-1:
           stans-macbook-pro:
+          StanFishDeb:
         end
 
         section: links
@@ -76,8 +77,11 @@
           nixos-beelink-1:
             left = nixos-gmktec-1
             right = stans-macbook-pro
+            down = StanFishDeb
           stans-macbook-pro:
             left = nixos-beelink-1
+          StanFishDeb:
+            up = nixos-beelink-1
         end
 
         section: options
