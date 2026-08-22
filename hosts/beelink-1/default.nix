@@ -65,23 +65,19 @@
 
       xdg.configFile."Deskflow/deskflow-server.conf".text = ''
         section: screens
-          nixos-gmktec-1:
+          stanfish:
           nixos-beelink-1:
           stans-macbook-pro:
-          StanFishDeb:
         end
 
         section: links
-          nixos-gmktec-1:
+          stanfish:
             right = nixos-beelink-1
           nixos-beelink-1:
-            left = nixos-gmktec-1
+            left = stanfish
             right = stans-macbook-pro
-            down = StanFishDeb
           stans-macbook-pro:
             left = nixos-beelink-1
-          StanFishDeb:
-            up = nixos-beelink-1
         end
 
         section: options

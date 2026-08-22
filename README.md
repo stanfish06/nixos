@@ -107,11 +107,16 @@ launchctl kickstart -k gui/$(id -u)/org.nixos.miniflux
 
 ### Deskflow
 
-The Beelink is the keyboard/mouse server. The GMKtec and MacBook are clients:
+The Beelink is the keyboard/mouse server. The clients are `stanfish` (the Arch
+laptop, configured outside this flake) and the MacBook:
 
 ```text
-nixos-gmktec-1 <- nixos-beelink-1 -> stans-macbook-pro
+stanfish <- nixos-beelink-1 -> stans-macbook-pro
 ```
+
+The GMKtec is unlinked for now; `hosts/gmktec-1` still ships its client
+settings, so re-adding it only means putting it back in the server's `screens`
+and `links` sections.
 
 Deskflow starts with each graphical login. The clients connect to the Beelink's
 LAN address (`192.168.8.222`) with mDNS as a fallback. The first connection on
