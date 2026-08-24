@@ -90,6 +90,7 @@
                 })
                 inputs.dolphin-overlay.overlays.default
                 inputs.claude-desktop.overlays.default
+                (import ./pkgs/helium-linux.nix)
               ];
             }
             inputs.home-manager.nixosModules.home-manager

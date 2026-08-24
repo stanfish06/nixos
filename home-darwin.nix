@@ -31,6 +31,10 @@ in
 {
   home.stateVersion = "26.05";
 
+  xdg.configFile."mise/config.toml" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Git/my-configs/mise/config.toml";
+  };
+
   home.activation.initializeDeskflowSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     settings_dir=${lib.escapeShellArg "${config.home.homeDirectory}/Library/Deskflow"}
     if [ ! -e "$settings_dir/Deskflow.conf" ]; then
@@ -40,27 +44,18 @@ in
   '';
 
   home.packages = with pkgs; [
-    # shell + cli
-    atuin
+    # shell + cli; atuin/bat/eza/fd/fzf/jq/ripgrep/zoxide/gh come from mise
     autossh
-    bat
     btop
     chafa
     chezmoi
     clipboard-jh # brew calls this "clipboard"
     coreutils
-    eza
-    fd
-    fzf
-    jq
     mosh
-    ripgrep
     television
     yazi
-    zoxide
     worktrunk
     # git
-    gh
     lazygit
     # agent sandboxes
     new.docker-sbx
@@ -74,23 +69,19 @@ in
     # programs.zsh from home.nix later
     zsh-autosuggestions
     zsh-syntax-highlighting
-    # lua tooling
+    # lua tooling; lua-language-server and stylua come from mise
     lua5_4
-    lua-language-server
     lua54Packages.luacheck # not a top-level attr; match lua5_4 above
-    stylua
     # build tools
     cmake
     meson
     automake
     libtool
-    shellcheck
     # formatters
     treefmt
     nixfmt
-    # runtimes / version manager
+    # version manager; the tools it manages live in mise/config.toml
     mise
-    nodejs
     # media
     ffmpeg
     imagemagick

@@ -43,6 +43,7 @@
       "codexbar"
       "copilot-cli"
       "deskflow-dev"
+      "helium-browser"
       "miniconda"
       "raycast"
     ];

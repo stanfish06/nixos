@@ -59,6 +59,7 @@ in
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
     "$HOME/.config/dots/my-configs/rofi/scripts"
+    "$HOME/.local/share/mise/shims"
   ];
   home.file = {
     ".npmrc" = {
@@ -109,7 +110,7 @@ in
 
         # wait until socket is ready, then start services
         unset WAYLAND_DISPLAY
-        while [ -z "$WAYLAND_DISPLAY" ]; do 
+        while [ -z "$WAYLAND_DISPLAY" ]; do
             sleep 0.1
             export WAYLAND_DISPLAY=wayland-0
             if [ -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY" ]; then
@@ -325,6 +326,9 @@ in
     };
   };
   xdg.configFile = {
+    "mise/config.toml" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/mise/config.toml";
+    };
     "nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
       recursive = true;
@@ -595,15 +599,6 @@ in
   services.mako = {
     enable = true;
   };
-  programs.bat = {
-    enable = true;
-  };
-  programs.eza = {
-    enable = true;
-    enableZshIntegration = true;
-    icons = "auto";
-    git = false;
-  };
   gtk = {
     enable = true;
     theme = {
@@ -625,6 +620,7 @@ in
     enable = true;
     shellAliases = sharedLsAliases // {
       ls = "ls"; # this is intentional in order to keep original ls
+      eza = "eza --icons auto"; # was programs.eza icons option; eza now comes from mise
       l = "eza -1 --group-directories-first";
       la = "eza -a --group-directories-first";
       ll = "eza -lh --git --group-directories-first";
@@ -689,21 +685,8 @@ in
     enable = true;
     enableZshIntegration = true;
     enableNushellIntegration = true;
-    globalConfig = {
-      tools = {
-        uv = "latest";
-        node = "latest";
-        bun = "latest";
-        "aqua:LuaLS/lua-language-server" = "latest";
-      };
-      settings = {
-        idiomatic_version_file_enable_tools = [ ];
-        experimental = true;
-        # nix-ld handles upstream Node binaries without pinning them to a
-        # garbage-collectable Nix store interpreter.
-        node.compile = false;
-      };
-    };
+    # global config is the shared file from my-configs, symlinked via
+    # xdg.configFile; the old globalConfig contents were merged into it
   };
   programs.zoxide = {
     enable = true;
@@ -988,17 +971,12 @@ in
     };
   };
   home.packages = with pkgs; [
-    # useful tools
+    # useful tools; fzf/ripgrep/fd/gh/jq/bat/eza come from mise
     tigervnc
     wlr-randr
     alsa-utils
-    fzf
-    ripgrep
-    fd
     rofi
-    gh
     lazygit
-    jq
     btop
     rclone
     new.yazi
@@ -1029,6 +1007,7 @@ in
     gimp
     unstable.code-cursor
     new.brave
+    helium
     kdePackages.dolphin
     kdePackages.gwenview
     kdePackages.konsole
@@ -1045,13 +1024,10 @@ in
     cargo
     rustc
     rust-analyzer
-    # python
+    # python; pyright comes from mise
     unstable.python3
-    unstable.pyright
     unstable.python3Packages.pip
     unstable.python3Packages.virtualenv
-    # js
-    unstable.nodejs
     # notification
     libnotify
     # dev deps
