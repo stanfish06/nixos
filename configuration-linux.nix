@@ -211,6 +211,7 @@
     # xterm-ghostty terminfo so ssh/et from Ghostty resolves TERM
     ghostty.terminfo
     unstable.neovim
+    unstable.emacs
     new.zsh
     new.alacritty
     new.nixfmt
