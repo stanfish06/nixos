@@ -457,6 +457,11 @@ in
       url = "https://x.com/";
       icon = ./assets/web-apps/x.svg;
     };
+    grok = mkWebApp {
+      name = "Grok";
+      url = "https://grok.com/";
+      icon = ./assets/web-apps/grok.svg;
+    };
   };
   xdg.mimeApps = {
     enable = true;
