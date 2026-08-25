@@ -37,6 +37,12 @@
       url = "github:aaddrick/claude-desktop-debian";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # dotfiles repo (github.com/stanfish06/my-configs), fetched as a plain
+    # source tree and pinned in flake.lock; refresh with ./build.sh update
+    my-configs = {
+      url = "github:stanfish06/my-configs";
+      flake = false;
+    };
     # t3code nightly source, pinned to one prerelease tag (upstream cuts ~3/day
     # and does not ship a flake). pkgs/t3code-nightly.nix builds it; bumping the
     # tag here means bumping the version + hashes there too.
@@ -98,6 +104,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-bak";
+              home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.users.stan = {
                 imports = [
                   ./home.nix
@@ -171,6 +178,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.backupFileExtension = "hm-bak";
+              home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.users.stan = ./home-darwin.nix;
             }
             ./configuration-darwin.nix

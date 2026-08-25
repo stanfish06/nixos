@@ -1,9 +1,13 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
 let
+  # dotfiles from the my-configs flake input (read-only store path,
+  # pinned in flake.lock)
+  myConfigs = inputs.my-configs;
   # hiddify (proxy client)
   hiddify =
     let
@@ -22,7 +26,7 @@ let
           zstd
         ];
     };
-  wallpaper = "${config.home.homeDirectory}/.config/dots/my-configs/img/robot-1-darker.jpg";
+  wallpaper = "${myConfigs}/img/robot-1-darker.jpg";
   # primary monitor; the dwl, niri and hyprland configs below all derive from this
   monitorOutput = "HDMI-A-1";
   monitorResolution = "1920x1080";
@@ -58,7 +62,7 @@ in
   home.sessionPath = [
     "$HOME/.npm-global/bin"
     "$HOME/.local/bin"
-    "$HOME/.config/dots/my-configs/rofi/scripts"
+    "${myConfigs}/rofi/scripts"
     "$HOME/.local/share/mise/shims"
   ];
   home.file = {
@@ -68,31 +72,31 @@ in
       '';
     };
     ".tmux.conf" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/tmux/linux/.tmux.conf";
+      source = "${myConfigs}/tmux/linux/.tmux.conf";
     };
     ".vimrc" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/vim/.vimrc";
+      source = "${myConfigs}/vim/.vimrc";
     };
     ".gitconfig" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/git/.gitconfig";
+      source = "${myConfigs}/git/.gitconfig";
     };
     ".wezterm.lua" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/wezterm/linux/.wezterm.lua";
+      source = "${myConfigs}/wezterm/linux/.wezterm.lua";
     };
     ".emacs" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/emacs/.emacs";
+      source = "${myConfigs}/emacs/.emacs";
     };
     ".emacs.d/myDarkTheme-theme.el" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/emacs/myDarkTheme-theme.el";
+      source = "${myConfigs}/emacs/myDarkTheme-theme.el";
     };
     ".config/yazi/yazi.toml" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/yazi/yazi.toml";
+      source = "${myConfigs}/yazi/yazi.toml";
     };
     ".config/yazi/keymap.toml" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/yazi/keymap.toml";
+      source = "${myConfigs}/yazi/keymap.toml";
     };
     ".local/bin/rofi-scripts" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/rofi/scripts";
+      source = "${myConfigs}/rofi/scripts";
       recursive = true;
     };
     ".local/bin/start-dwl" = {
@@ -327,14 +331,14 @@ in
   };
   xdg.configFile = {
     "mise/config.toml" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/mise/config.toml";
+      source = "${myConfigs}/mise/config.toml";
     };
     "nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
       recursive = true;
     };
     "quickshell" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/my-configs/quickshell";
+      source = "${myConfigs}/quickshell";
     };
     "niri/config.kdl" = {
       text = ''

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
@@ -32,7 +33,7 @@ in
   home.stateVersion = "26.05";
 
   xdg.configFile."mise/config.toml" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Git/my-configs/mise/config.toml";
+    source = "${inputs.my-configs}/mise/config.toml";
   };
 
   home.activation.initializeDeskflowSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

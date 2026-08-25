@@ -152,6 +152,22 @@
         "type": "github"
       }
     },
+    "my-configs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1787628972,
+        "narHash": "sha256-DGUJW3TCEG5uxvfFRrOfgnN/3dQs6yNgeI2IYgcCZGM=",
+        "owner": "stanfish06",
+        "repo": "my-configs",
+        "rev": "29bfa20ba6723157dbbed5b2b956fa3e811846d2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "stanfish06",
+        "repo": "my-configs",
+        "type": "github"
+      }
+    },
     "neovim-nightly": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -301,6 +317,7 @@
         "codex-desktop": "codex-desktop",
         "dolphin-overlay": "dolphin-overlay",
         "home-manager": "home-manager",
+        "my-configs": "my-configs",
         "neovim-nightly": "neovim-nightly",
         "nix-darwin": "nix-darwin",
         "nixos-wsl": "nixos-wsl",
