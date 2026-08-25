@@ -83,12 +83,6 @@ in
     ".wezterm.lua" = {
       source = "${myConfigs}/wezterm/linux/.wezterm.lua";
     };
-    ".emacs" = {
-      source = "${myConfigs}/emacs/.emacs";
-    };
-    ".emacs.d/myDarkTheme-theme.el" = {
-      source = "${myConfigs}/emacs/myDarkTheme-theme.el";
-    };
     ".config/yazi/yazi.toml" = {
       source = "${myConfigs}/yazi/yazi.toml";
     };
@@ -335,10 +329,6 @@ in
   xdg.configFile = {
     "mise/config.toml" = {
       source = "${myConfigs}/mise/config.toml";
-    };
-    "nvim" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/dots/nvim";
-      recursive = true;
     };
     "quickshell" = {
       source = "${myConfigs}/quickshell";
@@ -790,9 +780,6 @@ in
         };
       };
     };
-  };
-  programs.emacs = {
-    enable = true;
   };
   programs.codexDesktopLinux = {
     enable = true;
