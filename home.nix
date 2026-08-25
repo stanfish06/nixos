@@ -92,6 +92,9 @@ in
     ".config/yazi/yazi.toml" = {
       source = "${myConfigs}/yazi/yazi.toml";
     };
+    ".config/rofi/config.rasi" = {
+      source = "${myConfigs}/rofi/config.rasi";
+    };
     ".config/yazi/keymap.toml" = {
       source = "${myConfigs}/yazi/keymap.toml";
     };
