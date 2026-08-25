@@ -442,6 +442,21 @@ in
       url = "https://open.spotify.com/";
       icon = ./assets/web-apps/spotify.svg;
     };
+    slack = mkWebApp {
+      name = "Slack";
+      url = "https://app.slack.com/client";
+      icon = ./assets/web-apps/slack.svg;
+    };
+    notion = mkWebApp {
+      name = "Notion";
+      url = "https://www.notion.so/";
+      icon = ./assets/web-apps/notion.svg;
+    };
+    x = mkWebApp {
+      name = "X";
+      url = "https://x.com/";
+      icon = ./assets/web-apps/x.svg;
+    };
   };
   xdg.mimeApps = {
     enable = true;
