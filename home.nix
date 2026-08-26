@@ -1010,6 +1010,7 @@ in
     # screenshot
     grim
     slurp
+    flameshot
     # terms
     new.kitty
     new.wezterm

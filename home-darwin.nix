@@ -83,6 +83,8 @@ in
     nixfmt
     # version manager; the tools it manages live in mise/config.toml
     mise
+    # screenshot
+    flameshot
     # media
     ffmpeg
     imagemagick
