@@ -36,6 +36,21 @@ in
     source = "${inputs.my-configs}/mise/config.toml";
   };
 
+  home.file.".raycast-scripts/flameshot.sh" = {
+    text = ''
+      #!/bin/bash
+
+      # @raycast.schemaVersion 1
+      # @raycast.title Flameshot
+      # @raycast.mode silent
+      # @raycast.icon 📸
+      # @raycast.packageName Screenshot
+
+      exec ${pkgs.unstable.flameshot}/bin/flameshot gui
+    '';
+    executable = true;
+  };
+
   home.activation.initializeDeskflowSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     settings_dir=${lib.escapeShellArg "${config.home.homeDirectory}/Library/Deskflow"}
     if [ ! -e "$settings_dir/Deskflow.conf" ]; then
