@@ -230,6 +230,13 @@ in
       '';
       executable = true;
     };
+    ".local/bin/flameshot-gui" = {
+      text = ''
+        #!/usr/bin/env bash
+        exec flameshot gui
+      '';
+      executable = true;
+    };
     ".local/bin/screenshot-fullscreen" = {
       text = ''
         #!/usr/bin/env bash
