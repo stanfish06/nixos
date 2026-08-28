@@ -49,6 +49,8 @@
     ];
   };
 
+  environment.systemPackages = [ pkgs.unstable.container ];
+
   launchd.user.agents.aerospace = {
     command = "${pkgs.unstable.aerospace}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace";
     path = [
