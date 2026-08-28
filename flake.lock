@@ -155,11 +155,11 @@
     "my-configs": {
       "flake": false,
       "locked": {
-        "lastModified": 1787894686,
-        "narHash": "sha256-yliKCGSorgPUZP1rqOzAxjFo3MHgFo7k3A5wi1f5MWs=",
+        "lastModified": 1787907219,
+        "narHash": "sha256-OSN1nxvQdq/BMyzHREfh3tYLgHY0VkTSsj0veZYVweY=",
         "owner": "stanfish06",
         "repo": "my-configs",
-        "rev": "7c3afbf18cb25875bbfc23c559d6133a8f372496",
+        "rev": "32d6f9d09d85bcc97266d222eea11dd706c85a48",
         "type": "github"
       },
       "original": {
