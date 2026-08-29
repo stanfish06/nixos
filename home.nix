@@ -233,6 +233,13 @@ in
     ".local/bin/flameshot-gui" = {
       text = ''
         #!/usr/bin/env bash
+        # rofi exits right after spawning us; wait for it to go away plus the
+        # compositor's close animation so it isn't in the capture
+        for _ in $(seq 1 60); do
+            pgrep -x rofi >/dev/null || break
+            sleep 0.05
+        done
+        sleep 0.2
         exec flameshot gui
       '';
       executable = true;
