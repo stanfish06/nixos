@@ -108,6 +108,11 @@
   #   6.18.38; the pinned nixpkgs kernel was already confirmed at 6.18.38 as of the
   #   2026-07-19 audit, so no blacklist/mitigation is needed here — tracked for the next
   #   `nix flake update` to confirm the pin hasn't regressed below that version.
+  # 2026-08-31 audit: nixpkgs input has since moved to a 2026-08-27 commit (well past
+  #   the 2026-07-19 confirmation), but the kernel version on that pin still could not
+  #   be re-verified — no working `nix` in the audit sandbox (nixos.org install blocked
+  #   by network policy, same as the 2026-08-17/2026-08-24 runs). Still tracked for the
+  #   next run with a working `nix eval`/build.
   boot.extraModprobeConfig = ''
     install rxrpc /bin/false
   '';
