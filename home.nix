@@ -558,6 +558,15 @@ in
 
       -- Window rules
       hl.window_rule({ match = { class = "^(brave-browser|firefox)$" }, opacity = "0.9 0.9" })
+      -- float + pin flameshot's fullscreen capture overlay
+      hl.window_rule({
+        match   = { class = "^(flameshot)$" },
+        float   = true,
+        pin     = true,
+        no_anim = true,
+        move    = { 0, 0 },
+        monitor = "${monitorOutput}",
+      })
 
       -- Keybinds
       hl.bind(mod .. " + Return", hl.dsp.exec_cmd("wezterm"))

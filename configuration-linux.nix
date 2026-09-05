@@ -4,6 +4,8 @@
 }:
 
 {
+  imports = [ ./modules/miniflux-linux.nix ];
+
   nix.settings = {
     experimental-features = [
       "nix-command"
