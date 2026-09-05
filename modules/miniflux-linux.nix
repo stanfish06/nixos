@@ -17,10 +17,10 @@ in
 {
   services.miniflux = {
     enable = true;
+    adminCredentialsFile = "/etc/miniflux.env";
     config = {
       LISTEN_ADDR = "127.0.0.1:8080";
       BASE_URL = "http://localhost:8080/";
-      CREATE_ADMIN = false;
     };
   };
 

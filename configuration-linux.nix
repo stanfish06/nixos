@@ -100,16 +100,6 @@
   ];
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # CVE-2026-31431 (Copy Fail): algif_aead blacklist lifted — both hosts confirmed on
-  #   kernel 6.18.36 (>= 6.18.22 fix threshold) as of 2026-06-29; patch is active.
-  # CVE-2026-43284 / CVE-2026-43500 (Dirty Frag): rxrpc (AFS) remains blacklisted.
-  # CVE-2026-31635 (DirtyDecrypt, CVSS 7.5): rxrpc blacklist covers this (RXGK auth runs atop rxrpc).
-  # CVE-2026-46300 (Fragnesia, CVSS 7.8): XFRM ESP-in-TCP priv-esc via skb_try_coalesce;
-  #   esp4/esp6 kept for VPN — accepted risk; kernel patch released 2026-05-13.
-  # CVE-2026-53366 (IPv4 OOB write in ip_output.c, CVSS 7.8, local): fixed upstream in
-  #   6.18.38; the pinned nixpkgs kernel was already confirmed at 6.18.38 as of the
-  #   2026-07-19 audit, so no blacklist/mitigation is needed here — tracked for the next
-  #   `nix flake update` to confirm the pin hasn't regressed below that version.
   boot.extraModprobeConfig = ''
     install rxrpc /bin/false
   '';
@@ -213,7 +203,8 @@
     # xterm-ghostty terminfo so ssh/et from Ghostty resolves TERM
     ghostty.terminfo
     unstable.neovim
-    unstable.emacs
+    unstable.emacs31
+    ispell # emacs needs it
     new.zsh
     new.alacritty
     new.nixfmt
