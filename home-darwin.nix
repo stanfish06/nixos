@@ -97,7 +97,7 @@ in
     treefmt
     nixfmt
     # version manager; the tools it manages live in mise/config.toml
-    mise
+    unstable.mise
     # screenshot;
     unstable.flameshot
     # media
