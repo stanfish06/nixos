@@ -4,7 +4,8 @@
 }:
 
 {
-  imports = [ ./modules/miniflux-linux.nix ];
+  # deployed to nas
+  # imports = [ ./modules/miniflux-linux.nix ];
 
   nix.settings = {
     experimental-features = [

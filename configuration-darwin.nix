@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./modules/miniflux-darwin.nix
+    # deployed to nas
+    # ./modules/miniflux-darwin.nix
     ./modules/apple-container-darwin.nix
   ];
 
