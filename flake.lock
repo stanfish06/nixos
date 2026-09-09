@@ -29,11 +29,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788929289,
-        "narHash": "sha256-UMbEzZmkIWK9zZatdeWaRvNdjGATM0l8taxvtEEhbPA=",
+        "lastModified": 1788953062,
+        "narHash": "sha256-7EP4t8nXyIShBzqujEMw9HNB/4DBQkmc5d/AqCWUfLw=",
         "owner": "ilysenko",
         "repo": "codex-desktop-linux",
-        "rev": "10cf6241eba303a274b4a6f5a46d605c54d07adc",
+        "rev": "4aa6ada09b12e13037ace8a61594f7ea5e1c7881",
         "type": "github"
       },
       "original": {
@@ -155,11 +155,11 @@
     "my-configs": {
       "flake": false,
       "locked": {
-        "lastModified": 1788850371,
-        "narHash": "sha256-WWX9KwFDzzgqOYZg07F9TVigLRqnRN2Bj0qtw9cmBhE=",
+        "lastModified": 1788966991,
+        "narHash": "sha256-TWQlLIjD/PBDFRQlONsAYRLSxghVm+nWqnTjBMX7IOI=",
         "owner": "stanfish06",
         "repo": "my-configs",
-        "rev": "bbe3129058fdd168d8f0218936d5db8dd825d6a8",
+        "rev": "c971f9201d1381755767328cf968c2f53aa929dd",
         "type": "github"
       },
       "original": {
