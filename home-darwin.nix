@@ -32,10 +32,6 @@ in
 {
   home.stateVersion = "26.05";
 
-  xdg.configFile."mise/config.toml" = {
-    source = "${inputs.my-configs}/mise/config.toml";
-  };
-
   home.file.".raycast-scripts/flameshot.sh" = {
     text = ''
       #!/bin/bash
@@ -81,10 +77,12 @@ in
     # prompt + shells
     starship
     nushell
-    # zsh plugins; wire into .zshrc from the nix store paths, or port
-    # programs.zsh from home.nix later
+    # zsh; .zshrc from chezmoi sources these from /etc/profiles/per-user/stan/share
+    oh-my-zsh
+    zsh-vi-mode
     zsh-autosuggestions
     zsh-syntax-highlighting
+    direnv
     # lua tooling; lua-language-server and stylua come from mise
     lua5_4
     lua54Packages.luacheck # not a top-level attr; match lua5_4 above
