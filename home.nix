@@ -515,8 +515,8 @@ in
       })
 
       -- Note: spring is not affected by speed parameter
-      hl.curve("smooth", { type = "spring", mass = 1, stiffness = 1000, damping = 90 })
-      hl.curve("bouncy", { type = "spring", mass = 1, stiffness = 400, damping = 32 })
+      hl.curve("smooth", { type = "spring", mass = 1, stiffness = 1000, dampening = 90 })
+      hl.curve("bouncy", { type = "spring", mass = 1, stiffness = 400, dampening = 32 })
 
       hl.animation({ leaf = "global",     enabled = true, speed = 3, spring = "smooth" })
       hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, spring = "smooth", style = "popin 80%" })
