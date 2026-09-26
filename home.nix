@@ -514,14 +514,15 @@ in
         },
       })
 
-      -- Bezier curves + animations
-      hl.curve("myBezier", { type = "bezier", points = { { 0.05, 0.9 }, { 0.1, 1.05 } } })
+      -- Note: spring is not affected by speed parameter
+      hl.curve("smooth", { type = "spring", mass = 1, stiffness = 1000, damping = 90 })
+      hl.curve("bouncy", { type = "spring", mass = 1, stiffness = 400, damping = 32 })
 
-      hl.animation({ leaf = "windows",    enabled = true, speed = 7,  bezier = "myBezier" })
-      hl.animation({ leaf = "windowsOut", enabled = true, speed = 7,  bezier = "default", style = "popin 80%" })
-      hl.animation({ leaf = "border",     enabled = true, speed = 10, bezier = "default" })
-      hl.animation({ leaf = "fade",       enabled = true, speed = 7,  bezier = "default" })
-      hl.animation({ leaf = "workspaces", enabled = true, speed = 6,  bezier = "default" })
+      hl.animation({ leaf = "global",     enabled = true, speed = 3, spring = "smooth" })
+      hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, spring = "smooth", style = "popin 80%" })
+      hl.animation({ leaf = "workspaces", enabled = true, speed = 3, spring = "bouncy" })
+      -- no animation for group
+      hl.animation({ leaf = "fadeSwitch", enabled = false })
 
       -- Window rules
       hl.window_rule({ match = { class = "^(brave-browser|firefox)$" }, opacity = "0.9 0.9" })
