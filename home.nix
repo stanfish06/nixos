@@ -562,13 +562,24 @@ in
       hl.bind(mod .. " + SHIFT + G", hl.dsp.group.toggle())
       hl.bind(mod .. " + SHIFT + J", hl.dsp.group.next())
       hl.bind(mod .. " + SHIFT + K", hl.dsp.group.prev())
+      hl.bind(mod .. " + CTRL + O", hl.dsp.window.move({ out_of_group = true }))
+
+      -- pop the window out of its group first; a plain workspace move takes the whole group
+      local function move_to_workspace(ws)
+        return function()
+          hl.dispatch(hl.dsp.window.move({ out_of_group = true }))
+          hl.dispatch(hl.dsp.window.move({ workspace = ws }))
+        end
+      end
 
       for i = 1, 9 do
         hl.bind(mod .. " + " .. i, hl.dsp.focus({ workspace = i }))
-        hl.bind(mod .. " + SHIFT + " .. i, hl.dsp.window.move({ workspace = i }))
+        hl.bind(mod .. " + SHIFT + " .. i, move_to_workspace(i))
+        hl.bind(mod .. " + SHIFT + CTRL + " .. i, hl.dsp.window.move({ workspace = i }))
       end
       hl.bind(mod .. " + 0", hl.dsp.focus({ workspace = 10 }))
-      hl.bind(mod .. " + SHIFT + 0", hl.dsp.window.move({ workspace = 10 }))
+      hl.bind(mod .. " + SHIFT + 0", move_to_workspace(10))
+      hl.bind(mod .. " + SHIFT + CTRL + 0", hl.dsp.window.move({ workspace = 10 }))
 
       hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
       hl.bind(mod .. " + mouse_up",   hl.dsp.focus({ workspace = "e-1" }))
@@ -744,6 +755,8 @@ in
     kdePackages.gwenview
     kdePackages.konsole
     unstable.vial
+    unstable.discord
+    unstable.telegram-desktop
     # agent sandboxes; `sbx` needs the docker daemon from configuration-linux.nix
     new.docker-sbx
     # c/c++
