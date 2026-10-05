@@ -9,6 +9,10 @@
 #
 # The modified package retains its original GPL license.
 
+# NOTE: this reaches into pkgs.libsForQt5.__internalKF5.kservice, a
+# double-underscore "internal" nixpkgs attribute with no compatibility
+# guarantee across nixpkgs/KDE Frameworks bumps. Recheck this overlay after
+# any KDE Frameworks version bump in case the attribute moves or disappears.
 final: prev: {
   kdePackages = prev.kdePackages.overrideScope (
     kfinal: kprev: {
