@@ -52,6 +52,27 @@
 
   environment.systemPackages = [ pkgs.unstable.container ];
 
+  # Open-source tailscaled instead of the Tailscale.app GUI: the app variant
+  # cannot run the Tailscale SSH server, tailscaled can. unstable for the
+  # newer version. `tailscale up` once after the first switch to authenticate.
+  services.tailscale = {
+    enable = true;
+    package = pkgs.unstable.tailscale;
+  };
+
+  # nix-darwin has no extraSetFlags; apply the same prefs as the linux hosts
+  # once tailscaled's socket is up. --operator lets `stan` run tailscale without sudo.
+  launchd.daemons.tailscale-set = {
+    script = ''
+      for _ in $(seq 1 30); do
+        [ -S /var/run/tailscaled.socket ] && break
+        sleep 1
+      done
+      exec ${pkgs.unstable.tailscale}/bin/tailscale set --ssh --operator=stan
+    '';
+    serviceConfig.RunAtLoad = true;
+  };
+
   launchd.user.agents.aerospace = {
     command = "${pkgs.unstable.aerospace}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace";
     path = [
