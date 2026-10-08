@@ -26,7 +26,7 @@ let
           zstd
         ];
     };
-  wallpaper = "${myConfigs}/img/robot-1-darker.jpg";
+  wallpaper = "${myConfigs}/img/nixos-1.png";
   # primary monitor; the dwl, niri and hyprland configs below all derive from this
   monitorOutput = "HDMI-A-1";
   monitorResolution = "1920x1080";
