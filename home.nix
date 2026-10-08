@@ -405,38 +405,7 @@ in
       '';
     };
   };
-  xdg.desktopEntries = {
-    youtube = mkWebApp {
-      name = "YouTube";
-      url = "https://www.youtube.com/";
-      icon = ./assets/web-apps/youtube.svg;
-    };
-    spotify = mkWebApp {
-      name = "Spotify";
-      url = "https://open.spotify.com/";
-      icon = ./assets/web-apps/spotify.svg;
-    };
-    slack = mkWebApp {
-      name = "Slack";
-      url = "https://app.slack.com/client";
-      icon = ./assets/web-apps/slack.svg;
-    };
-    notion = mkWebApp {
-      name = "Notion";
-      url = "https://www.notion.so/";
-      icon = ./assets/web-apps/notion.svg;
-    };
-    x = mkWebApp {
-      name = "X";
-      url = "https://x.com/";
-      icon = ./assets/web-apps/x.svg;
-    };
-    grok = mkWebApp {
-      name = "Grok";
-      url = "https://grok.com/";
-      icon = ./assets/web-apps/grok.svg;
-    };
-  };
+  xdg.desktopEntries = builtins.mapAttrs (_: mkWebApp) (import ./web-apps.nix);
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {

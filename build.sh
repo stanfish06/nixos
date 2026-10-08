@@ -5,6 +5,7 @@ script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 cd "$script_dir"
 
 declare -a hosts=()
+darwin_host="macbook-1"
 
 usage() {
   cat <<EOF
@@ -18,6 +19,7 @@ Usage:
   ./build.sh help
 
 Valid hosts: ${hosts[*]:-(none)}
+Darwin host: $darwin_host
 EOF
 }
 
@@ -193,6 +195,30 @@ build_hosts() {
   nix build --no-link --no-write-lock-file "${installables[@]}"
 }
 
+darwin_host_args() {
+  if (( $# > 1 )); then
+    usage_error "macOS has one host: '$darwin_host'"
+  fi
+  if (( $# == 1 )) && [[ "$1" != "$darwin_host" ]]; then
+    usage_error "unknown darwin host '$1'; expected '$darwin_host'"
+  fi
+}
+
+switch_darwin() {
+  darwin_host_args "$@"
+  sudo darwin-rebuild switch --no-write-lock-file --flake ".#$darwin_host"
+}
+
+build_darwin() {
+  darwin_host_args "$@"
+  nix build --no-link --no-write-lock-file ".#darwinConfigurations.$darwin_host.system"
+}
+
+is_darwin=false
+if [[ "$(uname -s)" == Darwin ]]; then
+  is_darwin=true
+fi
+
 action="${1:-}"
 if (( $# > 0 )); then
   shift
@@ -200,10 +226,18 @@ fi
 
 case "$action" in
   switch)
-    switch_host "$@"
+    if [[ "$is_darwin" == true ]]; then
+      switch_darwin "$@"
+    else
+      switch_host "$@"
+    fi
     ;;
   build)
-    build_hosts "$@"
+    if [[ "$is_darwin" == true ]]; then
+      build_darwin "$@"
+    else
+      build_hosts "$@"
+    fi
     ;;
   update)
     if (( $# != 0 )); then

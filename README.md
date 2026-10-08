@@ -30,8 +30,9 @@ Build one or more system closures without activating them:
 sudo nix run nix-darwin/nix-darwin-26.05#darwin-rebuild -- switch --flake .#macbook-1
 ```
 
-Subsequent switches:
+Subsequent switches and builds; `build.sh` detects macOS and targets `macbook-1`:
 
 ```bash
-sudo darwin-rebuild switch --flake .#macbook-1
+./build.sh switch
+./build.sh build
 ```

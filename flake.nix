@@ -143,9 +143,8 @@
         nixos-gmktec-1 = mkLinuxSystem ./hosts/gmktec-1/default.nix;
       };
 
-      # macOS is outside build.sh (that dispatcher only discovers NixOS hosts
-      # under hosts/); switch with darwin-rebuild directly:
-      #   sudo darwin-rebuild switch --flake .#macbook-1
+      # build.sh switches this on macOS (darwin_host in build.sh); the first
+      # switch needs darwin-rebuild bootstrapped, see README.md
       darwinConfigurations = {
         macbook-1 = inputs.nix-darwin.lib.darwinSystem {
           modules = [
