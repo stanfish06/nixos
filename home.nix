@@ -465,9 +465,9 @@ in
         group = {
           groupbar = {
             gradients = false,
-            ["col.active"] = "rgba(101520ff)",
+            ["col.active"] = "rgba(7d7d7dff)",
             ["col.inactive"] = "rgba(101520aa)",
-            text_color = "rgba(d8d4cdff)",
+            text_color = "rgba(D8D4CDff)",
             height = 1,
             font_size = 14,
             text_offset = -10,
