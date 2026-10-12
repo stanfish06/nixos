@@ -37,6 +37,10 @@
       url = "github:aaddrick/claude-desktop-debian";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ufetch = {
+      url = "github:stanfish06/UFetch";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # dotfiles repo (github.com/stanfish06/my-configs), fetched as a plain
     # source tree and pinned in flake.lock; refresh with ./build.sh update
     my-configs = {

@@ -106,6 +106,7 @@ in
       btop
       chafa
       chezmoi
+      inputs.ufetch.packages.${pkgs.stdenv.hostPlatform.system}.default
       clipboard-jh # brew calls this "clipboard"
       coreutils
       mosh

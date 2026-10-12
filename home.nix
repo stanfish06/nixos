@@ -683,6 +683,7 @@ in
     zsh-autosuggestions
     zsh-syntax-highlighting
     # useful tools; fzf/ripgrep/fd/gh/jq/bat/eza come from mise
+    inputs.ufetch.packages.${pkgs.stdenv.hostPlatform.system}.default
     tigervnc
     wlr-randr
     alsa-utils
