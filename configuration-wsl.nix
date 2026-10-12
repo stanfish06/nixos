@@ -15,6 +15,8 @@
   ];
 
   programs.zsh.enable = true;
+  # initialPassword only seeds the account on first boot; rebuilds don't
+  # re-apply it, so rotate this password (e.g. `passwd`) after first boot.
   users.users.nixos = {
     isNormalUser = true;
     shell = pkgs.zsh;
