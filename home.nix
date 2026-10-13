@@ -748,5 +748,7 @@ in
     # dev deps
     libxml2
     libxml2.dev
+    # others
+    ffmpeg
   ];
 }
