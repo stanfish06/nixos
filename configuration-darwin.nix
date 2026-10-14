@@ -45,12 +45,16 @@
       "copilot-cli"
       "deskflow-dev"
       "helium-browser"
+      "macfuse"
       "miniconda"
       "raycast"
     ];
   };
 
-  environment.systemPackages = [ pkgs.unstable.container ];
+  environment.systemPackages = [
+    pkgs.unstable.container
+    pkgs.new.sshfs
+  ];
 
   # Open-source tailscaled instead of the Tailscale.app GUI: the app variant
   # cannot run the Tailscale SSH server, tailscaled can. unstable for the
