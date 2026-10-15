@@ -750,6 +750,8 @@ in
     libxml2.dev
     # others
     ffmpeg
-    mc
+    mc # file explorer
+    kdePackages.okular
+    libreoffice
   ];
 }
