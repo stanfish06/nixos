@@ -31,6 +31,10 @@ in
       darwin_peer   stan             postgres
       darwin_peer   stan             miniflux
     '';
+    # mkForce (not mkAfter): nix-darwin's postgresql module ships a permissive
+    # default authentication config, so this must replace it outright rather
+    # than append. If another module ever adds auth rules here too, mkForce
+    # will silently drop them -- keep this the only writer of this option.
     authentication = lib.mkForce ''
       local all all               peer map=darwin_peer
       host  all all 127.0.0.1/32  md5
