@@ -750,5 +750,6 @@ in
     libxml2.dev
     # others
     ffmpeg
+    mc
   ];
 }
