@@ -170,6 +170,9 @@
 
   programs.mosh.enable = true; # resilient ssh connection
 
+  # initialPassword only seeds the account on first boot; `nixos-rebuild
+  # switch` never re-applies it, so rotate it manually after install and
+  # don't rely on this value staying in sync with the real password.
   users.users.stan = {
     isNormalUser = true;
     description = "stan";
