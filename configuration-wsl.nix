@@ -15,6 +15,9 @@
   ];
 
   programs.zsh.enable = true;
+  # initialPassword only seeds the account on first boot; `nixos-rebuild
+  # switch` never re-applies it, so rotate it manually after install and
+  # don't rely on this value staying in sync with the real password.
   users.users.nixos = {
     isNormalUser = true;
     shell = pkgs.zsh;
