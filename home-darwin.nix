@@ -73,6 +73,7 @@ let
       '';
 in
 {
+  imports = [ ./modules/ghidra-home.nix ];
   home.stateVersion = "26.05";
 
   home.file.".raycast-scripts/flameshot.sh" = {

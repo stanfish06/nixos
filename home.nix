@@ -51,6 +51,7 @@ let
     };
 in
 {
+  imports = [ ./modules/ghidra-home.nix ];
   home.stateVersion = "26.05";
   home.sessionPath = [
     "$HOME/.npm-global/bin"
