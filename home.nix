@@ -1,5 +1,6 @@
 {
   config,
+  osConfig,
   pkgs,
   inputs,
   ...
@@ -261,6 +262,21 @@ in
       ExecStart = "${pkgs.wayvnc}/bin/wayvnc --gpu --max-fps=60 0.0.0.0 5900";
       Restart = "always";
       RestartSec = 2;
+    };
+    Install = {
+      WantedBy = [ "wayland-session.target" ];
+    };
+  };
+  # input method for dwl/hyprland/niri; package comes from i18n.inputMethod in configuration-linux.nix
+  systemd.user.services.fcitx5 = {
+    Unit = {
+      Description = "Fcitx5 input method";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${osConfig.i18n.inputMethod.package}/bin/fcitx5 --replace";
+      Restart = "on-failure";
     };
     Install = {
       WantedBy = [ "wayland-session.target" ];

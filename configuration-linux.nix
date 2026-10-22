@@ -121,6 +121,26 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+  # chinese pinyin; ctrl+space toggles.
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5.waylandFrontend = true;
+    fcitx5.addons = with pkgs; [
+      qt6Packages.fcitx5-chinese-addons
+      fcitx5-gtk
+    ];
+    fcitx5.settings.inputMethod = {
+      GroupOrder."0" = "Default";
+      "Groups/0" = {
+        Name = "Default";
+        "Default Layout" = "us";
+        DefaultIM = "pinyin";
+      };
+      "Groups/0/Items/0".Name = "keyboard-us";
+      "Groups/0/Items/1".Name = "pinyin";
+    };
+  };
   services.xserver.enable = true;
   services.displayManager.gdm = {
     enable = true;
