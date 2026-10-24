@@ -47,6 +47,7 @@
       "helium-browser"
       "macfuse"
       "miniconda"
+      "obs"
       "raycast"
     ];
   };
