@@ -744,6 +744,7 @@ in
     unstable.vial
     unstable.discord
     unstable.telegram-desktop
+    thunderbird
     # agent sandboxes; `sbx` needs the docker daemon from configuration-linux.nix
     new.docker-sbx
     # c/c++

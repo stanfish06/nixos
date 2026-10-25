@@ -165,6 +165,7 @@ in
       vial-darwin # linux uses unstable.vial; darwin repacks the dmg, see pkgs/vial-darwin.nix
       unstable.discord
       unstable.telegram-desktop
+      thunderbird-bin # source build isn't cached for darwin; -bin repacks mozilla's dmg
       # editor
       emacs
     ]
