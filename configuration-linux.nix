@@ -199,6 +199,7 @@
       "networkmanager"
       "docker"
       "wheel"
+      "input"
     ];
   };
   users.users.root = {
