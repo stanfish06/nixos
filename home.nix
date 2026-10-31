@@ -735,6 +735,7 @@ in
     claude-desktop-fhs
     vscode
     gimp
+    krita
     unstable.code-cursor
     new.brave
     helium

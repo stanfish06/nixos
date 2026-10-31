@@ -45,6 +45,7 @@
       "copilot-cli"
       "deskflow-dev"
       "helium-browser"
+      "krita" # nixpkgs krita is linux-only
       "macfuse"
       "miniconda"
       "obs"
