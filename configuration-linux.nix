@@ -121,7 +121,7 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-  # chinese pinyin; ctrl+space toggles.
+  # chinese pinyin; super+space toggles.
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
@@ -139,6 +139,9 @@
       };
       "Groups/0/Items/0".Name = "keyboard-us";
       "Groups/0/Items/1".Name = "pinyin";
+    };
+    fcitx5.settings.globalOptions = {
+      "Hotkey/TriggerKeys"."0" = "Super+space";
     };
   };
   services.xserver.enable = true;
