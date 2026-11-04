@@ -234,6 +234,114 @@ in
       '';
       executable = true;
     };
+    ".local/bin/record-region" = {
+      text = ''
+        #!/usr/bin/env bash
+        # toggle a screen recording of a dragged region: the first run picks the
+        # region and starts recording, the next run stops it and saves the file
+        set -u
+
+        # --- tweakables ---
+        dir="$HOME/Videos/recordings"
+        container="mp4" # file extension; picks the muxer
+        fps="30"        # frame cap, not a fixed rate; both backends idle lower
+        bitrate="2 MB"  # wl-screenrec only, bytes/s (2 MB is 16 Mbps)
+        codec="avc"     # wl-screenrec only: avc, hevc, vp8, vp9, av1
+        backend="auto"  # auto, wl-screenrec or wf-recorder
+        # ------------------
+
+        audio=0
+        [ "''${1:-}" = "--audio" ] && audio=1
+
+        runtime="''${XDG_RUNTIME_DIR:-/tmp}"
+        pidfile="$runtime/record-region.pid"
+        pathfile="$runtime/record-region.path"
+        log="$runtime/record-region.log"
+
+        # second invocation: stop the recorder started by the first one
+        if [ -s "$pidfile" ] && kill -0 "$(cat "$pidfile")" 2>/dev/null; then
+            pid="$(cat "$pidfile")"
+            file="$(cat "$pathfile" 2>/dev/null)"
+            # SIGTERM makes both backends flush the encoder and write the
+            # container trailer; SIGKILL would leave an unplayable file.
+            # not SIGINT: `&` in a non-interactive shell starts the recorder
+            # with SIGINT ignored, so it would never arrive
+            kill -TERM "$pid"
+            for _ in $(seq 1 100); do
+                kill -0 "$pid" 2>/dev/null || break
+                sleep 0.1
+            done
+            if kill -0 "$pid" 2>/dev/null; then
+                kill -KILL "$pid"
+                notify-send -u critical "Recording truncated" \
+                    "the recorder ignored SIGTERM; $file may not play"
+            fi
+            rm -f "$pidfile" "$pathfile"
+            if [ -s "$file" ]; then
+                wl-copy "$file"
+                notify-send "Recording saved" "$file"
+            else
+                rm -f "$file"
+                notify-send -u critical "Recording failed" "no video was written; see $log"
+                exit 1
+            fi
+            exit 0
+        fi
+        rm -f "$pidfile" "$pathfile"
+
+        region="$(slurp)" || exit 0
+        # h264 rejects odd dimensions, so round the dragged box down to even
+        read -r pos size <<<"$region"
+        w="''${size%x*}"
+        h="''${size#*x}"
+        region="$pos $((w - w % 2))x$((h - h % 2))"
+
+        if [ "$backend" = auto ]; then
+            # wl-screenrec encodes on the GPU and needs a vaapi render node
+            if [ -e /dev/dri/renderD128 ]; then
+                backend=wl-screenrec
+            else
+                backend=wf-recorder
+            fi
+        fi
+
+        mkdir -p "$dir"
+        file="$dir/$(date +%Y-%m-%d_%H-%M-%S-%3N)-region.$container"
+
+        case "$backend" in
+            wl-screenrec)
+                set -- wl-screenrec -g "$region" -f "$file" \
+                    --codec "$codec" --max-fps "$fps" --bitrate "$bitrate"
+                [ "$audio" = 1 ] && set -- "$@" --audio
+                ;;
+            wf-recorder)
+                set -- wf-recorder -g "$region" -f "$file" -r "$fps"
+                [ "$audio" = 1 ] && set -- "$@" -a
+                ;;
+            *)
+                notify-send -u critical "Recording failed" "unknown backend: $backend"
+                exit 1
+                ;;
+        esac
+
+        # setsid detaches the recorder so it outlives this script
+        setsid "$@" >"$log" 2>&1 &
+        pid=$!
+        printf '%s' "$pid" >"$pidfile"
+        printf '%s' "$file" >"$pathfile"
+
+        # a missing vaapi driver or a zero-sized region kills the backend right
+        # away, so confirm it is alive before reporting that it records
+        sleep 0.5
+        if ! kill -0 "$pid" 2>/dev/null; then
+            rm -f "$pidfile" "$pathfile" "$file"
+            notify-send -u critical "Recording failed" "$backend exited at startup; see $log"
+            exit 1
+        fi
+        notify-send "Recording $region" "$backend started; press the same key again to stop"
+      '';
+      executable = true;
+    };
   };
   home.pointerCursor = {
     gtk.enable = true;
@@ -415,6 +523,7 @@ in
 
             Print { spawn "screenshot-fullscreen"; }
             Shift+Print { spawn "screenshot-region"; }
+            Mod+Print { spawn "record-region"; }
 
             Mod+Minus { set-column-width "-10%"; }
             Mod+Equal { set-column-width "+10%"; }
@@ -575,6 +684,7 @@ in
 
       hl.bind("Print",         hl.dsp.exec_cmd("screenshot-fullscreen"))
       hl.bind("SHIFT + Print", hl.dsp.exec_cmd("screenshot-region"))
+      hl.bind(mod .. " + Print",  hl.dsp.exec_cmd("record-region"))
 
       -- Resize submap
       hl.bind("ALT + R", hl.dsp.submap("resize"))
@@ -722,10 +832,13 @@ in
     hiddify
     # notes
     unstable.obsidian
-    # screenshot
+    # screenshot / screen recording
     grim
     slurp
     flameshot
+    # wl-screenrec encodes on the GPU, wf-recorder is the software fallback
+    wl-screenrec
+    wf-recorder
     # terms
     new.kitty
     new.wezterm
